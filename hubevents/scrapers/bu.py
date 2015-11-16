@@ -10,7 +10,7 @@ and one-by-one the event info is extracted.
 import requests
 from bs4 import BeautifulSoup
 
-days = ['2015-8-' + str(day) for day in range(10, 20)]
+days = ['2015-11-' + str(day) for day in range(17, 19)]
 
 base_url = 'http://www.bu.edu'
 unique_href = '.calendar.bu.edu'
@@ -18,7 +18,7 @@ unique_href = '.calendar.bu.edu'
 trans = {'When':'date_time', 'Contact Name':'contact_name',
          'Contact Email':'contact_email', 'Contact Organization':'contact_organization',
          'Phone':'phone', 'Location':'location', 'Building':'building', 'Fees':'cost',
-         'Room':'room', 'Open To':'open_to', 'Fee': 'cost', 'Speakers':'speaker'}
+         'Room':'room', 'Open To':'open_to', 'Fee':'cost', 'Speakers':'speaker'}
 
 events = []
 for day in days:
@@ -26,7 +26,7 @@ for day in days:
   s = BeautifulSoup(r.content, 'lxml')
   urls = [a.get('href') for a in s.find_all('a') if (unique_href in a.get('href'))]
   for url in urls:
-    event = {'credit_url':base_url + url}
+    event = {'credit_url':base_url + url[:url.rindex('&day=')]}
     r = requests.get(base_url + url)
     s = BeautifulSoup(r.content, 'lxml')
     try:
@@ -34,22 +34,22 @@ for day in days:
     except:
       continue
     if (sct.find('h1')):
-      event['title'] = sct.find('h1').text
-      event['description'] = sct.find('p').text
+      event['title'] = sct.find('h1').text.encode('ascii', 'ignore').strip()
+      event['description'] = sct.find('p').text.encode('ascii', 'ignore').strip()
       for td, th in zip(sct.find_all('td'), sct.find_all('th')):
-	th_key = th.text
+	th_key = th.text.encode('ascii', 'ignore')
 	if (th_key not in trans.keys()):
 	  th_key = th_key.replace(' ', '_').lower()
-	  event[th_key] = td.text
+	  event[th_key] = td.text.encode('ascii', 'ignore')
 	  print "WARNING:", th.text, "converted to", th_key, "and added to dictionary"
 	else:
-	  event[trans[th_key]] = td.text
+	  event[trans[th_key]] = td.text.encode('ascii', 'ignore')
       if (sct.find('a', {'class':'more-info'})):
         event['more_info_url'] = sct.find('a', {'class':'more-info'}).get('href')
       if (sct.find('a', {'class':'register'})):
         event['register_url'] = sct.find('a', {'class':'register'}).get('href')
       if (sct.find('span', {'class':'deadline'})):
-        event['register_deadline'] = sct.find('span', {'class':'deadline'}).text
+        event['register_deadline'] = sct.find('span', {'class':'deadline'}).text.encode('ascii', 'ignore')
       events.append(event)
 
 import json
