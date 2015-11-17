@@ -1,8 +1,8 @@
 ## Usage: ##
-## python eventbrite.py > boston_13nov2015.html ##
+##   python eventbrite.py > boston_13nov2015.html ##
 
-start_date = '2015-12-10'
-end_date = '2015-12-11'
+start_date = '2015-12-1'
+end_date = '2015-12-5'
 
 import os
 my_token = os.environ['EVENTBRITE_SHELL_VAR']
@@ -25,38 +25,30 @@ for p in range(2, page_count + 1):
   r.extend(response.json()['events'])
 
 ## start HTML output ##
-print "Content-type:text/html\n\n"
-print "<html><head></head><body>"
-print "page_count: ", page_count, ", total events: ", len(r), "<p><p>"
+print '<html><head></head><body>'
+print 'page_count: ', page_count, ', total events: ', len(r), '<p><p>'
+print '-------------------------------<p><p>'
 
 ## create list from all the records ##
 for i, rr in enumerate(r):
-  dts = rr['start']['local']
-  dte = rr['end']['local']
-  start_year = dts[0:4]
-  start_month = dts[5:7]
-  start_day = dts[8:10]
-  start_time = dts[11:16]
-  end_year = dte[0:4]
-  end_month = dte[5:7]
-  end_day = dte[8:10]
-  end_time = dte[11:16]
+  str_d = rr['start']['local']
+  end_d = rr['end']['local']
   from datetime import date
   from datetime import time
-  d_s = date(int(start_year), int(start_month), int(start_day))
-  d_e = date(int(end_year), int(end_month), int(end_day))
-  t_s = time(int(dts[11:13]), int(dts[14:16]))
-  t_e = time(int(dte[11:13]), int(dte[14:16]))
+  d_str = date(*map(int, str_d.split('T')[0].split('-')))
+  d_end = date(*map(int, end_d.split('T')[0].split('-')))
+  t_str = time(*map(int, str_d.split('T')[1].split(':')))
+  t_end = time(*map(int, end_d.split('T')[1].split(':')))
 
   ## title and date ##
   title = rr['name']['text']
   if (title):
     print title.encode('ascii', 'ignore'), "<br>"
-  if (d_s == d_e):
-    print '{dt:%A}, {dt:%B} {dt.day}<br>'.format(dt=d_s) # requires Python 2.6
+  if (d_str == d_end):
+    print '{dt:%A}, {dt:%B} {dt.day}<br>'.format(dt=d_str) # requires Python 2.6
   else:
-    print '{dt:%A}, {dt:%B} {dt.day}'.format(dt=d_s), '-', '{dt:%A}, {dt:%B} {dt.day}<br>'.format(dt=d_e)
-  print t_s.strftime('%-I:%M %p'), '-', t_e.strftime('%-I:%M %p'), "<br>" # hack used to remove zero padding
+    print '{dt:%A}, {dt:%B} {dt.day}'.format(dt=d_str), '-', '{dt:%A}, {dt:%B} {dt.day}<br>'.format(dt=d_end)
+  print t_str.strftime('%-I:%M %p'), '-', t_end.strftime('%-I:%M %p'), "<br>" # hack: remove zero padding
 
   ## location ##
   lctn = []
@@ -83,24 +75,22 @@ for i, rr in enumerate(r):
   num_tix = len(rr['ticket_classes'])
   for j in range(num_tix):
     tix = rr['ticket_classes'][j]
-    if (tix['free']):
-      if ('FREE' not in costs): costs.append('FREE')
-    elif (not tix['free'] and tix['donation']):
-      if ('Donation' not in costs): costs.append('Donation')
+    if (tix['free']): costs.append('FREE')
+    elif (not tix['free'] and tix['donation']): costs.append('Donation')
     elif (not tix['free'] and not tix['donation']):
       costs.append(tix['cost']['display'].encode('ascii', 'ignore'))
     else:
-      print 'ERROR: SHOULD NOT BE HERE: free donation', tix['free'], tix['donation']
+      print 'ERROR: SHOULD NOT BE HERE: ', tix['free'], tix['donation']
  
   # ensure FREE and Donation appear first
-  costs = sorted(list(set(costs))) # remove duplicates and sort
+  costs = list(set(costs)) # remove duplicates
   if ('Donation' in costs):
     costs.remove('Donation')
     costs.insert(0, 'Donation')
   if ('FREE' in costs):
     costs.remove('FREE')
     costs.insert(0, 'FREE')
-  if (costs != ['FREE']): print 'Cost:', ', '.join(set(costs)), '<p>'
+  if (costs != ['FREE'] and costs): print 'Cost:', ', '.join(costs), '<p>'
   else: print '<p>'
 
   ## description ##
@@ -108,10 +98,5 @@ for i, rr in enumerate(r):
   if (dscrpt):
     print '%s<p>' % dscrpt.encode('ascii', 'ignore')
 
-  ## contact ##
-  #organizer_name = rr['organizer']['name']
-  #if (organizer_name):
-  #  print 'Contact: %s<p><p>' % organizer_name.encode('ascii', 'ignore')
   print '<p><p>-------------------------------<p><p>'
-
-print "</body></html>"
+print '</body></html>'
