@@ -1,8 +1,8 @@
 ## Usage: ##
 ##   python eventbrite.py > boston_13nov2015.html ##
 
-start_date = '2015-12-1'
-end_date = '2015-12-5'
+start_date = '2015-11-30'
+end_date = '2015-12-15'
 
 import os
 my_token = os.environ['EVENTBRITE_SHELL_VAR']
@@ -12,7 +12,7 @@ url = 'https://www.eventbriteapi.com/v3/events/search/?start_date.range_start=' 
       + end_date + 'T13:00:00Z&token=' + my_token
 
 import requests
-payload = {'venue.city':'Cambridge', 'venue.region':'MA', 'venue.country':'US',
+payload = {'venue.city':'Boston', 'venue.region':'MA', 'venue.country':'US',
            'sort_by':'date', 'expand':'organizer,venue,ticket_classes', 'token':my_token}
 response = requests.get(url, params=payload, headers = {"Authorization": "Bearer " + my_token,}, verify = True)
 r = response.json()['events']
@@ -81,7 +81,6 @@ for i, rr in enumerate(r):
       costs.append(tix['cost']['display'].encode('ascii', 'ignore'))
     else:
       print 'ERROR: SHOULD NOT BE HERE: ', tix['free'], tix['donation']
- 
   # ensure FREE and Donation appear first
   costs = list(set(costs)) # remove duplicates
   if ('Donation' in costs):
@@ -90,8 +89,19 @@ for i, rr in enumerate(r):
   if ('FREE' in costs):
     costs.remove('FREE')
     costs.insert(0, 'FREE')
-  if (costs != ['FREE'] and costs): print 'Cost:', ', '.join(costs), '<p>'
-  else: print '<p>'
+  # handle cost cases
+  if (costs == [] or costs == ['FREE']):
+    print '<p>'
+  elif (costs == ['Donation'] or costs == ['FREE', 'Donation']):
+    print 'Cost: FREE or Donation<p>'
+  elif (len(costs) == 1 and costs[0].startswith('$')):
+    print 'Cost: $%s<p>' % costs[0][1:costs[0].rfind('.')]
+  else:
+    dollars = []
+    for cost in costs:
+      if (cost == 'FREE' or cost == 'Donation'): dollars.append(0)
+      if (cost.startswith('$')): dollars.append(int(cost[1:cost.rfind('.')]))
+    print 'Cost: $%d - $%d<p>' % (min(dollars), max(dollars))
 
   ## description ##
   dscrpt = rr['description']['text']
