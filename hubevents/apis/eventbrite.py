@@ -1,7 +1,7 @@
 ## Usage: ##
 ##   python eventbrite.py > boston_13nov2015.html ##
 
-start_date = '2015-11-30'
+start_date = '2015-12-13'
 end_date = '2015-12-15'
 
 import os
@@ -15,24 +15,24 @@ import requests
 payload = {'venue.city':'Boston', 'venue.region':'MA', 'venue.country':'US',
            'sort_by':'date', 'expand':'organizer,venue,ticket_classes', 'token':my_token}
 response = requests.get(url, params=payload, headers = {"Authorization": "Bearer " + my_token,}, verify = True)
-r = response.json()['events']
+events = response.json()['events']
 
 ## 50 records per page so may need multiple pages ##
 page_count = int(response.json()['pagination']['page_count'])
 for p in range(2, page_count + 1):
   url += '&page=' + str(p)
   response = requests.get(url, params=payload, headers = {"Authorization": "Bearer " + my_token,}, verify = True)
-  r.extend(response.json()['events'])
+  events.extend(response.json()['events'])
 
 ## start HTML output ##
 print '<html><head></head><body>'
-print 'page_count: ', page_count, ', total events: ', len(r), '<p><p>'
-print '-------------------------------<p><p>'
+print 'page count: %d, total events: %d' % (page_count, len(events))
+print '<p><p>-------------------------------<p><p>'
 
-## create list from all the records ##
-for i, rr in enumerate(r):
-  str_d = rr['start']['local']
-  end_d = rr['end']['local']
+## create list from all the events ##
+for event in events:
+  str_d = event['start']['local']
+  end_d = event['end']['local']
   from datetime import date
   from datetime import time
   d_str = date(*map(int, str_d.split('T')[0].split('-')))
@@ -41,7 +41,7 @@ for i, rr in enumerate(r):
   t_end = time(*map(int, end_d.split('T')[1].split(':')))
 
   ## title and date ##
-  title = rr['name']['text']
+  title = event['name']['text']
   if (title):
     print title.encode('ascii', 'ignore'), "<br>"
   if (d_str == d_end):
@@ -52,18 +52,18 @@ for i, rr in enumerate(r):
 
   ## location ##
   lctn = []
-  venue_name = rr['venue']['name']
+  venue_name = event['venue']['name']
   if (venue_name): lctn.append(venue_name.encode('ascii', 'ignore'))
-  venue_city = rr['venue']['address']['city']
-  if (venue_city): lctn.append(venue_city.encode('ascii', 'ignore'))
-  a1 = rr['venue']['address']['address_1']
+  a1 = event['venue']['address']['address_1']
   if (a1): lctn.append(a1.encode('ascii', 'ignore'))
-  a2 = rr['venue']['address']['address_2']
+  a2 = event['venue']['address']['address_2']
   if (a2): lctn.append(a2.encode('ascii', 'ignore'))
+  venue_city = event['venue']['address']['city']
+  if (venue_city): lctn.append(venue_city.encode('ascii', 'ignore'))
   print '%s<br>' % ', '.join(lctn)
 
   ## rsvp ##
-  rsvp = rr['url']
+  rsvp = event['url']
   if (rsvp):
     url = rsvp.rstrip('?aff=ebapi')
     print 'RSVP at <a href="' + url + '" target="_blank">' + url + '</a><br>'
@@ -72,9 +72,9 @@ for i, rr in enumerate(r):
   ## note ticket can be free, donation or a cost ##
   ## if not free and not donation then cost ##
   costs = []
-  num_tix = len(rr['ticket_classes'])
+  num_tix = len(event['ticket_classes'])
   for j in range(num_tix):
-    tix = rr['ticket_classes'][j]
+    tix = event['ticket_classes'][j]
     if (tix['free']): costs.append('FREE')
     elif (not tix['free'] and tix['donation']): costs.append('Donation')
     elif (not tix['free'] and not tix['donation']):
@@ -95,7 +95,7 @@ for i, rr in enumerate(r):
   elif (costs == ['Donation'] or costs == ['FREE', 'Donation']):
     print 'Cost: FREE or Donation<p>'
   elif (len(costs) == 1 and costs[0].startswith('$')):
-    print 'Cost: $%s<p>' % costs[0][1:costs[0].rfind('.')]
+    print 'Cost: %s<p>' % costs[0][:costs[0].rfind('.')]
   else:
     dollars = []
     for cost in costs:
@@ -104,7 +104,7 @@ for i, rr in enumerate(r):
     print 'Cost: $%d - $%d<p>' % (min(dollars), max(dollars))
 
   ## description ##
-  dscrpt = rr['description']['text']
+  dscrpt = event['description']['text']
   if (dscrpt):
     print '%s<p>' % dscrpt.encode('ascii', 'ignore')
 
