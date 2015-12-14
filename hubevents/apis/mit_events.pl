@@ -1,7 +1,12 @@
-#!/usr/bin/evn perl
+#!/usr/bin/env perl
 
 # Author: J. Halverson
 # Date: December 12, 2015
+
+#########################
+my $start = "2015/12/12";
+my $end   = "2015/12/19";
+#########################
 
 use SOAP::Lite;
 use Data::Dumper;
@@ -16,40 +21,70 @@ my $em = new SOAP::Lite
 use String::Util qw(trim);
 use Date::Calc qw(Today Add_Delta_Days);
 
-my $start = "2015/12/12";
-my $end   = "2015/12/19";
+sub format_time {
+  local($hr, $mn) = ($_[0], $_[1]);
+  if ($hr >= 13) {$hr - 12 . ":" . $mn . " PM";}
+  elsif ($hr == 12) {"12:" . $mn . " PM";}
+  elsif ($hr == 0)  {"12:" . $mn . " AM";}
+  else {$hr . ":" . $mn . " AM";}
+}
+
 my $scevents = result($em->getDateRangeEvents($start, $end));
 foreach my $event (@$scevents) {
     print $event->{'title'} . "\n";
     # type_code - S/M/R. S - indicates a simple (non-recurring) event, M indicates
     # a multiple-day event, and R indicates a repeating event
     $type_code = $event->{'type_code'}; 
+    $s_wkdy = $event->{'start'}->{'weekday'};
+    $s_month = $event->{'start'}->{'monthname'};
+    $s_day = $event->{'start'}->{'day'};
     if ($type_code eq "S" or $type_code eq "R") {
-      print $event->{'start'}->{'weekday'} . ", " . $event->{'start'}->{'monthname'} . " " . $event->{'start'}->{'day'} . "\n";
+      print $s_wkdy . ", " . $s_month . " " . $s_day . "\n";
     }
     elsif ($type_code eq "M") {
-      print $event->{'start'}->{'weekday'} . ", " . $event->{'start'}->{'monthname'} . " " . $event->{'start'}->{'day'} . "\n";
-      print $event->{'end'}->{'weekday'} . ", " . $event->{'end'}->{'monthname'} . " " . $event->{'end'}->{'day'} . "\n";
+      $e_wkdy = $event->{'end'}->{'weekday'};
+      $e_month = $event->{'end'}->{'monthname'};
+      $e_day = $event->{'end'}->{'day'};
+      print $s_wkdy . ", " . $s_month . " " . $s_day . "\n";
+      print $e_wkdy . ", " . $e_month . " " . $e_day . "\n";
     }
     else {print "ERROR: type_code\n";}
-    print $event->{'start'}->{'hour'}. ":" . $event->{'start'}->{'minute'} . " - " . $event->{'end'}->{'hour'}. ":" . $event->{'end'}->{'minute'} . "\n";
-
+    $s_hour = $event->{'start'}->{'hour'}; $s_hour += 0;
+    $s_mins = $event->{'start'}->{'minute'};
+    $e_hour = $event->{'end'}->{'hour'}; $e_hour += 0;
+    $e_mins = $event->{'end'}->{'minute'};
+    print &format_time($s_hour, $s_mins) . " - " . format_time($e_hour, $e_mins) . "\n";
+    #if ($s_hour > 13) {print $s_hour - 12 . ":" . $s_mins . " PM - ";}
+    #elsif ($s_hour == 12) {print "12:" . $s_mins . " PM - ";}
+    #elsif ($s_hour == 0)  {print "12:" . $s_mins . " AM - ";}
+    #else {print $s_hour . ":" . $s_mins . " AM - ";}
+    #if ($e_hour > 13) {print $e_hour - 12 . ":" . $e_mins . " PM\n";}
+    #elsif ($e_hour == 12) {print "12:" . $s_mins . " PM - ";}
+    #elsif ($e_hour == 0)  {print "12:" . $s_mins . " AM - ";}
+    #else {print $e_hour . ":" . $e_mins . " AM\n";}
+ 
     # location and address
-    $lctn = $event->{'location'};
-    $sloc = $event->{'shortloc'};
+    $lctn = $event->{'location'}; # event location in long text format
+    $sloc = $event->{'shortloc'}; # event location in building/room format
     if ($lctn ne "" and $sloc ne "") {
-      print "MIT, " . $lctn . ", " . $sloc . ", Cambridge\n";}
+      print "MIT, " . $lctn . ", Building " . $sloc;
+      if (index($lctn, "Cambridge") == -1) {print ", Cambridge\n";}
+      else {print "\n";}}
     elsif ($lctn ne "" and $sloc eq "") {
-      print "MIT, " . $lctn . ", Cambridge\n";}
+      print "MIT, " . $lctn;
+      if (index($lctn, "Cambridge") == -1) {print ", Cambridge\n";}
+      else {print "\n";}}
     elsif ($lctn eq "" and $sloc ne "") {
-      print "MIT, " . $sloc . ", Cambridge\n";}
+      print "MIT, Building " . $sloc . ", Cambridge\n";}
     else {
       print "MIT, Cambridge\n";}
     print "\n";
 
     $lecturer = $event->{'lecturer'};
     if ($lecturer ne "") {print "Speaker(s): " . $event->{'lecturer'} . "\n";}
-    print $event->{'description'} . "\n\n";
+    $d = $event->{'description'};
+    $d =~s/\015//g; # remove ^M characters
+    print $d . "\n\n";
 
     # from http://events.mit.edu/help/soap/index.html#Overview
     #   opento - 0=MIT-only; 1=Everybody; 2=Other, "other" value specified in opentext
@@ -84,24 +119,24 @@ foreach my $event (@$scevents) {
     }
     print "Sponsor(s): " . join(", ", @colors) . "\n";
     $other_sponsors = $event->{'other_sponsors'};
-    #print "OTHERS: " . $other_sponsors . "\n";
+    if ($other_sponsors ne "") {print "OTHERS: " . $other_sponsors . "\n";}
     #print "SCALAR: " . scalar(@$sponsors) . "\n";
 
     # contact and sponsor information
     $infoname = trim($event->{'infoname'});
     $infomail = trim($event->{'infomail'});
     if ($infoname ne "" and $infomail eq "") {
-      print "Contact: " . $event->{'infoname'} . "\n";}
+      print "Contact: " . $infoname . "\n";}
     elsif ($infoname ne "" and $infomail ne "") {
-      print "Contact: " . $event->{'infoname'} . " (" . $event->{'infomail'} .  ")\n";}
+      print "Contact: " . $infoname . " (" . $infomail .  ")\n";}
     else {
-      print "Contact: " . $event->{'infomail'} . "\n";}
+      print "Contact: " . $infomail . "\n";}
     $infourl = $event->{'infourl'};
-    if ($infourl ne "") {print "Web site: " . $event->{'infourl'} . "\n";}
+    if ($infourl ne "") {print "Web site: " . $infourl . "\n";}
     $infophone = $event->{'infophone'};
-    if ($infophone ne "") {print "More info: " . $event->{'infophone'} . "\n";}
+    if ($infophone ne "") {print "More info: " . $infophone . "\n";}
     $infoloc = $event->{'infoloc'};
-    if ($infoloc ne "") {print "More info address: " . $event->{'infoloc'} . "\n";}
+    if ($infoloc ne "") {print "More info address: " . $infoloc . "\n";}
 
     print "\n-------------------------------\n\n";
 }
