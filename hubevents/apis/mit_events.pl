@@ -4,8 +4,8 @@
 # Date: December 12, 2015
 
 #########################
-my $start = "2015/12/12";
-my $end   = "2015/12/19";
+my $start = "2015/12/14";
+my $end   = "2015/12/31";
 #########################
 
 use SOAP::Lite;
@@ -21,11 +21,12 @@ my $em = new SOAP::Lite
 use String::Util qw(trim);
 use Date::Calc qw(Today Add_Delta_Days);
 
+# convert from 24-hour clock to 12
 sub format_time {
   local($hr, $mn) = ($_[0], $_[1]);
   if ($hr >= 13) {$hr - 12 . ":" . $mn . " PM";}
-  elsif ($hr == 12) {"12:" . $mn . " PM";}
   elsif ($hr == 0)  {"12:" . $mn . " AM";}
+  elsif ($hr == 12) {"12:" . $mn . " PM";}
   else {$hr . ":" . $mn . " AM";}
 }
 
@@ -54,14 +55,6 @@ foreach my $event (@$scevents) {
     $e_hour = $event->{'end'}->{'hour'}; $e_hour += 0;
     $e_mins = $event->{'end'}->{'minute'};
     print &format_time($s_hour, $s_mins) . " - " . format_time($e_hour, $e_mins) . "\n";
-    #if ($s_hour > 13) {print $s_hour - 12 . ":" . $s_mins . " PM - ";}
-    #elsif ($s_hour == 12) {print "12:" . $s_mins . " PM - ";}
-    #elsif ($s_hour == 0)  {print "12:" . $s_mins . " AM - ";}
-    #else {print $s_hour . ":" . $s_mins . " AM - ";}
-    #if ($e_hour > 13) {print $e_hour - 12 . ":" . $e_mins . " PM\n";}
-    #elsif ($e_hour == 12) {print "12:" . $s_mins . " PM - ";}
-    #elsif ($e_hour == 0)  {print "12:" . $s_mins . " AM - ";}
-    #else {print $e_hour . ":" . $e_mins . " AM\n";}
  
     # location and address
     $lctn = $event->{'location'}; # event location in long text format
