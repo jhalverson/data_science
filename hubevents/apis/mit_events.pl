@@ -3,23 +3,14 @@
 # Author: J. Halverson
 # Date: December 12, 2015
 
+# Dates are always in the format:
+#   yyyy/mm/dd hh:mm
+# where hh:mm is optional and hh is in 24-hour format
+
 #########################
-my $start = "2015/12/14";
-my $end   = "2015/12/31";
+$start = "2015/12/14";
+$end   = "2015/12/31";
 #########################
-
-use SOAP::Lite;
-use Data::Dumper;
-
-use SOAP::Lite +autodispatch =>
-  uri => '/',
-  proxy => 'http://events.mit.edu/websvc/';#, +trace;   # remove first semi and uncomment to see a SOAP trace
-
-my $em = new SOAP::Lite
-    -> uri('/MIT/Events/EventManager');
-
-use String::Util qw(trim);
-use Date::Calc qw(Today Add_Delta_Days);
 
 # convert from 24-hour clock to 12
 sub format_time {
@@ -30,8 +21,16 @@ sub format_time {
   else {$hr . ":" . $mn . " AM";}
 }
 
-my $scevents = result($em->getDateRangeEvents($start, $end));
-foreach my $event (@$scevents) {
+use SOAP::Lite;
+use Data::Dumper;
+
+use SOAP::Lite +autodispatch =>
+  uri => '/',
+  proxy => 'http://events.mit.edu/websvc/';#, +trace;   # remove first semi and uncomment to see a SOAP trace
+
+$em = new SOAP::Lite -> uri('/MIT/Events/EventManager');
+$scevents = result($em->getDateRangeEvents($start, $end));
+foreach $event (@$scevents) {
     print $event->{'title'} . "\n";
     # type_code - S/M/R. S - indicates a simple (non-recurring) event, M indicates
     # a multiple-day event, and R indicates a repeating event
@@ -54,29 +53,29 @@ foreach my $event (@$scevents) {
     $s_mins = $event->{'start'}->{'minute'};
     $e_hour = $event->{'end'}->{'hour'}; $e_hour += 0;
     $e_mins = $event->{'end'}->{'minute'};
-    print &format_time($s_hour, $s_mins) . " - " . format_time($e_hour, $e_mins) . "\n";
+    print &format_time($s_hour, $s_mins) . " - " . &format_time($e_hour, $e_mins) . "\n";
  
     # location and address
     $lctn = $event->{'location'}; # event location in long text format
     $sloc = $event->{'shortloc'}; # event location in building/room format
-    if ($lctn ne "" and $sloc ne "") {
+    if ($lctn && $sloc) {
       print "MIT, " . $lctn . ", Building " . $sloc;
       if (index($lctn, "Cambridge") == -1) {print ", Cambridge\n";}
       else {print "\n";}}
-    elsif ($lctn ne "" and $sloc eq "") {
+    elsif ($lctn && !$sloc) {
       print "MIT, " . $lctn;
       if (index($lctn, "Cambridge") == -1) {print ", Cambridge\n";}
       else {print "\n";}}
-    elsif ($lctn eq "" and $sloc ne "") {
+    elsif (!$lctn && $sloc) {
       print "MIT, Building " . $sloc . ", Cambridge\n";}
     else {
       print "MIT, Cambridge\n";}
     print "\n";
 
     $lecturer = $event->{'lecturer'};
-    if ($lecturer ne "") {print "Speaker(s): " . $event->{'lecturer'} . "\n";}
+    if ($lecturer) {print "Speaker(s): " . $event->{'lecturer'} . "\n";}
     $d = $event->{'description'};
-    $d =~s/\015//g; # remove ^M characters
+    $d =~ s/\015//g; # remove ^M characters
     print $d . "\n\n";
 
     # from http://events.mit.edu/help/soap/index.html#Overview
@@ -91,7 +90,7 @@ foreach my $event (@$scevents) {
 
     # print cost if not free
     $cost = $event->{'cost'};
-    if (lc $cost ne "free" and lc $cost ne "free!" and $cost ne "") {
+    if ($cost && lc $cost ne "free" && lc $cost ne "free!") {
       print "Cost: " . $cost . "\n";}
 
     # print sponsor information
@@ -112,38 +111,37 @@ foreach my $event (@$scevents) {
     }
     print "Sponsor(s): " . join(", ", @colors) . "\n";
     $other_sponsors = $event->{'other_sponsors'};
-    if ($other_sponsors ne "") {print "OTHERS: " . $other_sponsors . "\n";}
+    if ($other_sponsors) {print "OTHERS: " . $other_sponsors . "\n";}
     #print "SCALAR: " . scalar(@$sponsors) . "\n";
 
     # contact and sponsor information
-    $infoname = trim($event->{'infoname'});
-    $infomail = trim($event->{'infomail'});
-    if ($infoname ne "" and $infomail eq "") {
+    $infoname = $event->{'infoname'};
+    $infomail = $event->{'infomail'};
+    if ($infoname && !$infomail) {
       print "Contact: " . $infoname . "\n";}
-    elsif ($infoname ne "" and $infomail ne "") {
+    elsif ($infoname && $infomail) {
       print "Contact: " . $infoname . " (" . $infomail .  ")\n";}
-    else {
+    elsif (!$infoname && $infomail) {
       print "Contact: " . $infomail . "\n";}
     $infourl = $event->{'infourl'};
-    if ($infourl ne "") {print "Web site: " . $infourl . "\n";}
+    if ($infourl) {print "Web site: " . $infourl . "\n";}
     $infophone = $event->{'infophone'};
-    if ($infophone ne "") {print "More info: " . $infophone . "\n";}
+    if ($infophone) {print "More info: " . $infophone . "\n";}
     $infoloc = $event->{'infoloc'};
-    if ($infoloc ne "") {print "More info address: " . $infoloc . "\n";}
+    if ($infoloc) {print "More info address: " . $infoloc . "\n";}
 
     print "\n-------------------------------\n\n";
 }
 
 ### uncomment the three lines below to see the raw event info for debugging
-#foreach my $event (@$scevents) {
+#foreach $event (@$scevents) {
 #    print Dumper($event);
 #}
 
 exit(0);
 
-#
+
 # Helper to deal with SOAP faults
-#
 sub result {
     my ($som) = @_;
     if ($som->fault) {
