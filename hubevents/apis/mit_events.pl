@@ -12,15 +12,6 @@ $start = "2015/12/14";
 $end   = "2015/12/31";
 #########################
 
-# convert from 24-hour clock to 12
-sub format_time {
-  local($hr, $mn) = ($_[0], $_[1]);
-  if ($hr >= 13) {$hr - 12 . ":" . $mn . " PM";}
-  elsif ($hr == 0)  {"12:" . $mn . " AM";}
-  elsif ($hr == 12) {"12:" . $mn . " PM";}
-  else {$hr . ":" . $mn . " AM";}
-}
-
 use SOAP::Lite;
 use Data::Dumper;
 
@@ -94,25 +85,13 @@ foreach $event (@$scevents) {
       print "Cost: " . $cost . "\n";}
 
     # print sponsor information
-    @colors = ();
+    @spons = ();
     $sponsors = $event->{'sponsors'};
     foreach $s (@$sponsors) {
-      $s_name = $s->{'name'};
-      $s_contact = $s->{'contact'};
-      $s_email = $s->{'publicmail'};
-      #print "Sponsor(s): " . $s_name . "\n";
-      push(@colors, $s_name);
-      #if ($s_email eq "") {
-      #  print "Sponsor(s): " . $s_name . ", " . $s_contact . "\n";
-      #}
-      #else {
-      #  print "Sponsor(s): " . $s_name . ", " . $s_contact . " (" . $s_email . ")\n";
-      #}
-    }
-    print "Sponsor(s): " . join(", ", @colors) . "\n";
+      push(@spons, $s->{'name'});}
+    print "Sponsor(s): " . join(", ", @spons) . "\n";
     $other_sponsors = $event->{'other_sponsors'};
-    if ($other_sponsors) {print "OTHERS: " . $other_sponsors . "\n";}
-    #print "SCALAR: " . scalar(@$sponsors) . "\n";
+    if ($other_sponsors) {print "Sponsor(s): " . $other_sponsors . "\n";}
 
     # contact and sponsor information
     $infoname = $event->{'infoname'};
@@ -131,6 +110,15 @@ foreach $event (@$scevents) {
     if ($infoloc) {print "More info address: " . $infoloc . "\n";}
 
     print "\n-------------------------------\n\n";
+}
+
+# convert from 24-hour clock to 12
+sub format_time {
+  my ($hr, $mn) = @_;
+  if ($hr >= 13) {$hr - 12 . ":" . $mn . " PM";}
+  elsif ($hr == 0)  {"12:" . $mn . " AM";}
+  elsif ($hr == 12) {"12:" . $mn . " PM";}
+  else {$hr . ":" . $mn . " AM";}
 }
 
 ### uncomment the three lines below to see the raw event info for debugging
