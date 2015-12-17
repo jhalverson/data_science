@@ -36,7 +36,7 @@ foreach $event (@$scevents) {
       $e_wkdy = $event->{'end'}->{'weekday'};
       $e_month = $event->{'end'}->{'monthname'};
       $e_day = $event->{'end'}->{'day'};
-      print $s_wkdy . ", " . $s_month . " " . $s_day . "\n";
+      print $s_wkdy . ", " . $s_month . " " . $s_day . " - ";
       print $e_wkdy . ", " . $e_month . " " . $e_day . "\n";
     }
     else {print "ERROR: type_code\n";}
@@ -51,11 +51,11 @@ foreach $event (@$scevents) {
     $sloc = $event->{'shortloc'}; # event location in building/room format
     if ($lctn && $sloc) {
       print "MIT, " . $lctn . ", Building " . $sloc;
-      if (index($lctn, "Cambridge") == -1) {print ", Cambridge\n";}
+      if ($lctn =~ /Cambridge/) {print ", Cambridge\n";}
       else {print "\n";}}
     elsif ($lctn && !$sloc) {
       print "MIT, " . $lctn;
-      if (index($lctn, "Cambridge") == -1) {print ", Cambridge\n";}
+      if ($lctn =~ /Cambridge/) {print ", Cambridge\n";}
       else {print "\n";}}
     elsif (!$lctn && $sloc) {
       print "MIT, Building " . $sloc . ", Cambridge\n";}
@@ -66,7 +66,7 @@ foreach $event (@$scevents) {
     $lecturer = $event->{'lecturer'};
     if ($lecturer) {print "Speaker(s): " . $event->{'lecturer'} . "\n";}
     $d = $event->{'description'};
-    $d =~ s/\015//g; # remove ^M characters
+    $d =~ s/\015//g; # substitute ^M characters with empty space
     print $d . "\n\n";
 
     # from http://events.mit.edu/help/soap/index.html#Overview
