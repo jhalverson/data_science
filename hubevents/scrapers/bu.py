@@ -10,7 +10,7 @@ and one-by-one the event info is extracted.
 import requests
 from bs4 import BeautifulSoup
 
-days = ['2015-11-' + str(day) for day in range(16, 17)]
+days = ['2016-01-' + str(day) for day in range(1, 31 + 1)]
 
 base_url = 'http://www.bu.edu'
 unique_href = '.calendar.bu.edu'

@@ -8,8 +8,8 @@
 # where hh:mm is optional and hh is in 24-hour format
 
 #########################
-$start = "2015/12/14";
-$end   = "2015/12/31";
+$start = "2016/01/01";
+$end   = "2016/01/31";
 #########################
 
 use SOAP::Lite;
@@ -51,12 +51,12 @@ foreach $event (@$scevents) {
     $sloc = $event->{'shortloc'}; # event location in building/room format
     if ($lctn && $sloc) {
       print "MIT, " . $lctn . ", Building " . $sloc;
-      if ($lctn =~ /Cambridge/) {print ", Cambridge\n";}
-      else {print "\n";}}
+      if ($lctn =~ /Cambridge/) {print "\n";}
+      else {print ", Cambridge\n";}}
     elsif ($lctn && !$sloc) {
       print "MIT, " . $lctn;
-      if ($lctn =~ /Cambridge/) {print ", Cambridge\n";}
-      else {print "\n";}}
+      if ($lctn =~ /Cambridge/) {print "\n";}
+      else {print ", Cambridge\n";}}
     elsif (!$lctn && $sloc) {
       print "MIT, Building " . $sloc . ", Cambridge\n";}
     else {
