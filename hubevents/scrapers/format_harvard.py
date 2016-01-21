@@ -54,13 +54,15 @@ for event in events:
   #TODO: remove image
   #target = '<img height'
 
-  if ('more_info_url' in event.keys()): print 'More info: %s<br>' % event['more_info_url']
-  if ('register_url' in event.keys()): print 'RSVP at: %s<br>' % event['register_url']
-  if ('register_deadline' in event.keys()): print 'Registration deadline: %s<br>' % event['register_deadline']
-  if ('contact_organization' in event.keys()): print 'Contact organization: %s<br>' % event['contact_organization'].encode('ascii', 'ignore')
-  if ('phone' in event.keys()): print 'Phone : %s<br>' % event['phone']
-  if ('contact_name' in event.keys()): print 'Contact name: %s<br>' % event['contact_name']
-  if ('contact_email' in event.keys()): print 'Contact email: %s<br>' % event['contact_email']
+  if ('more_info_url' in event): print 'More info: %s<br>' % event['more_info_url']
+  if ('register_url' in event): print 'RSVP at: %s<br>' % event['register_url']
+  if ('register_deadline' in event): print 'Registration deadline: %s<br>' % event['register_deadline']
+  if ('contact_organization' in event): print 'Contact organization: %s<br>' % event['contact_organization'].encode('ascii', 'ignore')
+  if ('phone' in event): print 'Phone : %s<br>' % event['phone']
+  if ('contact_name' in event): print 'Contact name: %s<br>' % event['contact_name']
+  if ('contact_email' in event):
+    if (event['contact_email']):
+      print 'Contact email: %s<br>' % event['contact_email'].encode('ascii', 'ignore')
   print 'Source: %s<p>' % event['credit_url']
   print '<p><p>\n\n--------------------\n\n<p><p>'
 print '</body></html>'
