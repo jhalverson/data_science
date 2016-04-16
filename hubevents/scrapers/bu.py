@@ -2,6 +2,8 @@
 Date: August 8, 2015
 Author: Jonathan Halverson (halverson.jonathan@gmail.com)
 
+Usage: python bu.py (the output is written to json)
+
 Approach: We first get the HTML for each day in the desired range. For each
 day we extract the urls to the various events. These pages are downloaded
 and one-by-one the event info is extracted.
@@ -10,7 +12,8 @@ and one-by-one the event info is extracted.
 import requests
 from bs4 import BeautifulSoup
 
-days = ['2016-01-' + str(day) for day in range(1, 31 + 1)]
+days = ['2016-04-' + str(day) for day in range(18, 30 + 1)]
+days += ['2016-05-' + str(day) for day in range(1, 31 + 1)]
 
 base_url = 'http://www.bu.edu'
 unique_href = '.calendar.bu.edu'
