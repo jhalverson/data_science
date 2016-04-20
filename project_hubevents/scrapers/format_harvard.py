@@ -33,7 +33,7 @@ for event in events:
   hours = hours.replace('-', ' - ').replace('a.m.', ' AM').replace('p.m.', ' PM')
   print weekday_month_day + '<br>'
   print hours + '<br>'
-  print 'Harvard University, ' + event['building'] + '<p>'
+  print 'Harvard University, ' + event['building'].encode('ascii', 'ignore') + '<p>'
 
   print '\n'
 

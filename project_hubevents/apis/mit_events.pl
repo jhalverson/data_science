@@ -3,13 +3,15 @@
 # Author: J. Halverson
 # Date: December 12, 2015
 
+# Usage: perl mit_events.pl > mit_26feb2016.txt
+
 # Dates are always in the format:
 #   yyyy/mm/dd hh:mm
 # where hh:mm is optional and hh is in 24-hour format
 
 #########################
-$start = "2016/01/01";
-$end   = "2016/01/31";
+$start = "2016/04/18";
+$end   = "2016/05/31";
 #########################
 
 use SOAP::Lite;
