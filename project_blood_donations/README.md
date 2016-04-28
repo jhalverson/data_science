@@ -22,6 +22,12 @@ GridSearchCV with 10 folds of stratified cross validation were performed
 for each set of hyperparameters. The log loss scoring was computed for
 each case and each set of features.
 
+Bagged Logistic Regression
+1. 'months_since_last', 'number_of_donations', 'months_since_first', 'months_btwn_donation', 'inverse_first'
+2. 'months_since_last', 'number_of_donations', 'months_since_first', 'last_to_first', 'months_btwn_donation', 'inverse_first'
+3. 'months_since_last', 'number_of_donations', 'months_since_first', 'last_to_first'
+
+
 For RandomForest it was necessary to set min_samples_leaf to a value much greater than
 1 because otherwise it predicts 0 or 1 for certain cases which leads to large
 penalties with log loss scoring.
