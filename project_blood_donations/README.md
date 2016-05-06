@@ -27,6 +27,15 @@ Bagged Logistic Regression
 2. 'months_since_last', 'number_of_donations', 'months_since_first', 'last_to_first', 'months_btwn_donation', 'inverse_first'
 3. 'months_since_last', 'number_of_donations', 'months_since_first', 'last_to_first'
 
+SVC Linear
+Optimal features:  ['months_since_last', 'number_of_donations', 'months_since_first', 'months_btwn_donation', 'inverse_first']
+Optimal parameters:  {'kernel': 'linear', 'C': 1.0, 'shrinking': True}
+
+SVC RBF
+Optimal score: 0.48
+Optimal features:  ['months_since_last', 'last_to_first', 'months_btwn_donation', 'inverse_first']
+Optimal parameters:  {'kernel': 'rbf', 'C': 100.0, 'shrinking': False, 'gamma': 0.10000000000000001}
+
 
 For RandomForest it was necessary to set min_samples_leaf to a value much greater than
 1 because otherwise it predicts 0 or 1 for certain cases which leads to large
@@ -47,5 +56,6 @@ with features:.
 |KNearestNeighbors |            0.4370|
 |RandomForest|            0.4370|
 |GradientBoosting|            0.4370|
-|SVM|            0.4370|
+|SVCLinear|            0.4370|
+|SVCRBF|            0.4370|
 
