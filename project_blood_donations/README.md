@@ -21,7 +21,7 @@ computationally expensive for some models but it helps with refinement.
 GridSearchCV with 10 folds of stratified cross validation were performed
 for each set of hyperparameters. The log loss scoring was computed for
 each case and each set of features.
-
+------
 Majority voiting
 1. Optimal score: 0.47
 Optimal features:  ['number_of_donations', 'months_since_first', 'last_to_first', 'months_btwn_donation']
