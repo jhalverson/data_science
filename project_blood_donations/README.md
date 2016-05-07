@@ -23,15 +23,15 @@ for each set of hyperparameters. The log loss scoring was computed for
 each case and each set of features.
 ------
 Majority voiting
-1. Optimal score: 0.47
+ONE. Optimal score: 0.47
 Optimal features:  ['number_of_donations', 'months_since_first', 'last_to_first', 'months_btwn_donation']
 Optimal parameters:  {'blr__base_estimator__C': 10.0, 'blr__n_estimators': 50, 'knn__n_neighbors': 20, 'rf__min_samples_leaf': 40}
 
-2. Optimal score: 0.47
+TWO. Optimal score: 0.47
 Optimal features:  ['number_of_donations', 'months_since_first', 'last_to_first', 'months_btwn_donation', 'inverse_first']
 Optimal parameters:  {'blr__base_estimator__C': 1.0, 'blr__n_estimators': 100, 'knn__n_neighbors': 20, 'rf__min_samples_leaf': 20}
 
-3. Optimal score: 0.47
+THREE. Optimal score: 0.47
 Optimal features:  ['months_since_last', 'number_of_donations', 'months_since_first', 'last_to_first', 'months_btwn_donation']
 Optimal parameters:  {'blr__base_estimator__C': 10.0, 'blr__n_estimators': 25, 'knn__n_neighbors': 20, 'rf__min_samples_leaf': 20}
 
