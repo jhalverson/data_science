@@ -2,10 +2,10 @@
 ####Jonathan Halverson
 
 With all that is going on in Boston it is easy to miss key events. The goal of this
-project is to create a universal calendar that will make it possible to search every
-instutition in Boston that holds public events.
+project is to create a searchable universal calendar of all the public events taking place
+in Boston.
 
-Presently, one must visit sites like Meetup, Eventbrite, MIT Events,
+Presently, one must visit individual sites like Meetup, Eventbrite, MIT Events,
 Harvard Gazette, [BUGC](http://bugc.org), etc. When the project is complete it will be possible
 to search all institutions and organizations with a single search.
 
@@ -18,7 +18,7 @@ other universities.
 
 This project started with George Mokray. For more than 10 years, George has been manually compiling a list of interesting events going
 on in the Boston/Cambridge area ([http://hubevents.blogspot.com](http://hubevents.blogspot.com)). I met
-George when he approached us at the Boston Chapter for Data Science for the Social Good. I have been
+George when he approached us at the Boston Chapter of Data Science for the Social Good. I have been
 leading the technical work since July of 2015.
 
 I presented this projet at Data-Con on August 8, 2015 in Cambridge, MA. A hackathon devoted to the project took place in the
