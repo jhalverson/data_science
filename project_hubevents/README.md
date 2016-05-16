@@ -1,5 +1,5 @@
 # HubEvents Project
-####Jonathan Halverson
+####Jonathan Halverson and George Mokray
 
 With all that is going on in Boston it is easy to miss key events. The goal of this
 project is to create a searchable, universal calendar of all the public events taking place
