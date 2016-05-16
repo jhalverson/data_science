@@ -1,26 +1,29 @@
-# Predict Blood Donations
-### Hosted by DrivenData.org
+# Predict Blood Donations: DrivenData.org Competitiion
+#### Jonathan Halverson
 
-The objective is to predict a donation in March 2007.
+### Overview
 
-** Exploratory data analysis **
+Data is given by 576 blood donation volunteers. We are given their id number, number of months since
+their first donations, number of months since their last donation, total number of donations, total
+volume of blood donated and whether or not they donated in March 2007. The goal of the contest
+to create a model that predicts the probability of a given volunteer in the test set donating blood
+in March 2007. Scores are determined by the log loss metric.
 
-We are given four features for 576 samples. However, two of the columns are
-perfectly correlated. Several plots were made.
+Read about the [competition](https://www.drivendata.org/competitions/2/page/5/).
+Check my score for jhalverson on the [leaderboard](https://www.drivendata.org/competitions/2/leaderboard/).
+
+### Exploratory data analysis
+
+I began the problem by exploring the data ([see notebook](https://github.com/jhalverson/data_science/blob/master/project_blood_donations/exploratory_data_analysis.ipynb)). The correlation matrix showed that two features were perfectly correlated so one of them was dropped. Several plots were then constructed
+of the remaing three features.
 
 ### Feature engineering
 
-The average time between donations and others.
+Feature engineering usually determines the success of the model. I created three new features: average number of months between donations, the ratio of the number of months sinces the first donation to that of the last, and the inverse of months since first.
 
-* Model training and cross validation
+The Python itertools module was used to generate a list of different combinations of features. For each model we considered all combinations of the six features (three given plus three derived) from triples up to the full set. For each model and each feature set, the model's hyperparameters were optimzed using stratified K-fold cross validation. An attempt was made use nested cross validation but it proved to be computationally infeasible.
 
-Six total featurs were considered. All possible combinations of features
-were constructed using the itertools Python module. This extra loop is
-computationally expensive for some models but it helps with refinement.
 
-GridSearchCV with 10 folds of stratified cross validation were performed
-for each set of hyperparameters. The log loss scoring was computed for
-each case and each set of features.
 ------
 Majority voiting
 ONE. Optimal score: 0.47
