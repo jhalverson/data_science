@@ -2,15 +2,14 @@
 ####Jonathan Halverson
 
 With all that is going on in Boston it is easy to miss key events. The goal of this
-project is to create a searchable universal calendar of all the public events taking place
+project is to create a searchable, universal calendar of all the public events taking place
 in Boston.
 
 Presently, one must visit individual sites like Meetup, Eventbrite, MIT Events,
 Harvard Gazette, [BUGC](http://bugc.org), etc. When the project is complete it will be possible
 to search all institutions and organizations with a single search.
 
-My solution is to use APIs and web scraping to build a searchable database of all
-the public events in Boston. Currently, I have written code that pulls from the
+My solution is to use APIs and web scraping to build a searchable database. Currently, I have written code that pulls from the
 Eventbrite API and the MIT Events API. We use the RSS feed to get event listings from the
 Harvard Gazette. Most insitutions do not provide APIs. For Boston University, I have written a web scraping
 script in Python that uses the requests and BeautifulSoup packages. Work has begun on
