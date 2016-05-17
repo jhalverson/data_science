@@ -1,33 +1,33 @@
 # Predict Blood Donations: DrivenData.org Competitiion
 ### Jonathan Halverson
 
-#### Overview
+#### Introduction
 
-Data is given by 576 blood donation volunteers. We are given their id number, number of months since
-their first donations, number of months since their last donation, total number of donations, total
-volume of blood donated and whether or not they donated in March 2007. The goal of the contest
+This document describes my solution to the Predict Blood Donations machine learning competition
+hosted by DrivenData.org. The goal of the contest is
 to create a model that predicts the probability of a given volunteer in the test set donating blood
-in March 2007. Scores are determined by the log loss metric.
+in March 2007. The training data consists of 576 blood donation volunteer records. For each
+volunteer we are given their id number, number of months since
+their first donations, number of months since their last donation, total number of donations, total
+volume of blood donated and whether or not they donated in March 2007. Scores are determined by the log loss metric.
 
-Read about the [competition](https://www.drivendata.org/competitions/2/page/5/).
-Check my score for jhalverson on the [leaderboard](https://www.drivendata.org/competitions/2/leaderboard/).
+Read about the [competition](https://www.drivendata.org/competitions/2/page/5/) or check my score (jhalverson) on the [leaderboard](https://www.drivendata.org/competitions/2/leaderboard/).
 
 #### Exploratory data analysis
 
-I began the problem by exploring the data ([see notebook](https://github.com/jhalverson/data_science/blob/master/project_blood_donations/exploratory_data_analysis.ipynb)). The correlation matrix showed that two features were perfectly correlated so one of them was dropped. Several plots were then constructed
-of the remaing three features.
+I began the problem by exploring the data ([see notebook](https://github.com/jhalverson/data_science/blob/master/project_blood_donations/exploratory_data_analysis.ipynb)). The correlation matrix of features showed that two features (total volume and number of donations) were perfectly correlated so one of them was dropped. Several plots were then constructed of the remaing three features including a three-dimensional scatter plot. After inspecting the various figures it was not obvious how to distinguish between the two classes.
 
 #### Feature engineering
 
-Feature engineering usually determines the success of the model. I created three new features: average number of months between donations, the ratio of the number of months sinces the first donation to that of the last, and the inverse of months since first.
+Feature engineering is usually crucial for a successful model. I created three new features: average number of months between donations, the ratio of the number of months since the last donation to that of the first, and the inverse of months since first.
 
-The Python itertools module was used to generate a list of different combinations of features. For each model we considered all combinations of the six features (three given plus three derived) from triples up to the full set. For each model and each feature set, the model's hyperparameters were optimzed using stratified K-fold cross validation. An attempt was made use nested cross validation but it proved to be computationally infeasible.
+The Python itertools module was used to generate a list of different combinations of features. For each model we considered all combinations of the six features (three given plus three derived) from triples up to the full set. For each model and each feature set, the hyperparameters of the model were optimzed using stratified K-fold cross validation. An attempt was made use nested cross validation but it proved to be computationally infeasible.
 
 #### Results
 
-Several models were attempted. For RandomForest it was necessary to set min_samples_leaf to a value much greater than
-1 because otherwise it predicts 0 or 1 for certain cases which leads to large
-penalties with log loss scoring.
+Several models were tried. For random forest it was necessary to set min_samples_leaf to a value much greater than
+1 (e.g., 20-40) because otherwise it predicts 0 or 1 for certain cases which leads to large penalties with log loss scoring. The support
+vector machine model took the longest to optimize (12 hours on 4-core laptop) and our grid was chosen to be sparse to aid this. For KNN a
 
 |model                      | leaderboard score|
 |:--------------------------|:-----------------:|
