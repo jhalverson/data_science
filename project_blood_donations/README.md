@@ -27,9 +27,11 @@ The Python itertools module was used to generate a list of different combination
 
 Several models were tried. For random forest it was necessary to set min_samples_leaf to a value much greater than
 1 (e.g., 20-40) because otherwise it predicts 0 or 1 for certain cases which leads to large penalties with log loss scoring. The support
-vector machine model took the longest to optimize (12 hours on 4-core laptop) and our grid was chosen to be sparse to aid this. For KNN a
+vector machine model took the longest to optimize (12 hours on 4-core laptop) and our grid was chosen to be sparse to aid this. Similarly, for KNN a large number of neighbors proved to be optimum (e.g., 30-50). For the majority voting classifier, we used bagged logistic regression, random forest and K-nearest neighbors. Due to the expense of optimizing this model we were only above to consider a sparse grid of hyperparameters. This explains why it did not do the best of all the models.
 
-|model                      | leaderboard score|
+The table below gives the score found for each optimized model:
+
+|Model                      | Leaderboard Score|
 |:--------------------------|:-----------------:|
 |BaggedLogisticRegression       |            0.4360|
 |LogisticRegression       |            0.4370|
@@ -43,4 +45,4 @@ vector machine model took the longest to optimize (12 hours on 4-core laptop) an
 
 #### Conclusions
 
-Our best result was obtained using bagging with logistic regression as the base estimator. Each model was optimized for each feature set. It may be possible to improve on the result by using neural networks.
+Our best result was obtained using bagging with logistic regression as the base estimator. In general this is a fairly noisy data set. One must be very careful to avoid overfitting. This was accomplished using stratified K-fold cross validation with shuffling. Our model performs very well. Other contestants have reported success with using neural networks.
