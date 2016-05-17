@@ -5,7 +5,7 @@
 
 This document describes my solution to the Predict Blood Donations machine learning competition
 hosted by DrivenData.org. The goal of the contest is
-to create a model that predicts the probability of a given volunteer in the test set donating blood
+to create a model that predicts the probability of a given volunteer in the test set to donate blood
 in March 2007. The training data consists of 576 blood donation volunteer records. For each
 volunteer we are given their id number, number of months since
 their first donations, number of months since their last donation, total number of donations, total
@@ -21,7 +21,7 @@ I began the problem by exploring the data ([see notebook](https://github.com/jha
 
 Feature engineering is usually crucial for a successful model. I created three new features: average number of months between donations, the ratio of the number of months since the last donation to that of the first, and the inverse of months since first.
 
-The Python itertools module was used to generate a list of different combinations of features. For each model we considered all combinations of the six features (three given plus three derived) from triples up to the full set. For each model and each feature set, the hyperparameters of the model were optimzed using stratified K-fold cross validation. An attempt was made use nested cross validation but it proved to be computationally infeasible.
+The Python itertools module was used to generate a list of different combinations of features. For each model we considered all combinations of the six features (three given plus three derived) from triples up to the full set. For each model and each feature set, the hyperparameters of the model were optimzed using stratified K-fold cross validation. To reduce the generalization error, an attempt was made use nested cross validation but it proved to be computationally infeasible.
 
 #### Results
 
