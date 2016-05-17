@@ -2,7 +2,7 @@
 
 ####Jonathan Halverson
 
-I am a seeking a data scientist position in Boston/Cambridge. My background is in computational physics. I have been transitioning to data science since summer 2015.
+I am seeking a data scientist position in Boston/Cambridge. My background is in computational physics. I have been transitioning to data science since summer 2015.
 
 This directory contains my data science projects as well as coding samples from machine learning, statistics and probability, and big data.
 
