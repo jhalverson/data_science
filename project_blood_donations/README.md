@@ -1,4 +1,4 @@
-# Predict Blood Donations: DrivenData.org Competitiion
+# Predict Blood Donations: DrivenData.org Competition
 ### Jonathan Halverson
 
 #### Introduction
@@ -15,13 +15,13 @@ Read about the [competition](https://www.drivendata.org/competitions/2/page/5/) 
 
 #### Exploratory data analysis
 
-I began the problem by exploring the data ([see notebook](https://github.com/jhalverson/data_science/blob/master/project_blood_donations/exploratory_data_analysis.ipynb)). There were no missing values and the extreme values appeared to be sane. One could attempt to identify outliers but that was no attempted here. The correlation matrix of features showed that two features (total volume and number of donations) were perfectly correlated so one of them was dropped. Several plots were then constructed of the remaing three features including a three-dimensional scatter plot. After inspecting the various figures it was not obvious how to distinguish between the two classes.
+I began the problem by exploring the data ([see notebook](https://github.com/jhalverson/data_science/blob/master/project_blood_donations/exploratory_data_analysis.ipynb)). There were no missing values and the extreme values appeared to be sane. One could attempt to identify outliers but that was no attempted here. The correlation matrix of features showed that two features (total volume and number of donations) were perfectly correlated so one of them was dropped. Several plots were then constructed of the remaining three features including a three-dimensional scatter plot. After inspecting the various figures it was not obvious how to distinguish between the two classes.
 
 #### Feature engineering
 
 Feature engineering is usually crucial for a successful model. I created three new features: average number of months between donations, the ratio of the number of months since the last donation to that of the first, and the inverse of months since first.
 
-The Python itertools module was used to generate a list of different combinations of features. For each model we considered all combinations of the six features (three given plus three derived) from triples up to the full set. For each model and each feature set, the hyperparameters of the model were optimzed using stratified K-fold cross validation. To reduce the generalization error, an attempt was made use nested cross validation but it proved to be computationally infeasible.
+The Python itertools module was used to generate a list of different combinations of features. For each model we considered all combinations of the six features (three given plus three derived) from triples up to the full set. For each model and each feature set, the hyperparameters of the model were optimized using stratified K-fold cross validation. To reduce the generalization error, an attempt was made use nested cross validation but it proved to be computationally infeasible.
 
 #### Results
 
