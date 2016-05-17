@@ -15,7 +15,7 @@ Read about the [competition](https://www.drivendata.org/competitions/2/page/5/) 
 
 #### Exploratory data analysis
 
-I began the problem by exploring the data ([see notebook](https://github.com/jhalverson/data_science/blob/master/project_blood_donations/exploratory_data_analysis.ipynb)). The correlation matrix of features showed that two features (total volume and number of donations) were perfectly correlated so one of them was dropped. Several plots were then constructed of the remaing three features including a three-dimensional scatter plot. After inspecting the various figures it was not obvious how to distinguish between the two classes.
+I began the problem by exploring the data ([see notebook](https://github.com/jhalverson/data_science/blob/master/project_blood_donations/exploratory_data_analysis.ipynb)). There were no missing values and the extreme values appeared to be sane. One could attempt to identify outliers but that was no attempted here. The correlation matrix of features showed that two features (total volume and number of donations) were perfectly correlated so one of them was dropped. Several plots were then constructed of the remaing three features including a three-dimensional scatter plot. After inspecting the various figures it was not obvious how to distinguish between the two classes.
 
 #### Feature engineering
 
@@ -25,8 +25,7 @@ The Python itertools module was used to generate a list of different combination
 
 #### Results
 
-It is always wise to try several models since each has strengths and weaknesses. For random forest it was necessary to set minimum samples per leaf parameter to a value much greater than 1 (e.g., 20-40) because otherwise it predicts 0 or 1 for certain cases which leads to large penalties with log loss scoring. Similarly, for KNN a large number of neighbors proved to be optimum (e.g., 30-50). The support
-vector machine model took the longest to optimize (12 hours on 4-core laptop) and our grid was chosen to be sparse to aid this. For the majority voting classifier, we used bagged logistic regression, random forest and K-nearest neighbors. Due to the expense of optimizing this model we were only able to consider a sparse grid of hyperparameters. This explains why it did not do the best of all the models.
+It is always wise to try several models since each has strengths and weaknesses. For random forest it was necessary to set minimum samples per leaf parameter to a value much greater than 1 (e.g., 20-40) because otherwise it predicts 0 or 1 for certain cases which leads to large penalties with log loss scoring. Similarly, for KNN a large number of neighbors proved to be optimum (e.g., 30-50). The support vector machine model took the longest to optimize (12 hours on 4-core laptop) and our grid was chosen to be sparse to aid this. For the majority voting classifier, we used bagged logistic regression, random forest and K-nearest neighbors. Due to the expense of optimizing this model we were only able to consider a sparse grid of hyperparameters. This explains why it did not do the best of all the models. For each model the features were standardized when needed.
 
 The table below gives the score found for each optimized model:
 
