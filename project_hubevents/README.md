@@ -9,7 +9,7 @@ Presently, one must visit individual sites like Meetup, Eventbrite, MIT Events,
 Harvard Gazette, [BUGC](http://bugc.org), etc. When the project is complete it will be possible
 to search all institutions and organizations with a single search.
 
-My solution is to use APIs and web scraping to build a searchable database. Currently, I have written code that pulls from the
+Our solution is to use APIs and web scraping to build a searchable database. Currently, I have written code that pulls from the
 Eventbrite API and the MIT Events API. We use the RSS feed to get event listings from the
 Harvard Gazette. Most institutions do not provide APIs. For Boston University, I have written a web scraping
 script in Python that uses the requests and BeautifulSoup packages. Work has begun on
