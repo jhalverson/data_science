@@ -1,0 +1,29 @@
+Meet the winners!
+1st Place
+Name: Liliana Medina
+
+Home base: St. Ives, England
+
+Background: My name is Liliana Medina, I'm a Portuguese citizen currently living and working in Cambridge, UK. I am presently a data scientist for ForecastThis, where I've been involved in the development of a machine-learning-as-a-service platform, DSX, and also in financial forecasting, web traffic fraud detection and text analysis related projects. Before this I was a data and text mining specialist for 365Media. I have an MSc in Electrical and Computer Engineering, and my thesis work was focused on pattern detection in electrophysiological signals, using unsupervised learning methods. I'm going back to college soon, as I have recently enrolled in an Astronomy certification programme at the University of Cambridge's Institute of Continuing Education.
+
+Method overview: Liliana extracted three classes of features: information about a restaurant's history of inspections, metadata about restaurants from Yelp (e.g., the type of cuisine), and data she extracted from the Yelp reviews. Her approach to creating features from the review text involved both sentiment analysis and topic modeling. Ultimately, she combined these features into a model that averaged the predictions of a random forest and gradient boosted decision trees.
+
+
+2nd Place
+Name: Qingchen Wang
+
+Home base: Surrey, Canada
+
+Background: My name is Qingchen Wang, and I have just started as a PhD student in data science at the University of Amsterdam. I've also just started work as a consultant at ORTEC.
+
+Method overview: Qingchen focused on building features about the restaurants based entirely on information about the restaurant inspection history and data from Yelp. He noted that many restaurants don't clean up their act after a failed inspection, so he was able to special-case predictions for these repeat-violators. Combining this inspection history information with Yelp information like the average star rating and number of reviews, he was able to train a random forest model that earned him second place.
+
+
+3rd Place
+Name: Shane Teehan
+
+Home base: Dublin, Ireland
+
+Background: I am an advanced analytics professional with an academic background in Operations Research and about ten years industry experience. I am currently managing a team of data scientists working in the aviation sector.
+
+Method overview: In order to extract the most effective features from the model, Shane normalized the json data dump from Yelp and imported that into a Postgres database. Working in SQL allowed him to quickly explore the dataset and construct complex combinations of features about restaurants, their reviews and Yelp users. Finally, Shane included features about a restaurant's history of violations. He built four models for each target (random forest, extra random trees, gradient boosting machine, l2 logistic regression) and blended the predictions from these models to create his final submission.
