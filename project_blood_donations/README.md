@@ -38,6 +38,7 @@ The table below gives the score found for each optimized model:
 |RandomForest|            0.4521|
 |SVC/RBF|            0.4590|
 |GradientBoosting|            0.4634|
+|XGBoost| 0.4639 |
 |AdaptiveBoosting             |            0.4809|
 |SVC/Linear|            0.4905|
 
