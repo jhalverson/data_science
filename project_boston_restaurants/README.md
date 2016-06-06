@@ -28,6 +28,22 @@ a given restaurant on a given date, the code would consider.
 
 Are the duplicates a problem. What about null values? Could more be done with the other data.
 
+#### Results
+
+| Model | Mean Square Error |
+|:---------|:-----------:|
+|Null model (train) | 18.6  |
+|Null model (test) | 16.9  |
+|Mean model (train) | 13.6  |
+|Mean model (test) | 12.8  | 
+|LinearRegression (train) | |
+|LinearRegression (test) | |
+|RandomForestRegression (train) | |
+|RandomForestRegression (test) | |
+
+The Null model is to guess (3, 0, 0). The Mean model is to guess the mean values of the violations for each
+restaurant. These are simple models for benchmarking purposes and neither of them use the Yelp data.
+
 ####Conclusions
 
 The model proved to work fairly well judging by our leaderboard score. It would have been nice to use the Yelp data right up to the day of the inspection or at least the week before. New hires, a change of distributor or construction projects can quickly alter the quality of service.
