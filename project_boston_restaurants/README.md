@@ -28,7 +28,7 @@ We found a modest correlation between the number of violations and the number of
 for correlation throughout this work we computed the Pearson and Spearman correlation coefficients along with their
 corresponding p-values.
 
-The Yelp business data was used to get a sense of the effect of neighborhood and categories.
+The Yelp business data was used to get a sense of the effect of [neighborhood and categories](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_2_yelp_business_data.ipynb).
 Dudley Square, Fields Corner and Chinatown were found to be the worst neighborhoods for
 clean kitchens while Fenway, Back Bay and Hyde Park had the fewest violations on average.
 For food categories, of the restaurants with more than 1 inspection, the most violations were
@@ -73,44 +73,40 @@ number of characters in a tip is 56.8. We did not use the tip data in our models
 
 A range of models from simple to complex were considered:
 
-* Model 0: The simplest model is to predict the median value for each of the violation levels for all restaurants. This corresponds to 3, 0, 0 for 1-, 2- and 3-star violations, respectively.
+* Model 0: Predict the median value of all the data for each of the violation levels for all restaurants. This corresponds to 3, 0, 0 for 1-, 2- and 3-star violations, respectively. A simple model like this is useful for benchmarking purposes.
 
-* Model 1: The next more complicated model would be to predict the median value for each specific restaurant. This leads to a large improvement.
+* Model 1: Predict the median value for each restaurant using only the data specific to each restaurant for all time. This model was effective which emphasizes the importance of the inspection history data relative to the Yelp data.
 
-* Model 2: It turns out that if one only uses the median value for each restaurant up to
-the inspection date (instead of all the data) the result is not very good.
+* Model 2: Predict the median value for each restaurant using data specific to the restaurant up to
+the inspection date. This model uses extrapolation, which ultimately is required for the contest.
 
-* Model 3: Another simple model is to fit a line to the violation data and interpolate the
-number of violations for a given inspection date. This proves to not work very well.
+* Model 3: Fit a line to the entire violation data of each restaurant and evaluate this equation for predictions.
 
-* Mode 4: A bag of words model with TF-IDF was used on the Yelp reviews. Reviews written
-within a time window before the inspection were used to generate features.
-
-* Model 5: Our approach was to association reviews with violations over a given date range. For instance, to predict violations at
-a given restaurant on a given date, the code would consider.
+* Model 4: Train a model by relating recent Yelp reviews to the violation data. A bag of words model
+with TF-IDF was used on the Yelp reviews. Reviews written within a certain time window before the inspection were used.
 We used BeautifulSoup to remove any HTML. Regualr expressions were used to
-remove non-alphabetical characters like numbers and puncuation. We setup
-a pipeline to optimize the model. We considered cases where the reviews
-where all combined and kept individually. A Porter stemmer was considered
-as well as the removal of stop words. TF-IDF was used as well as
-n-grams up to trigrams. 
+remove non-alphabetical characters like numbers and punctuation. We setup
+a pipeline to optimize the model where stop words, stemming were considered.
+The model used n-grams up to tri-grams. We found better results were obtained when all the reviews
+within the window were combined instead of associating each individual review with the corresponding
+violation score. Ridge regression was used.
 
-* Model 6: From the exploratory data analysis we found that categories were telling. We constructed a series of models by using one-hot encoding and Lasso. This was also done for neighborhoods and the combination of the two.
-We used the one-hot encoding to make features based on both [neighborhood
-and categories](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_8_categories_neighborhoods_model.ipynb).
+* Model 5: From the exploratory data analysis we found that categories were telling. We constructed a [series of models](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_8_categories_neighborhoods_model.ipynb) by using one-hot encoding to prepare the features and Lasso regression as the model. This was also done for neighborhoods as well and the combination of the two.
 
-#### Results
+####Results
 
-Below is a table summarizing ours results:
+Below is a table summarizing ours results. These result are based on a train-test split.
 
-| Model number | Model description | Mean Square Error |
-|:---------|:---------|:-----------:|
-|0 | Null model (train) | 18.6  |
-|0 | Null model (test) | 16.9  |
-|1 | Mean model (train) | 13.6  |
-|1 | Mean model (test) | 12.8  |
-|2 | LinearRegression (train) | |
-|2 | LinearRegression (test) | |
+| Model | Mean square error (train) | Mean square error (train) |
+|:---------:|:---------|:-----------:|
+|0 | Generic median model (train) | 18.6  |
+|0 | Generic median model (test) | 16.9  |
+|1 | Specific mean model using all data (train) | 13.6  |
+|1 | Specific mean model using all data (test) | 12.8  |
+|1 | Specific mean model using data up to inspection (test) | 12.8  |
+|1 | Specific mean model using data up to inspection (test) | 12.8  |
+|2 | LinearRegression using all data (train) | |
+|2 | LinearRegression using all data (test) | |
 |3 | RandomForestRegression (train) | |
 |3 | RandomForestRegression (test) | |
 
