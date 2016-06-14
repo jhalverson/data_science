@@ -37,9 +37,9 @@ Tobacco Shops, Gay Bars, Cheesesteaks and Moroccan.
 Analyzing additional attributes such as BYOB, Delivery, Take-out, Wheelchair accessible did not
 reveal much.
 
-Seasonality in the number of inspections was examined by computing the correlation between the mean temperature averaged over a week and the number of [inspections per week](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_2b_correlation_time.ipynb). A moderate correlation was found (r = -0.41, p = 0.002) which could be explained by inspectors going on vacation during the summer months.
+Seasonality in the number of inspections was examined by computing the correlation between the mean temperature averaged over a week and the number of [inspections per week](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_2b_correlation_time.ipynb). A moderate inverse correlation was found (r = -0.41, p = 0.002) which could be explained by inspectors going on vacation during the summer months.
 
-We also computed the [autocorrelation function](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_2b_correlation_time.ipynb) of the number of violations over all restaurants. On the time scale of 1-2 weeks the function was found to decrease as expected. However, around the 3-week mark it becomes negative and remains so until around week 13 when it becomes zero. One may reason that when a restaurant is inspected and the resulting number of violations is above the average, the restaurant tends to have fewer violations when re-inspected between 3 and 12 weeks later. Likewise, when the number of violations is small, maybe the restaurant gets careless and they have more violations during the 3 to 12 period after the inspection.
+We also computed the [autocorrelation function](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_2b_correlation_time.ipynb) of the number of violations over all restaurants. On the time scale of 1-2 weeks the function was found to decrease as expected. However, around the 3-week mark it becomes negative and remains so until around week 13 when it becomes zero. One may reason that when a restaurant is inspected and the resulting number of violations is above the average, the restaurant takes corrective action and has fewer violations when re-inspected between 3 and 12 weeks later. Likewise, when the number of violations is small, maybe the restaurant becomes lax and they have more violations during the 3 to 12 period after the inspection.
 
 Each restaurant has an average star rating between 1 (worst) and 5 (best).
 If the food or experience was not very good then the reviewer would choose
@@ -54,7 +54,7 @@ the number of [crimes committed](https://github.com/jhalverson/data_science/blob
 to as the crime density. The cutoff radius was taken as
 1/20 the distance between North and South Station. Since there were 268,056 crimes
 we used a binning procedure to assign each crime to a cell in a 2-d grid. This allowed us to
-consider only the crimes in the nearest-neighbor cells of the restaurant.
+consider only the crimes in the central and nearest-neighbor cells of the restaurant.
 There was no correlation between number of violations and crime density.
 
 The [user data](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_4_user_data.ipynb) gives us information about the people who wrote the reviews. We are given
@@ -71,7 +71,7 @@ number of characters in a tip is 56.8. We did not use the tip data in our models
 
 ####Models
 
-A range of models from simple to complex were considered:
+A range of models from simple to complex were considered. Each model was based only on data up to the inspection date since this is ultimately how it would be used in practice. Below is a description of each model:
 
 * Model 0: Predict the median value of all the data for each of the violation levels for all restaurants. This corresponds to 3, 0, 0 for 1-, 2- and 3-star violations, respectively. A simple model like this is useful for benchmarking purposes.
 
