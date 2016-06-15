@@ -102,7 +102,7 @@ mean number of violations up to the inspection date as a feature. The alpha para
 Below is a table summarizing ours results. These results are based on a 80/20 train-test split.
 
 | Model No.| Mean square error (train) | Mean square error (test) | Notes |
-|:---------:|:---------|:-----------:|:------:|
+|:---------:|:--------:|:-----------:|:------|
 |0 | 18.3  | 18.1 | |
 |1 | 19.2  | 22.5 | |
 |2 | 28.2  | 22.8 | |
@@ -115,4 +115,4 @@ Below is a table summarizing ours results. These results are based on a 80/20 tr
 
 ####Conclusions
 
-The model proved to work fairly well judging by our leaderboard score of 12th of 525. It would have been nice to have Yelp data available right up to the day of the inspection or at least the week before but the contest was not run in this way. New hires, a change of distributor or construction projects can quickly alter the quality of service.
+Our best model does a fair job given the difficulty of the problem. It would have been nice to have Yelp data available right up to the day of the inspection or at least the week before but the contest was not run in this way.
