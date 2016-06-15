@@ -75,40 +75,43 @@ A range of models from simple to complex were considered. Each model was based o
 
 * Model 0: Predict the median value of all the data for each of the violation levels for all restaurants. This corresponds to 3, 0, 0 for 1-, 2- and 3-star violations, respectively. A simple model like this is useful for benchmarking purposes.
 
-* Model 1: Predict the median value for each restaurant using only the data specific to each restaurant for all time. This model was effective which emphasizes the importance of the inspection history data relative to the Yelp data.
+* Model 1: Predict the mean number of violations for each restaurant using data specific to the restaurant up to
+the inspection date. If the restaurant has no previous inspections then predict 3, 0, 0. This model uses
+extrapolation, which ultimately is required for the contest.
 
-* Model 2: Predict the median value for each restaurant using data specific to the restaurant up to
-the inspection date. This model uses extrapolation, which ultimately is required for the contest.
+* Model 2: Fit a line to the violation data of each restaurant up to the inspection date and evaluate this equation. If the
+restaurant has fewer than 2 previous inspections then predict 3, 0, 0. This simple model attempts to capture the
+trend of the data.
 
-* Model 3: Fit a line to the entire violation data of each restaurant and evaluate this equation for predictions.
+* Model 3: Train a model by relating Yelp reviews written within 60 days of the inspection date to the
+violation data. A bag of words model up to tri-grams
+with TF-IDF was used. The number of features was limited to 2000. The raw reviews were preprocessed by using
+BeautifulSoup to remove HTML tags. Regular expressions were used to
+remove non-alphabetical characters like numbers and punctuation. All characters were converted to lower case.
+A pipeline was created to optimize the model where the removal of stop words and the use
+of a Porter stemmer were considered. Cross validation with three folds was used. The optimal model did not remove
+stop words or use the stemmer. We found better results were obtained when all the reviews
+within the time window were combined instead of associating each individual review with the corresponding
+violation score. Ridge regression with a regularization coefficient of alpha equals 5 was used.
 
-* Model 4: Train a model by relating recent Yelp reviews to the violation data. A bag of words model
-with TF-IDF was used on the Yelp reviews. Reviews written within a certain time window before the inspection were used.
-We used BeautifulSoup to remove any HTML. Regualr expressions were used to
-remove non-alphabetical characters like numbers and punctuation. We setup
-a pipeline to optimize the model where stop words, stemming were considered.
-The model used n-grams up to tri-grams. We found better results were obtained when all the reviews
-within the window were combined instead of associating each individual review with the corresponding
-violation score. Ridge regression was used.
-
-* Model 5: From the exploratory data analysis we found that categories were telling. We constructed a [series of models](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_8_categories_neighborhoods_model.ipynb) by using one-hot encoding to prepare the features and Lasso regression as the model. This was also done for neighborhoods as well and the combination of the two.
+* Model 4: From the exploratory data analysis of the restaurant metadata we found that categories, and to a lesser extent neighborhoods, were telling. We constructed a [series of models](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_8_categories_neighborhoods_model.ipynb) by using one-hot encoding to prepare the features. We also used the
+mean number of violations up to the inspection date as a feature. The alpha parameter of the Lasso model was optimized for each case.
 
 ####Results
 
-Below is a table summarizing ours results. These result are based on a train-test split.
+Below is a table summarizing ours results. These results are based on a 80/20 train-test split.
 
-| Model | Mean square error (train) | Mean square error (train) |
-|:---------:|:---------|:-----------:|
-|0 | Generic median model (train) | 18.6  |
-|0 | Generic median model (test) | 16.9  |
-|1 | Specific mean model using all data (train) | 13.6  |
-|1 | Specific mean model using all data (test) | 12.8  |
-|1 | Specific mean model using data up to inspection (test) | 12.8  |
-|1 | Specific mean model using data up to inspection (test) | 12.8  |
-|2 | LinearRegression using all data (train) | |
-|2 | LinearRegression using all data (test) | |
-|3 | RandomForestRegression (train) | |
-|3 | RandomForestRegression (test) | |
+| Model No.| Mean square error (train) | Mean square error (test) | Notes |
+|:---------:|:---------|:-----------:|:------:|
+|0 | 18.3  | 18.1 | |
+|1 | 19.2  | 22.5 | |
+|2 | 28.2  | 22.8 | |
+|3 | 16.4  | 17.7 | Ridge with alpha = 10|
+|3 |  3.2  | 17.8 | Random Forest with 20 estimators|
+|4 | 17.2  | 16.9 | Neighborhoods |
+|4 | 16.9  | 16.8 | Categories |
+|4 | 16.4  | 16.4 | Categories and neighborhoods |
+|4 | 15.8  | 15.9 | Mean violations, categories and neighborhoods |
 
 ####Conclusions
 
