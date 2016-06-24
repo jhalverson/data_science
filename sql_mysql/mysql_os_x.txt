@@ -1,0 +1,87 @@
+Jonathan Halverson
+Thursday, June 23, 2016
+-----------------------
+
+
+jhalverson$ mysql -p
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| test               |
++--------------------+
+2 rows in set (0.06 sec)
+
+mysql> use test;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| persons        |
+| test_log       |
++----------------+
+2 rows in set (0.00 sec)
+
+
+mysql> describe test.persons;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int(11)      | NO   | PRI | 0       |       |
+| description | varchar(255) | YES  |     | NULL    |       |
+| ContactName | varchar(255) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from persons;
++----+-------------------------------+----------------+
+| id | description                   | ContactName    |
++----+-------------------------------+----------------+
+| 11 | Gas canisters                 | James Woodborn |
+| 56 | Digital compass for dog sleds | Charlie Parker |
++----+-------------------------------+----------------+
+2 rows in set (0.07 sec)
+
+
+mysql> describe test_log;
++-------------+--------------+------+-----+-------------+----------------+
+| Field       | Type         | Null | Key | Default     | Extra          |
++-------------+--------------+------+-----+-------------+----------------+
+| id          | int(11)      | NO   | PRI | NULL        | auto_increment |
+| message     | varchar(255) | YES  |     | NULL        |                |
+| ContactName | varchar(100) | YES  |     | Joey Baggio |                |
++-------------+--------------+------+-----+-------------+----------------+
+3 rows in set (0.01 sec)
+
+
+### delete a table
+mysql> drop table test_log;
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| persons        |
++----------------+
+1 row in set (0.00 sec)
+
+
+### I tried to load a csv file but it failed due to jhalverson not having access
+### I was able to make the table as jhalverson, however
+mysql> create table products (ID int, ProductName varchar(255), ContactName varchar(255), Price float);
+Query OK, 0 rows affected (0.22 sec)
+
+### I then logged in as root and was then able to load the CSV file
+nanomines:mysql jhalverson$ mysql -u root -p
+
+load data infile "/Users/jhalverson/data_science/sql_mysql/products.csv" into table products columns terminated by ',' lines terminated by '\n';
+
+
+
