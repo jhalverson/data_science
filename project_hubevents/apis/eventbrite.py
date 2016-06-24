@@ -1,8 +1,10 @@
+## Jonathan D. Halverson
+
 ## Usage: ##
 ##   python eventbrite.py > boston_13nov2015.html ##
 
-start_date = '2016-04-18'
-end_date   = '2016-05-31'
+start_date = '2016-06-27'
+end_date   = '2016-07-17'
 
 import os
 my_token = os.environ['EVENTBRITE_SHELL_VAR']
@@ -12,7 +14,7 @@ url = 'https://www.eventbriteapi.com/v3/events/search/?start_date.range_start=' 
       + end_date + 'T13:00:00Z&token=' + my_token
 
 import requests
-payload = {'venue.city':'Cambridge', 'venue.region':'MA', 'venue.country':'US',
+payload = {'venue.city':'Boston', 'venue.region':'MA', 'venue.country':'US',
            'sort_by':'date', 'expand':'organizer,venue,ticket_classes', 'token':my_token}
 response = requests.get(url, params=payload, headers = {"Authorization": "Bearer " + my_token,}, verify = True)
 events = response.json()['events']

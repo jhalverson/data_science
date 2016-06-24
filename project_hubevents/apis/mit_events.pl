@@ -10,8 +10,8 @@
 # where hh:mm is optional and hh is in 24-hour format
 
 #########################
-$start = "2016/04/18";
-$end   = "2016/05/31";
+$start = "2016/06/27";
+$end   = "2016/07/17";
 #########################
 
 use SOAP::Lite;

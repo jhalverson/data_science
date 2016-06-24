@@ -2,6 +2,8 @@
 Date: November 16, 2015
 Author: Jonathan Halverson (halverson.jonathan@gmail.com)
 
+Usage: python format_harvard.py > harvard_24june2016.html
+
 This code formats the Harvard University scraping data.
 """
 

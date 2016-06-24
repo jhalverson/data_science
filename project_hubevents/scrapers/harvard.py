@@ -2,6 +2,8 @@
 Date: August 25, 2015
 Author: Tom Lukasiak
 
+Usage: python harvard.py
+
 Approach: Parse the RSS feed. Use BeautifulSoup for parsing HTML inside the RSS feed entries.
 """
 

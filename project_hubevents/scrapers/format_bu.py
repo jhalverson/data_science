@@ -2,6 +2,8 @@
 Date: November 16, 2015
 Author: Jonathan Halverson (halverson.jonathan@gmail.com)
 
+Usage: python format_bu.py > bu_24june2016.txt
+
 This code formats the Boston University scraping data.
 """
 
