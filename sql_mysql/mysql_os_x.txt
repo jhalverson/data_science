@@ -84,4 +84,59 @@ nanomines:mysql jhalverson$ mysql -u root -p
 load data infile "/Users/jhalverson/data_science/sql_mysql/products.csv" into table products columns terminated by ',' lines terminated by '\n';
 
 
+mysql> create table suppliers (ID int unsigned primary key auto_increment, Supplier char(80) not null, ProductName char(80) not null, ContactEmail char(80) default 'contact@host.com');
+Query OK, 0 rows affected (0.06 sec)
 
+mysql> insert into suppliers (Supplier, ProductName) values ('Chips chips', 'Straws');                                      Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from suppliers;
++----+-------------+-------------+------------------+
+| ID | Supplier    | ProductName | ContactEmail     |
++----+-------------+-------------+------------------+
+|  1 | Chips chips | Straws      | contact@host.com |
++----+-------------+-------------+------------------+
+1 row in set (0.00 sec)
+
+
+### Joins
+mysql> select * from suppliers;
++----+----------------------+-------------------+------------------------+
+| ID | Supplier             | ProductName       | ContactEmail           |
++----+----------------------+-------------------+------------------------+
+|  1 | Chips chips          | Straws            | info@chipschips.com    |
+|  2 | Bed, Bath and Beyond | Knives            | help@b3.com            |
+|  3 | Grossmans            | Drill bits        | mike@mikegrossmans.com |
+|  4 | Fishbone Forks       | Ursula's Utensils | ursula@mainz.de        |
++----+----------------------+-------------------+------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from products;
++------+----------------+---------------+--------+
+| ID   | ProductName    | ContactName   | Price  |
++------+----------------+---------------+--------+
+|    1 | Knives         | Joe Smith     |  19.99 |
+|    2 | Spoons         | Karen McGue   |   2.38 |
+|    3 | Fishbone Forks | Captain Joe   | 121.34 |
+|    4 | Straws         | Mitch Cohawke |  33.99 |
++------+----------------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from products left join suppliers on products.productname=suppliers.productname;
++------+----------------+---------------+--------+------+----------------------+-------------+---------------------+
+| ID   | ProductName    | ContactName   | Price  | ID   | Supplier             | ProductName | ContactEmail        |
++------+----------------+---------------+--------+------+----------------------+-------------+---------------------+
+|    4 | Straws         | Mitch Cohawke |  33.99 |    1 | Chips chips          | Straws      | info@chipschips.com |
+|    1 | Knives         | Joe Smith     |  19.99 |    2 | Bed, Bath and Beyond | Knives      | help@b3.com         |
+|    2 | Spoons         | Karen McGue   |   2.38 | NULL | NULL                 | NULL        | NULL                |
+|    3 | Fishbone Forks | Captain Joe   | 121.34 | NULL | NULL                 | NULL        | NULL                |
++------+----------------+---------------+--------+------+----------------------+-------------+---------------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from products inner join suppliers on products.productname=suppliers.productname;
++------+-------------+---------------+-------+----+----------------------+-------------+---------------------+
+| ID   | ProductName | ContactName   | Price | ID | Supplier             | ProductName | ContactEmail        |
++------+-------------+---------------+-------+----+----------------------+-------------+---------------------+
+|    4 | Straws      | Mitch Cohawke | 33.99 |  1 | Chips chips          | Straws      | info@chipschips.com |
+|    1 | Knives      | Joe Smith     | 19.99 |  2 | Bed, Bath and Beyond | Knives      | help@b3.com         |
++------+-------------+---------------+-------+----+----------------------+-------------+---------------------+
+2 rows in set (0.00 sec)
