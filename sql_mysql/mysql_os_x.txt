@@ -140,3 +140,22 @@ mysql> select * from products inner join suppliers on products.productname=suppl
 |    1 | Knives      | Joe Smith     | 19.99 |  2 | Bed, Bath and Beyond | Knives      | help@b3.com         |
 +------+-------------+---------------+-------+----+----------------------+-------------+---------------------+
 2 rows in set (0.00 sec)
+
+
+
+### Here is an alternative to describe:
+
+mysql> desc products;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ID          | int(11)      | YES  |     | NULL    |       |
+| ProductName | varchar(255) | YES  |     | NULL    |       |
+| ContactName | varchar(255) | YES  |     | NULL    |       |
+| Price       | float        | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.16 sec)
+
+
+### Unicode
+Nvarchar versus varchar

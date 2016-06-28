@@ -1,0 +1,46 @@
+The group by statement works the same as in Pandas. In the line
+below it is not used correctly as only the last line of each
+group is printed out. The correct way to use it is to apply
+an aggregate function to each group as shown below:
+
+SELECT * FROM Customers group by country;
+64	Rancho grande	Sergio Gutiérrez	Av. del Libertador 900	Buenos Aires	1010	Argentina
+59	Piccolo und mehr	Georg Pipps	Geislweg 14	Salzburg	5020	Austria
+76	Suprêmes délices	Pascale Cartrain	Boulevard Tirou, 255	Charleroi	B-6000	Belgium
+
+SELECT country, count(*) FROM Customers group by country;
+Argentina 3
+Austria	2
+Belgium	2
+Brazil	9
+Canada	3
+Denmark	2
+
+
+Here's an example of a double join:
+
+SELECT Shippers.ShipperName, Employees.LastName,
+COUNT(Orders.OrderID) AS NumberOfOrders
+FROM ((Orders
+INNER JOIN Shippers
+ON Orders.ShipperID=Shippers.ShipperID)
+INNER JOIN Employees
+ON Orders.EmployeeID=Employees.EmployeeID)
+GROUP BY ShipperName,LastName;
+
+
+
+Having is used like where but on the result of an aggregate function:
+
+SELECT Products.ProductName, avg(products.price) as av_price
+FROM [Products] inner join OrderDetails on orderdetails.ProductID=Products.productid
+group by products.productid having av_price > 30.0 order by Products.ProductName;
+
+ProductName	av_price
+Alice Mutton	39
+Camembert Pierrot	34
+Carnarvon Tigers	62.5
+Côte de Blaye	263.5
+Gnocchi di nonna Alice	38
+Gudbrandsdalsost	36
+Gumbär Gummibärchen	31.23
