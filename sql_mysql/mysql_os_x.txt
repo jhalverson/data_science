@@ -159,3 +159,5 @@ mysql> desc products;
 
 ### Unicode
 Nvarchar versus varchar
+
+### SQL provides a variety of math functions
