@@ -2,6 +2,7 @@ Jonathan Halverson
 Thursday, June 23, 2016
 -----------------------
 
+### Make sure to start the server through system preferences
 
 jhalverson$ mysql -p
 
@@ -161,3 +162,34 @@ mysql> desc products;
 Nvarchar versus varchar
 
 ### SQL provides a variety of math functions
+
+### Having
+select country, sum(CustomerID) as sumfunc from customers group by country having sumfunc > 100 and Country like 'U%' order by sumfunc; 
+Country	sumfunc
+UK	213
+USA	796
+
+
+### use SQL as a calculator
+select 45.0/2.98;
+
+
+### any and all
+SQL> SELECT * FROM CUSTOMERS
+WHERE AGE > ALL (SELECT AGE FROM CUSTOMERS WHERE SALARY > 6500);
++----+--------+-----+-----------+---------+
+| ID | NAME   | AGE | ADDRESS   | SALARY  |
++----+--------+-----+-----------+---------+
+|  1 | Ramesh |  32 | Ahmedabad | 2000.00 |
++----+--------+-----+-----------+---------+
+1 row in set (0.02 sec)
+SQL> SELECT * FROM CUSTOMERS
+WHERE AGE > ANY (SELECT AGE FROM CUSTOMERS WHERE SALARY > 6500);
++----+----------+-----+-----------+---------+
+| ID | NAME     | AGE | ADDRESS   | SALARY  |
++----+----------+-----+-----------+---------+
+|  1 | Ramesh   |  32 | Ahmedabad | 2000.00 |
+|  2 | Khilan   |  25 | Delhi
+|  4 | Chaitali |  25 | Mumbai
+|  5 | Hardik   |  27 | Bhopal
++----+----------+-----+-----------+---------
