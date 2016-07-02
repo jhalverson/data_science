@@ -100,6 +100,9 @@ mysql> select * from suppliers;
 
 
 ### Joins
+#The INNER JOIN creates a new result table by combining column values of two
+#tables (table1 and table2) based upon the join-predicate. The query
+#A full join is equivalent to a left join union all right join.
 mysql> select * from suppliers;
 +----+----------------------+-------------------+------------------------+
 | ID | Supplier             | ProductName       | ContactEmail           |
@@ -164,6 +167,7 @@ Nvarchar versus varchar
 ### SQL provides a variety of math functions
 
 ### Having
+# The GROUP BY clause follows the WHERE clause in a SELECT statement and precedes the ORDER BY clause.
 select country, sum(CustomerID) as sumfunc from customers group by country having sumfunc > 100 and Country like 'U%' order by sumfunc; 
 Country	sumfunc
 UK	213
@@ -193,3 +197,11 @@ WHERE AGE > ANY (SELECT AGE FROM CUSTOMERS WHERE SALARY > 6500);
 |  4 | Chaitali |  25 | Mumbai
 |  5 | Hardik   |  27 | Bhopal
 +----+----------+-----+-----------+---------
+
+
+### the like can be applied to numbers as well as text
+select * from products where price like '_8';
+# the percent symbol wildcard represents 0 or more characters
+
+
+### Union, union all, intercept, except are all possible
