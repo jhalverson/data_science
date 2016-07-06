@@ -205,3 +205,6 @@ select * from products where price like '_8';
 
 
 ### Union, union all, intercept, except are all possible
+
+
+### Started advanced operations
