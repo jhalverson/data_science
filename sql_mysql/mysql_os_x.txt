@@ -208,3 +208,4 @@ select * from products where price like '_8';
 
 
 ### Started advanced operations
+### Alter, truncate and other
