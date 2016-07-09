@@ -209,3 +209,11 @@ select * from products where price like '_8';
 
 ### Started advanced operations
 ### Alter, truncate and other
+
+
+### Create View view_name as select ...
+# Note that a check clause can be added 
+# There are many rules applied to views for updating and inserting rows
+CREATE VIEW CUSTOMERS_VIEW AS
+SELECT name, age FROM  CUSTOMERS WHERE age IS NOT NULL WITH CHECK OPTION;
+
