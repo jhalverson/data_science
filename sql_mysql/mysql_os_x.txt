@@ -3,8 +3,7 @@ Thursday, June 23, 2016
 -----------------------
 
 ### Make sure to start the server through system preferences
-
-jhalverson$ mysql -p
+jhalverson$ mysql -p // with the server running
 
 mysql> show databases;
 +--------------------+
@@ -217,3 +216,101 @@ select * from products where price like '_8';
 CREATE VIEW CUSTOMERS_VIEW AS
 SELECT name, age FROM  CUSTOMERS WHERE age IS NOT NULL WITH CHECK OPTION;
 
+
+### Monday, July 11, 2016
+# If alias fails with where clase then use subquery (this is an inline view)
+select * from (select productname, price as handle from products) as x where handle > 45 order by handle;
+
+# concatenation in MySQL
+select concat(description, '----', ContactName) from persons;
++-------------------------------------------------+
+| concat(description, '----', ContactName)        |
++-------------------------------------------------+
+| Gas canisters----James Woodborn                 |
+| Digital compass for dog sleds----Charlie Parker |
++-------------------------------------------------+
+
+# the case expression to add a column and use if-else
+mysql> select * from suppliers;
++----+----------------------+-------------------+------------------------+
+| ID | Supplier             | ProductName       | ContactEmail           |
++----+----------------------+-------------------+------------------------+
+|  1 | Chips chips          | Straws            | info@chipschips.com    |
+|  2 | Bed, Bath and Beyond | Knives            | help@b3.com            |
+|  3 | Grossmans            | Drill bits        | mike@mikegrossmans.com |
+|  4 | Fishbone Forks       | Ursula's Utensils | ursula@mainz.de        |
+|  5 | Boston Warehouse     | Manfrotto tripod  | contact@host.com       |
++----+----------------------+-------------------+------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select productname, id, case when id > 75 then 'overpriced' when id <= 2 then 'underpriced' else 'okay' end as status from suppliers; 
++-------------------+----+-------------+
+| productname       | id | status      |
++-------------------+----+-------------+
+| Straws            |  1 | underpriced |
+| Knives            |  2 | underpriced |
+| Drill bits        |  3 | okay        |
+| Ursula's Utensils |  4 | okay        |
+| Manfrotto tripod  |  5 | okay        |
++-------------------+----+-------------+
+
+# remove the not null constraint on a column
+mysql> alter table suppliers modify supplier char(80) default null;
+
+# replacing null in the result-set without changing the table
+mysql> select * from suppliers;
++----+----------------------+-------------------+------------------------+
+| ID | supplier             | ProductName       | ContactEmail           |
++----+----------------------+-------------------+------------------------+
+|  1 | Chips chips          | Straws            | info@chipschips.com    |
+|  2 | Bed, Bath and Beyond | Knives            | help@b3.com            |
+|  3 | Grossmans            | Drill bits        | mike@mikegrossmans.com |
+|  4 | Fishbone Forks       | Ursula's Utensils | ursula@mainz.de        |
+|  5 | Boston Warehouse     | Manfrotto tripod  | contact@host.com       |
+|  6 | Bills Trucking       | cargo service     | bill@billyboy.org      |
+|  7 | NULL                 | Cargo service     | bill@billyboy.org      |
++----+----------------------+-------------------+------------------------+
+7 rows in set (0.00 sec)
+
+mysql> select coalesce(supplier, 0) from suppliers;
++-----------------------+
+| coalesce(supplier, 0) |
++-----------------------+
+| Chips chips           |
+| Bed, Bath and Beyond  |
+| Grossmans             |
+| Fishbone Forks        |
+| Boston Warehouse      |
+| Bills Trucking        |
+| 0                     |
++-----------------------+
+
+SELECT ProductName,UnitPrice*(UnitsInStock+COALESCE(UnitsOnOrder,0)) FROM Products;
+
+# order by number of column
+select * from products order by 6 desc; // 6th column
+
+# order by second to last character
+mysql> select * from suppliers order by substr(productname, length(productname) - 1);
++----+----------------------+-------------------+------------------------+
+| ID | supplier             | ProductName       | ContactEmail           |
++----+----------------------+-------------------+------------------------+
+|  6 | Bills Trucking       | cargo service     | bill@billyboy.org      |
+|  7 | NULL                 | Cargo service     | bill@billyboy.org      |
+|  2 | Bed, Bath and Beyond | Knives            | help@b3.com            |
+|  4 | Fishbone Forks       | Ursula's Utensils | ursula@mainz.de        |
+|  5 | Boston Warehouse     | Manfrotto tripod  | contact@host.com       |
+|  3 | Grossmans            | Drill bits        | mike@mikegrossmans.com |
+|  1 | Chips chips          | Straws            | info@chipschips.com    |
++----+----------------------+-------------------+------------------------+
+
+# case statement for sorting
+
+# Note: union will probabily internally use a sort to eliminiate duplicates
+
+# using IN to select rows from a list of items from another table
+select * from customers where customers.country in (select distinct suppliers.country from suppliers) order by customers.country;
+select * from customers where customers.country not in (select distinct suppliers.country from suppliers) order by customers.country;
+
+# wildcard select
+select c.* from customers as c;
