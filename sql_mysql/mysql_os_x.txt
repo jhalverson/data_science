@@ -314,3 +314,26 @@ select * from customers where customers.country not in (select distinct supplier
 
 # wildcard select
 select c.* from customers as c;
+
+
+###Tuesday, July 12, 2016
+# all, any, some
+SELECT e1.empno, e1.sal
+FROM   emp e1
+WHERE  e1.sal > ALL (SELECT e2.sal
+                     FROM   emp e2
+                     WHERE  e2.deptno = 20);
+
+# CLOB is a character large object -- maybe replaced by text
+# There are five data types that deal with dates and times: date, time w/o time zone, timestamp w/o time zone
+# Intervals analogous to timediff are available
+# Row types breaks the rule of only one value per field
+# First normal form
+# Array and multiset is also possible Create table customer (Phone character varying (15) array[3]);
+# Cardinality relates to array size
+# REF is a pointer which can be dereferenced to obtain the actual contents
+# UDT or user defined types are also possible - these are nice because one can match the data types
+# of the host (application) with those of the database. UDT include distinct types and structured types
+# Distinct types are like typedefs from C/C++
+# XML can be stored
+# Schemas contain tables and views
