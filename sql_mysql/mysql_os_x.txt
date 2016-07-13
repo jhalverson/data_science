@@ -272,6 +272,8 @@ mysql> select * from suppliers;
 +----+----------------------+-------------------+------------------------+
 7 rows in set (0.00 sec)
 
+# the coalesce function returns the first non-null results from left to right; if nothing
+# is found then it returns null
 mysql> select coalesce(supplier, 0) from suppliers;
 +-----------------------+
 | coalesce(supplier, 0) |
@@ -337,3 +339,39 @@ WHERE  e1.sal > ALL (SELECT e2.sal
 # Distinct types are like typedefs from C/C++
 # XML can be stored
 # Schemas contain tables and views
+
+
+### Wednesday, July 13, 2016
+# Adding a column dependent on current columns
+select * from (select customername, city, case when city > 'L' then 0 else 1 end as city_flag from customers) as x where city_flag=1;
+customername	city	city_flag
+Alfreds Futterkiste	Berlin	1
+Cactus Comidas para llevar	Buenos Aires	1
+Chop-suey Chinese	Bern	1
+Drachenblut Delikatessend	Aachen	1
+
+# using an line case clause
+select *, price*case when price < 10 then 0.1 when price < 20 then 1 when price > 20 then 1.6 end as scaled_price from products;
+
+mysql> select *, power(id, 2) from suppliers;
++----+----------------------+-------------------+------------------------+--------------+
+| ID | supplier             | ProductName       | ContactEmail           | power(id, 2) |
++----+----------------------+-------------------+------------------------+--------------+
+|  1 | Chips chips          | Straws            | info@chipschips.com    |            1 |
+|  2 | Bed, Bath and Beyond | Knives            | help@b3.com            |            4 |
+|  3 | Grossmans            | Drill bits        | mike@mikegrossmans.com |            9 |
+|  4 | Fishbone Forks       | Ursula's Utensils | ursula@mainz.de        |           16 |
+|  5 | Boston Warehouse     | Manfrotto tripod  | contact@host.com       |           25 |
+|  6 | Bills Trucking       | cargo service     | bill@billyboy.org      |           36 |
+|  7 | NULL                 | Cargo service     | bill@billyboy.org      |           49 |
++----+----------------------+-------------------+------------------------+--------------+
+
+# find common rows between tables
+select * from charles # where charles is a view with rows in customers with customerid > 50
+intersect
+select * from customers;
+
+# find rows in the first table which do not exist in the second
+select * from customers
+except
+select * from charles;
