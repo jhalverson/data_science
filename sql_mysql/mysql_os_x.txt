@@ -375,3 +375,27 @@ select * from customers;
 select * from customers
 except
 select * from charles;
+
+
+### Friday, July 15, 2016
+select categoryID, supplierid, avg(price), count(supplierid) from products where supplierid < 100 group by categoryID, supplierid having avg(price) > 25 order by categoryID desc;
+
+# join with "using" instead of "on"
+select * from customers join orders using (customerid);
+
+A database contains catalogs which contain schemas which contain tables
+
+CREATE SCHEMA SALES AUTHORIZATION SALES_MANAGER DEFAULT CHARACTER SET ASCII_FULL;
+
+CREATE DOMAIN AGE AS INTEGER CHECK (AGE > 20)
+
+DDL (data definition), DML (data manipulation lang), DCL (control)
+
+Aggregate or set functions: avg, min, max, sum, count - these operate on columns instead
+of the scalar functions.
+
+DCL has commit, rollback, grant, revoke
+
+Collation is how strings compare with one another for a given character set.
+
+Composite keys as primary keys
