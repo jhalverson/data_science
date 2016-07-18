@@ -399,3 +399,35 @@ DCL has commit, rollback, grant, revoke
 Collation is how strings compare with one another for a given character set.
 
 Composite keys as primary keys
+
+
+### Monday, July 18, 2016
+mysql> select county, avg(tiv_2012) from insur where county between 'A%' and 'H%' group by county having avg(tiv_2012) > 300000.0 order by county;
++------------------+----------------+
+| county           | avg(tiv_2012)  |
++------------------+----------------+
+| ALACHUA COUNTY   | 1021623.785457 |
+| BAY COUNTY       | 3013689.310074 |
+| BRADFORD COUNTY  | 1177371.827097 |
+| BREVARD COUNTY   | 1939929.287844 |
+| BROWARD COUNTY   | 2690955.647285 |
+| CALHOUN COUNTY   |  715649.379706 |
+| CHARLOTTE COUNTY | 1459168.163333 |
+| CITRUS COUNTY    | 1018138.243984 |
+| CLAY COUNTY      |  716967.506942 |
+| COLLIER COUNTY   | 2419465.874003 |
+| COLUMBIA COUNTY  | 1454704.909840 |
+| DESOTO COUNTY    |  596621.362870 |
+| DIXIE COUNTY     |  559451.452000 |
+| DUVAL COUNTY     | 3262571.100011 |
+| ESCAMBIA COUNTY  | 2309973.569818 |
+| FLAGLER COUNTY   | 1152014.854167 |
+| FRANKLIN COUNTY  |  756127.959730 |
+| GADSDEN COUNTY   |  903971.397704 |
+| GILCHRIST COUNTY |  314619.013333 |
+| GLADES COUNTY    | 1010138.583636 |
+| GULF COUNTY      |  854822.123472 |
++------------------+----------------+
+21 rows in set (0.05 sec)
+
+select policy_id, tiv_2011, tiv_2012 from insur where county = any(select county from insur where county like 'L%');
