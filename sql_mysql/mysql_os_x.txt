@@ -97,7 +97,6 @@ mysql> select * from suppliers;
 +----+-------------+-------------+------------------+
 1 row in set (0.00 sec)
 
-
 ### Joins
 #The INNER JOIN creates a new result table by combining column values of two
 #tables (table1 and table2) based upon the join-predicate. The query
@@ -431,3 +430,183 @@ mysql> select county, avg(tiv_2012) from insur where county between 'A%' and 'H%
 21 rows in set (0.05 sec)
 
 select policy_id, tiv_2011, tiv_2012 from insur where county = any(select county from insur where county like 'L%');
+
+
+###Tuesday, July 19, 2016
+# working with dates
+
+mysql> select curdate();
++------------+
+| curdate()  |
++------------+
+| 2016-07-19 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select curtime();
++-----------+
+| curtime() |
++-----------+
+| 11:48:38  |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2016-07-19 11:48:45 |
++---------------------+
+1 row in set (0.00 sec)
+
+TIP: The most difficult part when working with dates is to be sure that the format of the date you are trying to insert, matches the format of the date column in the database.
+
+For instance, the query "SELECT * FROM Orders WHERE OrderDate='2008-11-11'" will not return anything from
+1	Geitost	2008-11-11 13:23:44
+2	Camembert Pierrot	2008-11-09 15:45:21
+3	Mozzarella di Giovanni	2008-11-11 11:12:01
+4	Mascarpone Fabioli	2008-10-29 14:56:59
+
+because the query is looking for dates with no time portion.
+
+###
+mysql> select * from orders where orderdate1 = '2016-07-19';
+Empty set (0.00 sec)
+
+mysql> select * from orders where orderdate2 = '2016-07-19';
++----+---------------------+------------+---------------------+-------+
+| id | orderdate1          | orderdate2 | orderdate3          | price |
++----+---------------------+------------+---------------------+-------+
+|  1 | 2016-07-19 14:14:40 | 2016-07-19 | 2016-07-19 14:14:40 | 34.75 |
++----+---------------------+------------+---------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from orders where orderdate3 = '2016-07-19';
+Empty set (0.00 sec)
+###
+
+As long as your data contains only the date portion, your queries will work as expected. However, if a time portion is involved, it gets complicated.
+
+NOW()	Returns the current date and time
+CURDATE()	Returns the current date
+CURTIME()	Returns the current time
+DATE()	Extracts the date part of a date or date/time expression
+EXTRACT()	Returns a single part of a date/time
+DATE_ADD()	Adds a specified time interval to a date
+DATE_SUB()	Subtracts a specified time interval from a date
+DATEDIFF()	Returns the number of days between two dates
+DATE_FORMAT()	Displays date/time data in different formats
+
+MySQL comes with the following data types for storing a date or a date/time value in the database:
+
+DATE - format YYYY-MM-DD
+DATETIME  - format: YYYY-MM-DD HH:MI:SS
+TIMESTAMP - format: YYYY-MM-DD HH:MI:SS
+YEAR - format YYYY or YY
+
+select * from orders where orders.orderdate > '1996-09-04';
+select avg(orderdate) from orders; 1996.2244897959183
+
+mysql> select datediff('1999-05-22', '1996-07-11');
++--------------------------------------+
+| datediff('1999-05-22', '1996-07-11') |
++--------------------------------------+
+|                                 1045 |
++--------------------------------------+
+
+mysql> select datediff('1996-07-11', '1999-05-22');
++--------------------------------------+
+| datediff('1996-07-11', '1999-05-22') |
++--------------------------------------+
+|                                -1045 |
++--------------------------------------+
+
+mysql> select date_add('1996-07-11', interval 60 day);
++-----------------------------------------+
+| date_add('1996-07-11', interval 60 day) |
++-----------------------------------------+
+| 1996-09-09                              |
++-----------------------------------------+
+
+mysql> select date_add('1996-07-11', interval (select datediff('1999-07-11', '1996-05-22')) day);
++------------------------------------------------------------------------------------+
+| date_add('1996-07-11', interval (select datediff('1999-07-11', '1996-05-22')) day) |
++------------------------------------------------------------------------------------+
+| 1999-08-30                                                                         |
++------------------------------------------------------------------------------------+
+
+mysql> select EXTRACT(year from '1999-07-11') + 999;
++---------------------------------------+
+| EXTRACT(year from '1999-07-11') + 999 |
++---------------------------------------+
+|                                  2998 |
++---------------------------------------+
+
+mysql> select extract(year from date('2014-11-22 13:23:44.657'));
++----------------------------------------------------+
+| extract(year from date('2014-11-22 13:23:44.657')) |
++----------------------------------------------------+
+|                                               2014 |
++----------------------------------------------------+
+
+mysql> select DATE_FORMAT(NOW(),'%d %b %Y %T:%f');
++-------------------------------------+
+| DATE_FORMAT(NOW(),'%d %b %Y %T:%f') |
++-------------------------------------+
+| 19 Jul 2016 13:02:22:000000         |
++-------------------------------------+
+
+mysql> select DATE_FORMAT('2014-11-22 13:23:44.657','%d %b %Y %T:%f');
++---------------------------------------------------------+
+| DATE_FORMAT('2014-11-22 13:23:44.657','%d %b %Y %T:%f') |
++---------------------------------------------------------+
+| 22 Nov 2014 13:23:44:657000                             |
++---------------------------------------------------------+
+
+Even if DATETIME and TIMESTAMP return the same format, they work very differently. In an INSERT or UPDATE query, the TIMESTAMP automatically set itself to the current date and time. TIMESTAMP also accepts various formats, like YYYYMMDDHHMISS, YYMMDDHHMISS, YYYYMMDD, or YYMMDD.
+
+# make a table with date/time data types
+mysql> create table orders (id int primary key, orderdate1 timestamp, orderdate2 date, orderdate3 datetime, price float);
+
+mysql> insert into orders values(1, now(), '2016-07-19', now(), 34.75);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into orders values(2, '2002-07-10 10:07:05', '2050-03-07', '2000-05-15 15:05:00', 12.50);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from orders;
++----+---------------------+------------+---------------------+-------+
+| id | orderdate1          | orderdate2 | orderdate3          | price |
++----+---------------------+------------+---------------------+-------+
+|  1 | 2016-07-19 14:14:40 | 2016-07-19 | 2016-07-19 14:14:40 | 34.75 |
+|  2 | 2002-07-10 10:07:05 | 2050-03-07 | 2000-05-15 15:05:00 |  12.5 |
+|  3 | 2012-03-29 22:41:00 | 2005-10-03 | 2020-01-10 05:45:09 |   150 |
++----+---------------------+------------+---------------------+-------+
+
+mysql> desc orders;
++------------+-----------+------+-----+-------------------+-----------------------------+
+| Field      | Type      | Null | Key | Default           | Extra                       |
++------------+-----------+------+-----+-------------------+-----------------------------+
+| id         | int(11)   | NO   | PRI | NULL              |                             |
+| orderdate1 | timestamp | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+| orderdate2 | date      | YES  |     | NULL              |                             |
+| orderdate3 | datetime  | YES  |     | NULL              |                             |
+| price      | float     | YES  |     | NULL              |                             |
++------------+-----------+------+-----+-------------------+-----------------------------+
+
+mysql> select * from orders where extract(year from date(orderdate1)) = 2012;
++----+---------------------+------------+---------------------+-------+
+| id | orderdate1          | orderdate2 | orderdate3          | price |
++----+---------------------+------------+---------------------+-------+
+|  3 | 2012-03-29 22:41:00 | 2005-10-03 | 2020-01-10 05:45:09 |   150 |
++----+---------------------+------------+---------------------+-------+
+
+mysql> select datediff(orderdate1, orderdate2) from orders;
++----------------------------------+
+| datediff(orderdate1, orderdate2) |
++----------------------------------+
+|                                0 |
+|                           -17407 |
+|                             2369 |
++----------------------------------+
+
