@@ -610,3 +610,50 @@ mysql> select datediff(orderdate1, orderdate2) from orders;
 |                             2369 |
 +----------------------------------+
 
+
+mysql> select @x:=avg(orderdate2) from orders;
++---------------------+
+| @x:=avg(orderdate2) |
++---------------------+
+|  20237343.000000000 |
++---------------------+
+
+mysql> select *, @x from orders;
++----+---------------------+------------+---------------------+-------+--------------------+
+| id | orderdate1          | orderdate2 | orderdate3          | price | @x                 |
++----+---------------------+------------+---------------------+-------+--------------------+
+|  1 | 2016-07-19 14:14:40 | 2016-07-19 | 2016-07-19 14:14:40 | 34.75 | 20237343.000000000 |
+|  2 | 2002-07-10 10:07:05 | 2050-03-07 | 2000-05-15 15:05:00 |  12.5 | 20237343.000000000 |
+|  3 | 2012-03-29 22:41:00 | 2005-10-03 | 2020-01-10 05:45:09 |   150 | 20237343.000000000 |
++----+---------------------+------------+---------------------+-------+--------------------+
+
+mysql> select *, @x - datediff(orderdate1, orderdate2) from orders;
++----+---------------------+------------+---------------------+-------+-----------------------------------------+
+| id | orderdate1          | orderdate2 | orderdate3          | price | @x - datediff(orderdate1, orderdate2)   |
++----+---------------------+------------+---------------------+-------+-----------------------------------------+
+|  1 | 2016-07-19 14:14:40 | 2016-07-19 | 2016-07-19 14:14:40 | 34.75 | 20237343.000000000000000000000000000000 |
+|  2 | 2002-07-10 10:07:05 | 2050-03-07 | 2000-05-15 15:05:00 |  12.5 | 20254750.000000000000000000000000000000 |
+|  3 | 2012-03-29 22:41:00 | 2005-10-03 | 2020-01-10 05:45:09 |   150 | 20234974.000000000000000000000000000000 |
++----+---------------------+------------+---------------------+-------+-----------------------------------------+
+
+
+### Wednesday, July 20, 2016
+On indexes, rows are stored in the order they are inserted. An index simply list the rows by a specific column in order and stores the row index as pointer to the table.
+
+# only need table qualifier when column name is the same between tables
+select customers.customerid, orderdate, Country from customers, orders using (customerid);
+
+You can't update expressions in views; only columns in the underlying tables
+
+select * from customers limit 10 offset 5;
+
+Merge is a statement to conditionally insert values
+
+Temporal data - PERIOD -> application time (which dept an employee worked in) vs. system time (bank transactions)
+
+select city, case when city < 'D' then 1 when city < 'P' then 2 else 3 end as code from customers order by code;
+
+select * from customers where customerid > (select avg(price) from products);
+
+# select columns from tables [join] [where] [group by] [having] [order by]
+select customerid, city, orderid from customers inner join orders using (customerid) where customerid > 50 and orderid > 10260;
