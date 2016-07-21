@@ -657,3 +657,27 @@ select * from customers where customerid > (select avg(price) from products);
 
 # select columns from tables [join] [where] [group by] [having] [order by]
 select customerid, city, orderid from customers inner join orders using (customerid) where customerid > 50 and orderid > 10260;
+
+
+### Thursday, July 21, 2016
+select * from customers order by City, CustomerName desc, Address;
+select * from customers order by 5, 2 desc, 4;
+select * from products where price > 1.25 * (select avg(price) from products);
+select * from products where price > 50 and not supplierid = 3;
+null does not equal null (must use is null)
+
+select price, price < 20, productid is null from products;
+Price	price < 20	productid is null
+18	1	0
+19	1	0
+10	1	0
+22	0	0
+21.35	0	0
+
+To escape characters like _ and % use ! like '100!%'
+
+Derived columns are like: select name, heigh, 2*height from bodies;
+select productname || 'out' as concated from products where price between 3.5 and 75; // concatenation
+select City || ', ' || Country as Address from customers;
+select City || ', ' || trim(Country) as Address from customers; // chars are padded so use trim
+
