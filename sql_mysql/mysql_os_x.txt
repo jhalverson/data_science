@@ -681,3 +681,115 @@ select productname || 'out' as concated from products where price between 3.5 an
 select City || ', ' || Country as Address from customers;
 select City || ', ' || trim(Country) as Address from customers; // chars are padded so use trim
 
+
+### Friday, July 22, 2016
+mysql> select county, substring(county from 3) from insur_ limit 3;
++----------------+--------------------------+
+| county         | substring(county from 3) |
++----------------+--------------------------+
+| BROWARD COUNTY | OWARD COUNTY             |
+| CITRUS COUNTY  | TRUS COUNTY              |
+| DUVAL COUNTY   | VAL COUNTY               |
++----------------+--------------------------+
+
+mysql> select county, substring(county from 3 for 5) from insur_ limit 3;
++----------------+--------------------------------+
+| county         | substring(county from 3 for 5) |
++----------------+--------------------------------+
+| BROWARD COUNTY | OWARD                          |
+| CITRUS COUNTY  | TRUS                           |
+| DUVAL COUNTY   | VAL C                          |
++----------------+--------------------------------+
+
+mysql> select distinct county from insur_ where county like 'b%'; // notice not case-sensitive for this SQL engine
++-----------------+
+| county          |
++-----------------+
+| BROWARD COUNTY  |
+| BAY COUNTY      |
+| BREVARD COUNTY  |
+| BAKER COUNTY    |
+| BRADFORD COUNTY |
++-----------------+
+
+mysql> select county, char_length(county), length(county), character_length(county) from insur_ limit 5;
++-----------------+---------------------+----------------+--------------------------+
+| county          | char_length(county) | length(county) | character_length(county) |
++-----------------+---------------------+----------------+--------------------------+
+| BROWARD COUNTY  |                  14 |             14 |                       14 |
+| CITRUS COUNTY   |                  13 |             13 |                       13 |
+| DUVAL COUNTY    |                  12 |             12 |                       12 |
+| OKALOOSA COUNTY |                  15 |             15 |                       15 |
+| SARASOTA COUNTY |                  15 |             15 |                       15 |
++-----------------+---------------------+----------------+--------------------------+
+
+# position returns the position of the first occurance of the substring
+mysql> select distinct county, position('H CO' in county) from insur_ where position('H CO' in county) <> 0;
++---------------------+----------------------------+
+| county              | position('H CO' in county) |
++---------------------+----------------------------+
+| HILLSBOROUGH COUNTY |                         12 |
+| PALM BEACH COUNTY   |                         10 |
++---------------------+----------------------------+
+
+mysql> select current_user();
++----------------------+
+| current_user()       |
++----------------------+
+| jhalverson@localhost |
++----------------------+
+
+mysql> select current_date;
++--------------+
+| current_date |
++--------------+
+| 2016-07-22   |
++--------------+
+
+mysql> select DATE_ADD(current_date, INTERVAL 90 day);
++-----------------------------------------+
+| DATE_ADD(current_date, INTERVAL 90 day) |
++-----------------------------------------+
+| 2016-10-20                              |
++-----------------------------------------+
+
+# cast
+select cast(price as integer) from products;
+select cast(tiv_2012 as signed) from insur_; // Use signed instead of integer in MySQL
+
+mysql> select char_length(cast(tiv_2012 as char(20))) from insur_ limit 5;
++-----------------------------------------+
+| char_length(cast(tiv_2012 as char(20))) |
++-----------------------------------------+
+|                                       8 |
+|                                       7 |
+|                                       9 |
+|                                       8 |
+|                                       9 |
++-----------------------------------------+
+
+mysql> select county, case when position('BRO' in county) <> 0 then 'Bro' else 'Not Bro' end from insur_ limit 5;
++-----------------+------------------------------------------------------------------------+
+| county          | case when position('BRO' in county) <> 0 then 'Bro' else 'Not Bro' end |
++-----------------+------------------------------------------------------------------------+
+| BROWARD COUNTY  | Bro                                                                    |
+| CITRUS COUNTY   | Not Bro                                                                |
+| DUVAL COUNTY    | Not Bro                                                                |
+| OKALOOSA COUNTY | Not Bro                                                                |
+| SARASOTA COUNTY | Not Bro                                                                |
++-----------------+------------------------------------------------------------------------+
+
+# successive joins or chaining
+select * from customers inner join orders on customers.customerid=orders.customerid and customers.customerid > 50 inner join orderdetails on orderdetails.orderid=orders.orderid;
+
+
+# join with and condition
+select * from customers inner join orders on customers.customerid=orders.customerid and customers.customerid > 50;
+
+nullif is useful to replace -1 or 99 or 'N/A' with null
+Ex: select nullif(job, -1) this returns null if job is -1 or job is it is not equal to -1
+
+A domain is a set of permissible values for a column.
+
+# joins (Chapter 7)
+select * from customers natural join orders natural join shippers; // compares columns with the same name for equality
