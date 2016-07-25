@@ -793,3 +793,21 @@ A domain is a set of permissible values for a column.
 
 # joins (Chapter 7)
 select * from customers natural join orders natural join shippers; // compares columns with the same name for equality
+
+
+### Monday, July 25, 2016
+A null is not a match when joining.
+
+The cross join is the Cartesian product or every row with every row.
+
+The using clause is similar to natural join except with using you can specify which columns
+should match whereas with natural it will compare all columns with the same name for equality.
+select * from table1 join_type table2 using (column1, column2);
+
+Use cross join or Cartesian product: select * from table1 cross join table 2;
+Be wary of natural joins because if column names are renamed then previously written scripts can fail.
+
+Join is equivalent to inner join since it is the most common.
+
+inner join on t.price * t.sales > 10 * r.advance and t.title_id = r.title_id
+and t.title_id = r.title_id; // list books whose revenue is ten times larger than its advance
