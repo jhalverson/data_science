@@ -811,3 +811,21 @@ Join is equivalent to inner join since it is the most common.
 
 inner join on t.price * t.sales > 10 * r.advance and t.title_id = r.title_id
 and t.title_id = r.title_id; // list books whose revenue is ten times larger than its advance
+
+select o1.orderdetailid, o2.productid from orderdetails as o1 inner join orderdetails as o2 on o1.orderdetailid=o2.productid;
+
+
+### Tuesday, July 26, 2016
+# Subqueries
+select * from insur_ where county in (select county from insur_ where tiv_2012 > 1500000000.0);
+
+select * from insur_ where tiv_2012 >= (select max(tiv_2012) from insur_ where construction='Wood');
+
+Simple subqueries versus correlated subqueries. Here is a correlated subquery where
+a column of the table in outer query appears in the condition of the inner query.
+
+select c.* from customers as c where 10240 + customerid in (select orderid from orders where c.customerid=orders.customerid);
+CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
+14	Chop-suey Chinese	Yang Wang	Hauptstr. 29	Bern	3012	Switzerland
+24	Folk och fä HB	Maria Larsson	Åkergatan 24	Bräcke	S-844 67	Sweden
+44	Lehmanns Marktstand	Renate Messner	Magazinweg 7	Frankfurt a.M.	60528	Germany
