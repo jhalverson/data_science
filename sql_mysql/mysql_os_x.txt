@@ -829,3 +829,7 @@ CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
 14	Chop-suey Chinese	Yang Wang	Hauptstr. 29	Bern	3012	Switzerland
 24	Folk och fä HB	Maria Larsson	Åkergatan 24	Bräcke	S-844 67	Sweden
 44	Lehmanns Marktstand	Renate Messner	Magazinweg 7	Frankfurt a.M.	60528	Germany
+
+
+### Wednesday, July 27, 2016
+# Read chapter on set operations
