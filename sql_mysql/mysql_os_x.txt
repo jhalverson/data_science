@@ -833,3 +833,4 @@ CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
 
 ### Wednesday, July 27, 2016
 # Read chapter on set operations
+# Completed set operations
