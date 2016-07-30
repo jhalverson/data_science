@@ -834,3 +834,8 @@ CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
 ### Wednesday, July 27, 2016
 # Read chapter on set operations
 # Completed set operations
+
+### Friday, July 29, 2016
+Use order by at the very end of union, intersection, except
+
+To calculate a running average use a cross join with an inequality in the where clause and then group by
