@@ -839,3 +839,10 @@ CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
 Use order by at the very end of union, intersection, except
 
 To calculate a running average use a cross join with an inequality in the where clause and then group by
+
+### Saturday, July 30, 2016
+select * from insur_ where rand() < 0.01; // mysql approach to get a random sample of rows
+
+select distinct * from customers; // checking for duplicates
+
+Running statistics, trimmed mean
