@@ -844,5 +844,212 @@ To calculate a running average use a cross join with an inequality in the where 
 select * from insur_ where rand() < 0.01; // mysql approach to get a random sample of rows
 
 select distinct * from customers; // checking for duplicates
+Or to look for duplicates using composite fields:
+mysql> select supplier, productname, count(*) from suppliers group by supplier, productname having count(*) >= 1;
++----------------------+-------------------+----------+
+| supplier             | productname       | count(*) |
++----------------------+-------------------+----------+
+| NULL                 | Cargo service     |        1 |
+| Bed, Bath and Beyond | Knives            |        1 |
+| Bills Trucking       | cargo service     |        2 |
+| Boston Warehouse     | Manfrotto tripod  |        1 |
+| Chips chips          | Straws            |        1 |
+| Fishbone Forks       | Ursula's Utensils |        1 |
+| Grossmans            | Drill bits        |        1 |
++----------------------+-------------------+----------+
 
-Running statistics, trimmed mean
+### Monday, August 1, 2016
+Running average:
+
+mysql> select * from insur_mini;
++-----------+---------------------+-------------+-------------+---------------------+
+| policy_id | county              | tiv_2011    | tiv_2012    | construction        |
++-----------+---------------------+-------------+-------------+---------------------+
+|    100074 | BROWARD COUNTY      |    44665.57 |    36878.76 | Wood                |
+|    100123 | CITRUS COUNTY       |     4374.00 |     6774.39 | Wood                |
+|    100141 | DUVAL COUNTY        |   494802.00 |   559055.01 | Masonry             |
+|    100183 | OKALOOSA COUNTY     |    52032.55 |    75451.36 | Wood                |
+|    100203 | SARASOTA COUNTY     |   220993.74 |   314625.69 | Wood                |
+|    100208 | COLLIER COUNTY      |  2187352.81 |  2004315.13 | Reinforced Masonry  |
+|    100316 | GADSDEN COUNTY      |   112828.37 |   124303.92 | Wood                |
+|    100318 | LAKE COUNTY         | 16920000.00 | 24570000.00 | Reinforced Concrete |
+|    100361 | MIAMI DADE COUNTY   |  5391882.17 |  7972037.97 | Reinforced Masonry  |
+|    100377 | MARION COUNTY       |    44908.51 |    43112.17 | Wood                |
+|    100403 | WALTON COUNTY       |    23031.00 |    39940.61 | Wood                |
+|    100406 | VOLUSIA COUNTY      |      404.76 |      329.46 | Wood                |
+|    100433 | COLLIER COUNTY      |   757350.00 |   839901.91 | Masonry             |
+|    100440 | COLLIER COUNTY      |    12865.48 |    19688.58 | Wood                |
+|    100464 | ORANGE COUNTY       |   685903.50 |   952174.67 | Masonry             |
+|    100486 | SANTA ROSA COUNTY   |   500148.00 |   700452.27 | Masonry             |
+|    100491 | MIAMI DADE COUNTY   |   212163.86 |   236011.08 | Wood                |
+|    100548 | POLK COUNTY         |   716757.55 |  1038151.64 | Masonry             |
+|    100552 | ESCAMBIA COUNTY     |  1142758.99 |   931120.02 | Masonry             |
+|    100557 | HILLSBOROUGH COUNTY |    16917.01 |    20223.01 | Wood                |
++-----------+---------------------+-------------+-------------+---------------------+
+
+mysql> select a.policy_id a_id, a.tiv_2012 a_tiv, b.policy_id b_id, b.tiv_2012 b_tiv from insur_mini a, insur_mini b where a.policy_id >= b.policy_id order by a_id;
++--------+-------------+--------+-------------+
+| a_id   | a_tiv       | b_id   | b_tiv       |
++--------+-------------+--------+-------------+
+| 100074 |    36878.76 | 100074 |    36878.76 |
+| 100123 |     6774.39 | 100074 |    36878.76 |
+| 100123 |     6774.39 | 100123 |     6774.39 |
+| 100141 |   559055.01 | 100074 |    36878.76 |
+| 100141 |   559055.01 | 100141 |   559055.01 |
+| 100141 |   559055.01 | 100123 |     6774.39 |
+| 100183 |    75451.36 | 100123 |     6774.39 |
+| 100183 |    75451.36 | 100074 |    36878.76 |
+| 100183 |    75451.36 | 100183 |    75451.36 |
+| 100183 |    75451.36 | 100141 |   559055.01 |
+| 100203 |   314625.69 | 100123 |     6774.39 |
+| 100203 |   314625.69 | 100074 |    36878.76 |
+| 100203 |   314625.69 | 100183 |    75451.36 |
+| 100203 |   314625.69 | 100141 |   559055.01 |
+| 100203 |   314625.69 | 100203 |   314625.69 |
+...
+
+mysql> select a.policy_id, avg(b.tiv_2012) from insur_mini a, insur_mini b where a.policy_id >= b.policy_id group by a.policy_id;
++-----------+-----------------+
+| policy_id | avg(b.tiv_2012) |
++-----------+-----------------+
+|    100074 |    36878.760000 |
+|    100123 |    21826.575000 |
+|    100141 |   200902.720000 |
+|    100183 |   169539.880000 |
+|    100203 |   198557.042000 |
+|    100208 |   499516.723333 |
+|    100316 |   445914.894286 |
+|    100318 |  3461425.532500 |
+|    100361 |  3962604.692222 |
+|    100377 |  3570655.440000 |
+|    100403 |  3249681.364545 |
+|    100406 |  2978902.039167 |
+|    100433 |  2814363.567692 |
+|    100440 |  2614743.925714 |
+|    100464 |  2503905.975333 |
+|    100486 |  2391190.118750 |
+|    100491 |  2264414.881176 |
+|    100548 |  2196289.145556 |
+|    100552 |  2129701.296842 |
+|    100557 |  2024227.382500 |
++-----------+-----------------+
+
+# trimmed mean -- ignore the 3 largest and smallest values
+mysql> select avg(a.tiv_2012) from insur_mini a where (select count(*) from insur_mini b where a.tiv_2012 >= b.tiv_2012) >= 3 and (select count(*) from insur_mini c where a.tiv_2012 <= c.tiv_2012) >= 3;
++-----------------+
+| avg(a.tiv_2012) |
++-----------------+
+|   495962.864375 |
++-----------------+
+
+mysql> select avg(tiv_2012) from insur_mini;
++----------------+
+| avg(tiv_2012)  |
++----------------+
+| 2024227.382500 |
++----------------+
+
+mysql> select avg(a.tiv_2012) from insur_mini a where (select count(*) from insur_mini b where a.tiv_2012 >= b.tiv_2012) >= 0 and (select count(*) from insur_mini c where a.tiv_2012 <= c.tiv_2012) >= 0;
++-----------------+
+| avg(a.tiv_2012) |
++-----------------+
+|  2024227.382500 |
++-----------------+
+
+# Tried to make a sequence but apparently MySQL does not support them.
+
+select policy_id, case when construction='Wood' then 'Cedar' when construction='Masonry' then 'Cheddar' else construction end from insur_mini;
++-----------+-------------------------------------------------------------------------------------------------------------+
+| policy_id | case when construction='Wood' then 'Cedar' when construction='Masonry' then 'Cheddar' else construction end |
++-----------+-------------------------------------------------------------------------------------------------------------+
+|    100074 | Cedar                                                                                                       |
+|    100123 | Cedar                                                                                                       |
+|    100141 | Cheddar                                                                                                     |
+|    100183 | Cedar                                                                                                       |
+|    100203 | Cedar                                                                                                       |
+|    100208 | Reinforced Masonry                                                                                          |
+|    100316 | Cedar                                                                                                       |
+|    100318 | Reinforced Concrete                                                                                         |
+|    100361 | Reinforced Masonry                                                                                          |
+|    100377 | Cedar                                                                                                       |
+|    100403 | Cedar                                                                                                       |
+|    100406 | Cedar                                                                                                       |
+|    100433 | Cheddar                                                                                                     |
+|    100440 | Cedar                                                                                                       |
+|    100464 | Cheddar                                                                                                     |
+|    100486 | Cheddar                                                                                                     |
+|    100491 | Cedar                                                                                                       |
+|    100548 | Cheddar                                                                                                     |
+|    100552 | Cheddar                                                                                                     |
+|    100557 | Cedar                                                                                                       |
++-----------+-------------------------------------------------------------------------------------------------------------+
+
+# Assigning rank
+mysql> select policy_id, tiv_2012, (select count(*) from insur_mini b where a.tiv_2012 >= b.tiv_2012) from insur_mini a;
++-----------+-------------+--------------------------------------------------------------------+
+| policy_id | tiv_2012    | (select count(*) from insur_mini b where a.tiv_2012 >= b.tiv_2012) |
++-----------+-------------+--------------------------------------------------------------------+
+|    100074 |    36878.76 |                                                                  5 |
+|    100123 |     6774.39 |                                                                  2 |
+|    100141 |   559055.01 |                                                                 12 |
+|    100183 |    75451.36 |                                                                  8 |
+|    100203 |   314625.69 |                                                                 11 |
+|    100208 |  2004315.13 |                                                                 18 |
+|    100316 |   124303.92 |                                                                  9 |
+|    100318 | 24570000.00 |                                                                 20 |
+|    100361 |  7972037.97 |                                                                 19 |
+|    100377 |    43112.17 |                                                                  7 |
+|    100403 |    39940.61 |                                                                  6 |
+|    100406 |      329.46 |                                                                  1 |
+|    100433 |   839901.91 |                                                                 14 |
+|    100440 |    19688.58 |                                                                  3 |
+|    100464 |   952174.67 |                                                                 16 |
+|    100486 |   700452.27 |                                                                 13 |
+|    100491 |   236011.08 |                                                                 10 |
+|    100548 |  1038151.64 |                                                                 17 |
+|    100552 |   931120.02 |                                                                 15 |
+|    100557 |    20223.01 |                                                                  4 |
++-----------+-------------+--------------------------------------------------------------------+
+
+select policy_id, tiv_2012 from insur_mini order by tiv_2012;
++-----------+-------------+
+| policy_id | tiv_2012    |
++-----------+-------------+
+|    100406 |      329.46 |
+|    100123 |     6774.39 |
+|    100440 |    19688.58 |
+|    100557 |    20223.01 |
+|    100074 |    36878.76 |
+|    100403 |    39940.61 |
+|    100377 |    43112.17 |
+|    100183 |    75451.36 |
+|    100316 |   124303.92 |
+|    100491 |   236011.08 |
+|    100203 |   314625.69 |
+|    100141 |   559055.01 |
+|    100486 |   700452.27 |
+|    100433 |   839901.91 |
+|    100552 |   931120.02 |
+|    100464 |   952174.67 |
+|    100548 |  1038151.64 |
+|    100208 |  2004315.13 |
+|    100361 |  7972037.97 |
+|    100318 | 24570000.00 |
++-----------+-------------+
+
+Temporary tables are destroyed at the end of a session. They are useful since one can prevent
+users from having base tables which they can overload, alter, etc. MySQL does not recognize
+the local and global temporary tables.
+
+Temporary tables are different than views and using create table as select * from table where x
+
+View
++ may be assembled from base tables, temporary tables or other views
++ stored as a select statement and not the actual data
++ views can be updated if their rows come from a single base table without group by, having, distinct
+
+Chapter 14: Transactions
+A transactions is a set of one or more SQL statement executed as a single logical unit. They
+can be commited or rolled back, which means all statements and data changes are reversed. Seems
+useful in the banking business where a power outage for instance can cause a change in an account
+in a suspicous way.
