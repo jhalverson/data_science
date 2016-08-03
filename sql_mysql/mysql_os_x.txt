@@ -1053,3 +1053,37 @@ A transactions is a set of one or more SQL statement executed as a single logica
 can be commited or rolled back, which means all statements and data changes are reversed. Seems
 useful in the banking business where a power outage for instance can cause a change in an account
 in a suspicous way.
+
+
+### Tuesday, August 2, 2016
+The aggregate function count ignores null values.
+
+One can define variables or parameters and then use them via :param1
+
+mysql> select @x:=10.413;
++------------+
+| @x:=10.413 |
++------------+
+|     10.413 |
++------------+
+
+mysql> select county, @x from insur_mini;
++---------------------+--------+
+| county              | @x     |
++---------------------+--------+
+| BROWARD COUNTY      | 10.413 |
+| CITRUS COUNTY       | 10.413 |
+| DUVAL COUNTY        | 10.413 |
+...
+
+mysql> SET @t1=1, @t2=2, @t3:=4;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @t1, @t2, @t3, @t4 := @t1+@t2+@t3;
++------+------+------+--------------------+
+| @t1  | @t2  | @t3  | @t4 := @t1+@t2+@t3 |
++------+------+------+--------------------+
+|    1 |    2 |    4 |                  7 |
++------+------+------+--------------------+
+
+SQL has functions that use regular expressions like position_regex()
