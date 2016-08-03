@@ -675,6 +675,7 @@ Price	price < 20	productid is null
 21.35	0	0
 
 To escape characters like _ and % use ! like '100!%'
+where quote like '20#%' escape '#'; // # must not appear in the string
 
 Derived columns are like: select name, heigh, 2*height from bodies;
 select productname || 'out' as concated from products where price between 3.5 and 75; // concatenation
@@ -1087,3 +1088,65 @@ mysql> SELECT @t1, @t2, @t3, @t4 := @t1+@t2+@t3;
 +------+------+------+--------------------+
 
 SQL has functions that use regular expressions like position_regex()
+
+
+### Wednesday, August 3, 2016
+Be careful when comparing id's that are stored as integers in one table and character arrays in another.
+
+Row value expression:
+mysql> select * from insur_mini where (county, construction) = ('COLLIER COUNTY', 'Wood');
++-----------+----------------+----------+----------+--------------+
+| policy_id | county         | tiv_2011 | tiv_2012 | construction |
++-----------+----------------+----------+----------+--------------+
+|    100440 | COLLIER COUNTY | 12865.48 | 19688.58 | Wood         |
++-----------+----------------+----------+----------+--------------+
+
+Similar is a predicate where you can compare a character string to a regular expression.
+
+Be careful with any and null values
+
+select * from customers where exists (select * from orders where orders.customerid=customers.customerid); // 74 rows
+select * from customers where 0 <> (select count(*) from orders where orders.customerid=customers.customerid); // 74 rows
+select * from customers, orders where orders.customerid=customers.customerid; // 196 which is cardinality of orders
+select distinct customerid from orders; // 74 rows
+SELECT * FROM [Customers] where not (city='London');
+
+Unique is like exists but it evaluate to true if no two rows are the same.
+
+Overlaps may be used to determine if two time intervals overlap
+
+Match can be used for referential integrity
+
+select categoryid, avg(price) as mean_price from products group by categoryid having categoryid>=3 and mean_price < 30;
+
+SQL 1999 introduced a means for using windows
+
+Corresponding can be used with union to combine columns with the same names in both tables.
+
+A natural joins considers a match when both the column names, types and lengths are equal.
+
+// triple join
+select * from customers c left outer join orders o on c.customerid=o.customerid left outer join shippers s on s.shipperid=o.shipperid;
+
+CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country	OrderID	EmployeeID	OrderDate	ShipperID	ShipperName	Phone
+null	Alfreds Futterkiste	Maria Anders	Obere Str. 57	Berlin	12209	Germany	null	null	null	null	null	null
+2	Ana Trujillo Emparedados y helados	Ana Trujillo	Avda. de la Constitución 2222	México D.F.	05021	Mexico	10308	7	1996-09-18	3	Federal Shipping	(503) 555-9931
+3	Antonio Moreno Taquería	Antonio Moreno	Mataderos 2312	México D.F.	05023	Mexico	10365	3	1996-11-27	2	United Package	(503) 555-3199
+4	Around the Horn	Thomas Hardy	120 Hanover Sq.	London	WA1 1DP	UK	10355	6	1996-11-15	1	Speedy Express	(503) 555-9831
+
+There appears to be no union join in MySQL.
+
+mysql> select * from insur_mini where tiv_2012 > all(select tiv_2012 from insur where construction='wood');
++-----------+-------------------+-------------+-------------+---------------------+
+| policy_id | county            | tiv_2011    | tiv_2012    | construction        |
++-----------+-------------------+-------------+-------------+---------------------+
+|    100208 | COLLIER COUNTY    |  2187352.81 |  2004315.13 | Reinforced Masonry  |
+|    100318 | LAKE COUNTY       | 16920000.00 | 24570000.00 | Reinforced Concrete |
+|    100361 | MIAMI DADE COUNTY |  5391882.17 |  7972037.97 | Reinforced Masonry  |
+|    100433 | COLLIER COUNTY    |   757350.00 |   839901.91 | Masonry             |
+|    100464 | ORANGE COUNTY     |   685903.50 |   952174.67 | Masonry             |
+|    100486 | SANTA ROSA COUNTY |   500148.00 |   700452.27 | Masonry             |
+|    100548 | POLK COUNTY       |   716757.55 |  1038151.64 | Masonry             |
+|    100552 | ESCAMBIA COUNTY   |  1142758.99 |   931120.02 | Masonry             |
++-----------+-------------------+-------------+-------------+---------------------+
+
