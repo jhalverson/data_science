@@ -1150,5 +1150,8 @@ mysql> select * from insur_mini where tiv_2012 > all(select tiv_2012 from insur 
 |    100552 | ESCAMBIA COUNTY   |  1142758.99 |   931120.02 | Masonry             |
 +-----------+-------------------+-------------+-------------+---------------------+
 
-### Friday, August 6, 2016
+### Friday, August 5, 2016
 Read chapter on controlling operations
+
+### Monday, August 8, 2016
+Read chapter on recursive queries which is not part of the standard
