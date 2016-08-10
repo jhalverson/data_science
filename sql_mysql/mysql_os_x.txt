@@ -1155,3 +1155,13 @@ Read chapter on controlling operations
 
 ### Monday, August 8, 2016
 Read chapter on recursive queries which is not part of the standard
+
+### Tuesday, August 9, 2016
+Controlling operations with security
+grant insert on customer to SalesClerk; // revoke update on customer from SalesClerk;
+Domains are like typedefs with checks, so user defined types with check constraints
+Triggers are like signals in that they allow for code to be executed when a certain event happens. The
+code can be applied before or after the event. For example, whenever a customer record is deleted, a
+text line is added to a log table.
+SQL transactions preserve the integrity of the DB by making sure all the statements in the block
+execute before the changes are committed. If they are not then a rollback is called to restore the DB.
