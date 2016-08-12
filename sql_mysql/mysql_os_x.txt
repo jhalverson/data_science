@@ -1165,3 +1165,6 @@ code can be applied before or after the event. For example, whenever a customer 
 text line is added to a log table.
 SQL transactions preserve the integrity of the DB by making sure all the statements in the block
 execute before the changes are committed. If they are not then a rollback is called to restore the DB.
+
+### Wednesday, August 10, 2016
+Reviewed Spark in preparation for attending Boston Apache Spark meetup.
