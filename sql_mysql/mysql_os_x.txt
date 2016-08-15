@@ -1168,3 +1168,8 @@ execute before the changes are committed. If they are not then a rollback is cal
 
 ### Wednesday, August 10, 2016
 Reviewed Spark in preparation for attending Boston Apache Spark meetup.
+
+### Monday, August 15, 2016
+ODBC is open database connectivity. It is a standard which specifies how an application with talk to
+a database. It is needed because of the of the extensions to the ANSI SQL standard. An application
+uses a database by using a driver, which is particular to the given database.
