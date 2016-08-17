@@ -1173,3 +1173,20 @@ Reviewed Spark in preparation for attending Boston Apache Spark meetup.
 ODBC is open database connectivity. It is a standard which specifies how an application with talk to
 a database. It is needed because of the of the extensions to the ANSI SQL standard. An application
 uses a database by using a driver, which is particular to the given database.
+
+### Tuesday, August 16, 2016
+Read chapter on cursors. Application development languages have to operate on a single row at
+a time whereas SQL operates on the entire set of rows at a time. A cursor is like a pointer in
+that when it is active you can select, update or delete the row.
+
+Persistent stored modules where added between 1992 and 1999. They allow for function within
+SQL.
+
+void main {
+  exec sql
+    begin atomic
+      insert into ...
+    end;
+}
+
+Triggers are like signals. When one thing happens an event is triggered in response.
