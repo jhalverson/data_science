@@ -1190,3 +1190,6 @@ void main {
 }
 
 Triggers are like signals. When one thing happens an event is triggered in response.
+
+### Wednesday, August 17, 2016
+Uploaded updated resume and CV to web page. Reviewed SQL.
