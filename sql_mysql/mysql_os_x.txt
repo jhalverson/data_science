@@ -1193,3 +1193,28 @@ Triggers are like signals. When one thing happens an event is triggered in respo
 
 ### Wednesday, August 17, 2016
 Uploaded updated resume and CV to web page. Reviewed SQL.
+
+### Thursday, August 18, 2016
+select avg(o.price) from products o where
+(select count(*) from products i where o.price > i.price) > 3 and
+(select count(*) from products i where o.price > i.price) < (select count(*) from products) - 3;
+
+select avg(o.price) from products o where
+(select count(*) from products i where o.price > i.price) > 3 and
+(select count(*) from products i where o.price < i.price) > 3;
+
+select price, case when price > 25 then 0 else 1 end from products;
+
+SELECT * FROM [Customers] c where exists (select * from suppliers s where s.city = c.city); // 8
+SELECT * FROM [Customers] where city in (select city from suppliers); // 8
+SELECT * FROM [Customers] where city in (select distinct city from suppliers); // 8
+select * from customers where city in (SELECT city FROM [Customers] intersect select city from suppliers); // 8
+SELECT c.* FROM [Customers] c inner join suppliers s using (city); // 8, used join instead of subquery
+
+select * from customers where City like 'L%';
+
+select * from customers inner join orders on orders.customerid=customers.customerid inner join shippers on shippers.shipperid=orders.shipperid where customers.city <> 'Helsinki' and orders.orderid > 10400;
+
+select supplierid, avg(price) a from products group by supplierid having a < 20.5 order by a asc;
+
+select upper(city) || 'TonyHawk', nullif(country, 'Germany'), trim(length(country)), coalesce(1, null, city, country, null), cast(customerid as char(80)) from customers;
