@@ -1,0 +1,7 @@
+~/software/spark-2.0.0-bin-hadoop2.7/bin/pyspark
+
+RDD is resilent distributed datasets. The data is automatically distributed across the cluster.
+
+lines = sc.textFile('text_file.md')
+lines.count()
+
