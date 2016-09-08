@@ -5,3 +5,26 @@ RDD is resilent distributed datasets. The data is automatically distributed acro
 lines = sc.textFile('text_file.md')
 lines.count()
 
+
+### Wednesday, September 7, 2016
+Spark can be used via the shell or as part of a standalone library.
+Maven is an online package manager for Java applications. One
+can specify the coordinates in the XML build file.
+
+Hadoop MapReduce is batch while Spark is interactive and in-memory.
+Spark runs on the Java Virtual Machine so Java 6 is needed.
+
+pyspark is the Python Spark shell while spark-submit is the
+binary which interprets flat Python scripts.
+
+Pyspark automatically creates a SparkContext and it sets the enviromnet.
+When using spark-submit one must create a SparkContext after importing
+the appropriate modules. A SparkContext represents a connection to the
+computing cluster. It be done in local mode which uses only one thread.
+
+The driver and the executors. All work in Spark is expressed as making
+new RDD's, transformation RDD's and carrying out actions. An RDD is
+immutable and lazy. They are only evaluated when an action is called
+such as writing out a file or computing a result. One can
+use persist or cache to force the evaluation of an RDD.
+
