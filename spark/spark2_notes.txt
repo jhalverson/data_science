@@ -28,3 +28,6 @@ immutable and lazy. They are only evaluated when an action is called
 such as writing out a file or computing a result. One can
 use persist or cache to force the evaluation of an RDD.
 
+Pair RDD's consist of tuples of key/values. The basic RDD method
+can be used on them such as count, first, take.
+
