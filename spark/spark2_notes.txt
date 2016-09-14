@@ -31,3 +31,5 @@ use persist or cache to force the evaluation of an RDD.
 Pair RDD's consist of tuples of key/values. The basic RDD method
 can be used on them such as count, first, take.
 
+Read chapter on I/O.
+
