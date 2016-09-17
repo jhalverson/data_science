@@ -33,3 +33,24 @@ can be used on them such as count, first, take.
 
 Read chapter on I/O.
 
+The files must be available at the same path on all nodes in
+your cluster.
+
+Some network filesystems like NFS, AFS are exposed to the user as
+a regular filesystem.
+
+Amazon S3 is fast when your compute nodes are located inside of
+EC2 (elastic cloud compute). When you go over the net it is
+not fast.
+
+HDFS works great with Spark. It is designed to allow for nodes to
+fail and keep going. It is a distributed filesystem.
+
+Spark SQL is the SQL engine for structured data in Spark. The dataframe
+is used in Spark SQL.
+
+One can also load JSON using Spark SQL instead of using the json
+reader.
+
+Started reading Uncharted: Big data as a lens on human culture
+
