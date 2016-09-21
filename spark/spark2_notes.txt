@@ -55,3 +55,5 @@ reader.
 Started reading Uncharted: Big data as a lens on human culture
 
 Read the first half of chapter six on broadcast variables and accumulators.
+
+Reviewed broadcast variables.
