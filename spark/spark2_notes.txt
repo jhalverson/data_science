@@ -58,4 +58,12 @@ Read the first half of chapter six on broadcast variables and accumulators.
 
 Reviewed broadcast variables.
 
-Read Chapter 7 on running on a cluster.
+Read Chapter 7 on running on a cluster: The shell, local mode and then cluster mode
+and client mode. Each process runs in a JVM. This includes the driver. The driver
+interacts with the workers or executors via the cluster manager (Standalone [no
+queuing], Apache Mesos, Hadoop YARN). To launch an application use
+bin/spark-submit --master spark://host:7077 my_script.py
+The Standalone cluster manager is a good choice if only using Spark
+and queuing is not needed. YARN is in general the best choice because it
+works seemlessly with HDFS. If external modules or libraries are needed
+one must get those on the worker nodes. sbt is the Scala build tool.
