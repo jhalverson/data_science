@@ -1,0 +1,6 @@
+Tuesday, October 4, 2016
+--
+Read chapter on ML lib. Lack of pipelining was a good
+reminder. Book was saying to use sc.parallelize to pass
+coefficients for models such as logistic regression
+to find the optimal hyperparameters.
