@@ -9,3 +9,9 @@ Thursday, October 6, 2016
 --
 Wrote out notes on ML lib in Spark 2 then began
 reviewing earlier chapters.
+
+Friday, October 7, 2016
+--
+Read Uncharted big data book. Interesting definition of
+what a word is. Looked at how to define fame and who
+is the most mentioned person born in a given year.
