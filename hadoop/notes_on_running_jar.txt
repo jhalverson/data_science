@@ -1,0 +1,47 @@
+First I needed to get files from my laptop to HDFS. This
+is done by first uploading the files to S3.
+
+To connect to the EMR cluster do:
+
+ssh -i boston_data_fest2015.pem hadoop@ec2-174-129-121-227.compute-1.amazonaws.com
+
+Note that -i specifies the RSA key. This command was run
+from the directory containing the pem file but one could
+specify the path instead.
+
+Then from the command line do:
+
+hadoop fs -get s3://fridaybucket/WordCount.java WordCount.java
+
+Note that when you ssh to the cluster you are on a Linux
+machine:
+
+[hadoop@ip-172-31-14-252 ~]$ uname -a
+Linux ip-172-31-14-252 4.4.19-29.55.amzn1.x86_64 #1 SMP Mon Aug 29 23:29:40 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
+
+Run 'cat /proc/cpuinfo' to see that you are on a quad-
+processor (core) Intel Xeon machine.
+
+### files in the home directory of my Linux box (local)
+[hadoop@ip-172-31-14-252 ~]$ ls -l
+total 12
+-rw-r--r-- 1 hadoop hadoop  561 Nov 16 22:48 SumReducer.java
+-rw-r--r-- 1 hadoop hadoop 1629 Nov 16 21:27 WordCount.java
+-rw-r--r-- 1 hadoop hadoop  747 Nov 16 22:48 WordMapper.java
+
+### there is nothing on hdfs (remote) yet
+[hadoop@ip-172-31-14-252 ~]$ hadoop fs -ls .
+
+### copy files to hdfs
+[hadoop@ip-172-31-14-252 ~]$ hadoop fs -put WordMapper.java WordMapper.java 
+[hadoop@ip-172-31-14-252 ~]$ 
+[hadoop@ip-172-31-14-252 ~]$ hadoop fs -ls .
+Found 3 items
+-rw-r--r--   1 hadoop hadoop        561 2016-11-16 23:11 SumReducer.java
+-rw-r--r--   1 hadoop hadoop       1629 2016-11-16 23:12 WordCount.java
+-rw-r--r--   1 hadoop hadoop        747 2016-11-16 23:12 WordMapper.java
+
+To get from hdfs to s3:
+
+hadoop fs -put BinaryFiles s3://mybucket/BinaryDestination
+
