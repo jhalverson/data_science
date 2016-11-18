@@ -45,3 +45,27 @@ To get from hdfs to s3:
 
 hadoop fs -put BinaryFiles s3://mybucket/BinaryDestination
 
+
+One can explore the hdfs root directories:
+
+[hadoop@ip-172-31-3-215 ~]$ hadoop fs -ls /
+drwxr-xr-x   - hdfs hadoop          0 2016-11-17 18:58 /apps
+drwxrwxrwt   - hdfs hadoop          0 2016-11-17 19:05 /tmp
+drwxr-xr-x   - hdfs hadoop          0 2016-11-17 18:58 /user
+drwxr-xr-x   - hdfs hadoop          0 2016-11-17 18:58 /var
+
+[hadoop@ip-172-31-3-215 ~]$ hadoop fs -ls /user
+drwxrwxrwx   - hadoop hadoop          0 2016-11-17 19:06 /user/hadoop
+drwxr-xr-x   - mapred mapred          0 2016-11-17 18:58 /user/history
+drwxrwxrwx   - hdfs   hadoop          0 2016-11-17 18:58 /user/hive
+drwxrwxrwx   - hue    hue             0 2016-11-17 18:58 /user/hue
+drwxrwxrwx   - oozie  oozie           0 2016-11-17 19:04 /user/oozie
+drwxrwxrwx   - root   hadoop          0 2016-11-17 18:58 /user/root
+
+
+## Let's set some environment variables
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-1.b15.25.amzn1.x86_64
+export HADOOP_CLASSPATH=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-1.b15.25.amzn1.x86_64/lib
+export HADOOP_HOME=/usr/lib/hadoop # not sure if this is right
+export PATH=$PATH:$HADOOP_HOME/bin
+export HADOOP_STREAMING=/usr/lib/hadoop/hadoop-streaming-2.7.3-amzn-0.jar
