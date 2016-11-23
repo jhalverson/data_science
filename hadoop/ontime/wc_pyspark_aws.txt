@@ -1,0 +1,21 @@
+# Jonathan Halverson
+# Tuesday, November 22, 2016
+# Interactive Spark session
+
+>>> text = sc.textFile('s3://fridaybucket/words.txt')
+>>> print text.count()
+4                                                                               
+>>> from operator import add
+>>> def tokenize(line):
+...   return line.split()
+... 
+>>> words = text.flatMap(tokenize)
+>>> wc = words.map(lambda x: (x, 1))
+>>> print wc.toDebugString()
+(2) PythonRDD[6] at RDD at PythonRDD.scala:48 []
+ |  s3://fridaybucket/words.txt MapPartitionsRDD[4] at textFile at NativeMethodAccessorImpl.java:-2 []
+ |  s3://fridaybucket/words.txt HadoopRDD[3] at textFile at NativeMethodAccessorImpl.java:-2 []
+>>> 
+>>> counts = wc.reduceByKey(add)
+>>> counts.saveAsTextFile('wc')
+>>> sc.stop()                 
