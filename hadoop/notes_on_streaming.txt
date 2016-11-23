@@ -35,3 +35,7 @@ hot	1
 log	1
 not	1
 was	1
+
+Here is a test to run locally:
+
+cat words.txt | ./mapper.py | sort | ./reducer.py
