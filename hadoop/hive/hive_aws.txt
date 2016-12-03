@@ -1,6 +1,23 @@
 Jonathan Halverson
 Thursday, December 1, 2017
 
+Hive is good at performing at scale but it is bad at allowing
+for row-level inserts, updates and deletes. This is because
+HDFS is WORM. A Hive script is compiled into an execution plan
+or a series of HDFS operations and/or MapReduce jobs.
+
+The starting point to working with Hive is to assign a schema
+to data that is already in HDFS. That is, create a table.
+Once that is done one can use SQL-like queries to analyze the
+data just like writing MapReduce jobs.
+
+Note that Hive is not a database. It is a framework or trans-
+later to MapReduce.
+
+AWS uses Tez as the execution engine instead of MR, for
+improved performance.
+
+
 [hadoop@ip-172-31-23-160 ~]$ hive -e 'show databases;'
 Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j2.properties Async: false
 OK
@@ -56,3 +73,118 @@ popestimate2013     	int
 popestimate2014     	int                 	                    
 Time taken: 2.439 seconds, Fetched: 14 row(s)
 
+
+I got the script to execute by specifying an input and output and putting
+the CSV file in the input directory. The input file was not explicitly
+mentioned in the AWS job step form or the HQL script. Note that the files
+were left in S3 and not moved manually to HDFS.
+
+Arguments: hive-script --run-hive-script --args -f s3://fridaybucket/population.hql -d INPUT=s3://fridaybucket/hiveInput/ -d OUTPUT=s3://fridaybucket/hiveOutput/
+
+stdout captures the result since it was written out in one of the
+queries in the script. The same was found in 000000_0 in the
+hiveOutput directory:
+
+Alabama,4849377
+Alaska,736732
+Arizona,6731484
+Arkansas,2966369
+California,38802500
+Colorado,5355866
+Connecticut,3596677
+Delaware,935614
+District of Columbia,658893
+Florida,19893297
+Georgia,10097343
+Hawaii,1419561
+Idaho,1634464
+Illinois,12880580
+Indiana,6596855
+Iowa,3107126
+Kansas,2904021
+Kentucky,4413457
+Louisiana,4649676
+Maine,1330089
+Maryland,5976407
+Massachusetts,6745408
+Michigan,9909877
+Minnesota,5457173
+Mississippi,2994079
+Missouri,6063589
+Montana,1023579
+Nebraska,1881503
+Nevada,2839099
+New Hampshire,1326813
+New Jersey,8938175
+New Mexico,2085572
+New York,19746227
+North Carolina,9943964
+North Dakota,739482
+Ohio,11594163
+Oklahoma,3878051
+Oregon,3970239
+Pennsylvania,12787209
+Rhode Island,1055173
+South Carolina,4832482
+South Dakota,853175
+Tennessee,6549352
+Texas,26956958
+Utah,2942902
+Vermont,626562
+Virginia,8326289
+Washington,7061530
+West Virginia,1850326
+Wisconsin,5757564
+Wyoming,584153
+
+See population.hql in data_science/hadoop/hive
+
+I am still confused on how the CSV file was read. The file
+name is not specified anywhere.
+
+After the job step ran successfully, the tables were able
+in Hive via SSH.
+
+hive> show tables;
+OK
+pop
+state_pop
+Time taken: 1.043 seconds, Fetched: 2 row(s)
+
+This command and two queries ran successfully:
+
+hive> show tables;
+hive> select * from pop;
+hive> select sum(pop_est_2014) from state_pop;
+hive> exit;
+
+=== creating a table ===
+
+[hadoop@ip-172-31-35-186 ~]$ cat stuff.txt 
+Jimmy,67
+Tony,103
+Brian,10
+Titus,11
+[hadoop@ip-172-31-35-186 ~]$ hadoop fs -put stuff.txt stuff.txt 
+[hadoop@ip-172-31-35-186 ~]$ hive
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j2.properties Async: false
+
+hive> use log_data;
+OK
+Time taken: 0.844 seconds
+
+hive> load data inpath 'stuff.txt' overwrite into table my_log;
+Loading data to table log_data.my_log
+OK
+Time taken: 0.621 seconds
+
+hive> select name, age from my_log where name > 'H';
+OK
+Jimmy	67
+Tony	103
+Titus	11
+Time taken: 0.073 seconds, Fetched: 3 row(s)
+
+Note that if the file is in the local file system then use
+LOCAL INPATH instead of INPATH. In the example above,
+the file was uploaded to HDFS.
