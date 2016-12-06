@@ -1,0 +1,97 @@
+Jonathan Halverson
+Monday, December 5, 2016
+
+HBase is an NoSQL database designed to work with HDFS. It is a column-
+family database which makes it great for working for sparse column
+data. It is schema-less in a sense in that one specifies column
+families and columns within these families. There are no joins so
+the data is often de-normalized so there can be a great deal of
+redundancy. Row updates can be made freely so HBase is good for
+OLAP or OLTP. It is good for streaming as well. Each row item
+has a timestamp associated with it. This a why a 3-D block is a good
+visual model for HBase. One can extract a range of values stored
+in a row item.
+
+Another important piece is that row a stored according to a row
+key which is a unique byte array. The rows are stored in order
+by default.
+
+Create an EMR cluster on Amazon that supplies HBase.
+
+One cannot immediately SSH and run 'hbase shell'. Instead
+follow these steps:
+
+(http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-connect-master-node-ssh.html)
+
+[hadoop@ip-172-31-57-222 ~]$ aws emr list-clusters
+
+Extract the Id: "Id": "j-35YYN0ELAZ1VF",
+
+[hadoop@ip-172-31-57-222 ~]$ aws emr list-instances --cluster-id j-35YYN0ELAZ1VF
+
+Then log in to the master node:
+jhalverson$ ssh -i ~/data_science/winter2017.pem hadoop@ec2-54-211-111-42.compute-1.amazonaws.com
+
+[hadoop@ip-172-31-57-222 ~]$ hbase shell
+
+
+=== Here is the session ===
+
+hbase(main):001:0> create 'linkshare', 'link'
+0 row(s) in 1.5490 seconds
+
+hbase(main):003:0> disable 'linkshare'
+0 row(s) in 2.3200 seconds
+
+hbase(main):004:0> alter 'linkshare', 'statistics'
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+0 row(s) in 1.9250 seconds
+
+hbase(main):005:0> enable 'linkshare'
+0 row(s) in 1.2560 seconds
+
+hbase(main):006:0> describe 'linkshare'
+Table linkshare is ENABLED                                                                                                     
+linkshare                                                                                                                      
+COLUMN FAMILIES DESCRIPTION                                                                                                    
+{NAME => 'link', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODIN
+G => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICAT
+ION_SCOPE => '0'}                                                                                                              
+{NAME => 'statistics', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_E
+NCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', RE
+PLICATION_SCOPE => '0'}                                                                                                        
+2 row(s) in 0.0250 seconds
+
+
+=== Loading data with put ===
+
+hbase(main):002:0> put 'linkshare', 'org.hbase.www', 'link:title', 'Apache HBase'
+0 row(s) in 0.3770 seconds
+
+hbase(main):003:0> put 'linkshare', 'org.hadoop.com', 'link:title', 'Apache Hadoop'
+0 row(s) in 0.0130 seconds
+
+hbase(main):004:0> put 'linkshare', 'com.oreilly.www', 'link:title', 'OReily.com'
+0 row(s) in 0.0220 seconds
+
+
+=== Increment ===
+
+hbase(main):007:0* incr 'linkshare', 'org.hbase.www', 'statistics:share', 1
+COUNTER VALUE = 1
+0 row(s) in 0.0390 seconds
+
+hbase(main):008:0> incr 'linkshare', 'org.hbase.www', 'statistics:like', 1
+COUNTER VALUE = 1
+0 row(s) in 0.0050 seconds
+
+hbase(main):009:0> incr 'linkshare', 'org.hbase.www', 'statistics:share', 1
+COUNTER VALUE = 2
+0 row(s) in 0.0120 seconds
+
+hbase(main):012:0> get_counter 'linkshare', 'org.hbase.www', 'statistics:share'
+COUNTER VALUE = 2
+
+
