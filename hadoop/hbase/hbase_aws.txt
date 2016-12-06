@@ -16,6 +16,9 @@ Another important piece is that row a stored according to a row
 key which is a unique byte array. The rows are stored in order
 by default.
 
+
+=== hbase shell on AWS ===
+
 Create an EMR cluster on Amazon that supplies HBase.
 
 One cannot immediately SSH and run 'hbase shell'. Instead
@@ -30,9 +33,11 @@ Extract the Id: "Id": "j-35YYN0ELAZ1VF",
 [hadoop@ip-172-31-57-222 ~]$ aws emr list-instances --cluster-id j-35YYN0ELAZ1VF
 
 Then log in to the master node:
-jhalverson$ ssh -i ~/data_science/winter2017.pem hadoop@ec2-54-211-111-42.compute-1.amazonaws.com
-
+jhalverson$ ssh hadoop@ec2-54-172-140-228.compute-1.amazonaws.com -i ~/data_science/winter2017.pem
 [hadoop@ip-172-31-57-222 ~]$ hbase shell
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 1.2.3, rUnknown, Wed Nov 16 03:02:39 UTC 2016
 
 
 === Here is the session ===
@@ -95,3 +100,71 @@ hbase(main):012:0> get_counter 'linkshare', 'org.hbase.www', 'statistics:share'
 COUNTER VALUE = 2
 
 
+=== get and scan ===
+
+hbase(main):008:0> scan 'linkshare'
+ROW                              COLUMN+CELL                                                                                   
+ com.oreilly.www                 column=link:title, timestamp=1481045452171, value=OReilly                                     
+ org.hadoop.www                  column=link:title, timestamp=1481045427873, value=Apache Hadoop                               
+ org.hbase.www                   column=link:title, timestamp=1481045409515, value=Apache HBase                                
+ org.hbase.www                   column=statistics:like, timestamp=1481045524078, value=\x00\x00\x00\x00\x00\x00\x00\x01       
+ org.hbase.www                   column=statistics:share, timestamp=1481045608246, value=\x00\x00\x00\x00\x00\x00\x00\x02      
+3 row(s) in 0.3140 seconds
+
+hbase(main):009:0> get 'linkshare', 'org.hbase.www', 'link:title'
+COLUMN                           CELL                                                                                          
+ link:title                      timestamp=1481045409515, value=Apache HBase                                                   
+
+hbase(main):010:0> get 'linkshare', 'org.hbase.www', {TIMERANGE => [1481045409515, 1481045608246]}
+COLUMN                           CELL                                                                                          
+ link:title                      timestamp=1481045409515, value=Apache HBase                                                   
+ statistics:like                 timestamp=1481045524078, value=\x00\x00\x00\x00\x00\x00\x00\x01                               
+
+hbase(main):011:0> get 'linkshare', 'org.hbase.www', {COLUMN => 'statistics:share', VERSIONS => 2}
+COLUMN                           CELL                                                                                          
+ statistics:share                timestamp=1481045608246, value=\x00\x00\x00\x00\x00\x00\x00\x02                               
+
+hbase(main):012:0> put 'linkshare', 1, 'link:title', 'First of all'
+
+hbase(main):015:0> scan 'linkshare', {COLUMNS => ['link:title'], STARTROW => 'org'}
+ROW                              COLUMN+CELL                                                                                   
+ org.hadoop.www                  column=link:title, timestamp=1481045427873, value=Apache Hadoop                               
+ org.hbase.www                   column=link:title, timestamp=1481045409515, value=Apache HBase                                
+
+
+=== list, status (of cluster) ===
+
+hbase(main):001:0> list
+TABLE                                                                                                                          
+linkshare                                                                                                                      
+
+hbase(main):002:0> status
+1 active master, 0 backup masters, 1 servers, 0 dead, 3.0000 average load
+
+
+=== filters ===
+
+hbase(main):004:0> import org.apache.hadoop.hbase.util.Bytes
+hbase(main):005:0> import org.apache.hadoop.hbase.filter.SingleColumnValueFilter
+=> Java::OrgApacheHadoopHbaseFilter::SingleColumnValueFilter
+hbase(main):006:0> import org.apache.hadoop.hbase.filter.BinaryComparator
+=> Java::OrgApacheHadoopHbaseFilter::BinaryComparator
+hbase(main):007:0> import org.apache.hadoop.hbase.filter.CompareFilter
+=> Java::OrgApacheHadoopHbaseFilter::CompareFilter
+hbase(main):008:0> likeFilter = SingleColumnValueFilter.new(Bytes.toBytes('statistics'),Bytes.toBytes('like'),CompareFilter::CompareOp.valueOf('GREATER_OR_EQUAL'),BinaryComparator.new(Bytes.toBytes(10)))
+=> #<Java::OrgApacheHadoopHbaseFilter::SingleColumnValueFilter:0x2506b881>
+
+hbase(main):009:0> scan 'linkshare', {FILTER => likeFilter}
+ROW                              COLUMN+CELL                                                                                   
+ 1                               column=link:title, timestamp=1481050299566, value=First of all                                
+ com.oreilly.www                 column=link:title, timestamp=1481045452171, value=OReilly                                     
+ org.hadoop.www                  column=link:title, timestamp=1481045427873, value=Apache Hadoop                               
+
+hbase(main):010:0> scan 'linkshare'
+ROW                              COLUMN+CELL                                                                                   
+ 1                               column=link:title, timestamp=1481050299566, value=First of all                                
+ com.oreilly.www                 column=link:title, timestamp=1481045452171, value=OReilly                                     
+ org.hadoop.www                  column=link:title, timestamp=1481045427873, value=Apache Hadoop                               
+ org.hbase.www                   column=link:title, timestamp=1481045409515, value=Apache HBase                                
+ org.hbase.www                   column=statistics:like, timestamp=1481045524078, value=\x00\x00\x00\x00\x00\x00\x00\x01       
+ org.hbase.www                   column=statistics:share, timestamp=1481045608246, value=\x00\x00\x00\x00\x00\x00\x00\x02      
