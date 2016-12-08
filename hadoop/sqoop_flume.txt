@@ -1,0 +1,15 @@
+Jonathan Halverson
+Wednesday, December 7, 2016
+
+Data Ingestion
+
+Sqoop can be used to transfer data from a relational
+database such as MySQL or Oracle into HDFS, Hive
+or HBase. This is done by using MapReduce with only
+a mapper, no reducer. Sqoop can learn the schema
+from the relational database.
+
+For streaming data, Flume can be used to handle
+the data. The three components are source, channel,
+and sink. There are several configuration files to
+setup.
