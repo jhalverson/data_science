@@ -1,0 +1,48 @@
+Jonathan Halverson
+Friday, December 10, 2016
+
+PIG is similar to Hive except that is allows for more
+advanced transformations using a procedural language of
+Pig Latin. The main data structure is a relation which
+can be thought of as a SQL table. It is also known as
+the outer bag. Bags are collections stored in a single
+cell.
+
+Here are the built-in functions:
+http://pig.apache.org/docs/r0.16.0/func.html
+
+When running the job it was failing with "Output directory already exists."
+
+The reason for this was not that the output directory in the
+job step sumbit form was not new. The problem was that I had
+made the sentiment_analysis directory on HDFS. So the job
+was failing at the very end when it tried to write the data.
+
+Here is a successful command:
+
+Arguments: pig-script --run-pig-script --args -f s3://piggyinputs/population.pig -p INPUT=s3://piggyinputs/ -p OUTPUT=s3://piggyoutputs/
+
+To start grunt type pig at the command line. Grunt was only partially
+working. It works most of the time with the dump command but
+always fails with illustrate giving a 2017 error or " 
+
+
+[hadoop@ip-172-31-7-232 ~]$ pig
+grunt> raw = load 's3://piggyinputs/co-est2014-pop-data.csv' using PigStorage(',');
+grunt> state_county_pop = foreach raw generate $5, $6, $7;
+grunt> dump state_county_pop;
+
+(STNAME,CTYNAME,CENSUS2010POP)
+(Alabama,Alabama,4779736)
+(Alabama,Autauga County,54571)
+(Alabama,Baldwin County,182265)
+(Alabama,Barbour County,27457)
+(Alabama,Bibb County,22915)
+(Alabama,Blount County,57322)
+(Alabama,Bullock County,10914)
+(Alabama,Butler County,20947)
+...
+
+grunt> summer = foreach pop_group generate group, SUM(state_county_pop.$2);
+-- note that SUM must be capitalized
+grunt> dump summer;

@@ -1,0 +1,11 @@
+Tuesday, December 13, 2016
+
+Data lakes are large data stores of both structured and unstructed data.
+They consist of both streaming and static data. They are WORM systems
+which is important for science and other tasks the data must not change.
+Often a sanitized subset of the data is fed into a data warehouse where
+SQL queries can then be used.
+
+A data product is something that both depends on data and produces data
+as a product. It uses machine learning because it must always be adapt-
+ing. 
