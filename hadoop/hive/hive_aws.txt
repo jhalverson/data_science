@@ -1,5 +1,5 @@
 Jonathan Halverson
-Thursday, December 1, 2017
+Thursday, December 1, 2016
 
 Hive is good at performing at scale but it is bad at allowing
 for row-level inserts, updates and deletes. This is because
