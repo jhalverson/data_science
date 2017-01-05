@@ -1,0 +1,74 @@
+Jonathan Halverson
+Wednesday, January 4, 2017
+--
+
+Have to reinstalled MySQL. Then needed to set the PATH:
+
+
+Then log in as root:
+mbp2011:~ jhalverson$ mysql -u root -p
+
+One must reset the password to get started:
+
+mysql> show databases;
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+mysql> alter user 'root'@'localhost' identified by 'hyXXXXX';
+Query OK, 0 rows affected (0.00 sec)
+
+show databases;
+create database beverly;
+use beverly;
+
+# note that type may not be right here since departure_time and arrival_time are in military time format of HHMM
+mysql> create table flights (flight_date date, airline_id int, flight_num int, origin varchar(255), destination varchar(255), departure_time time, departure_delay float, arrival_time time, arrival_delay float, air_time float, distance float);
+
+2014-04-01,19805,1,JFK,LAX,0854,-6.00,1217,2.00,355.00,2475.00
+2014-04-01,19805,2,LAX,JFK,0944,14.00,1736,-29.00,269.00,2475.00
+2014-04-01,19805,3,JFK,LAX,1224,-6.00,1614,39.00,371.00,2475.00
+
+Got the following error when tried to do load data infile but error goes away when add local
+# ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+mysql> load data local infile '/Users/jhalverson/data_science/hadoop/ontime/flights.csv' into table flights columns terminated by ',' lines terminated by '\n';
+Query OK, 476881 rows affected, 65535 warnings (5.13 sec)
+Records: 476881  Deleted: 0  Skipped: 0  Warnings: 476881
+
+mysql> select * from flights limit 5;
++-------------+------------+------------+--------+-------------+----------------+-----------------+--------------+---------------+----------+----------+
+| flight_date | airline_id | flight_num | origin | destination | departure_time | departure_delay | arrival_time | arrival_delay | air_time | distance |
++-------------+------------+------------+--------+-------------+----------------+-----------------+--------------+---------------+----------+----------+
+| 2014-04-01  |      19805 |          1 | JFK    | LAX         |            854 |              -6 |         1217 |             2 |      355 |     2475 |
+| 2014-04-01  |      19805 |          2 | LAX    | JFK         |            944 |              14 |         1736 |           -29 |      269 |     2475 |
+| 2014-04-01  |      19805 |          3 | JFK    | LAX         |           1224 |              -6 |         1614 |            39 |      371 |     2475 |
+| 2014-04-01  |      19805 |          4 | LAX    | JFK         |           1240 |              25 |         2028 |           -27 |      264 |     2475 |
+| 2014-04-01  |      19805 |          5 | DFW    | HNL         |           1300 |              -5 |         1650 |            15 |      510 |     3784 |
++-------------+------------+------------+--------+-------------+----------------+-----------------+--------------+---------------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> describe flights;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| flight_date     | date         | YES  |     | NULL    |       |
+| airline_id      | int(11)      | YES  |     | NULL    |       |
+| flight_num      | int(11)      | YES  |     | NULL    |       |
+| origin          | varchar(255) | YES  |     | NULL    |       |
+| destination     | varchar(255) | YES  |     | NULL    |       |
+| departure_time  | float        | YES  |     | NULL    |       |
+| departure_delay | float        | YES  |     | NULL    |       |
+| arrival_time    | int(11)      | YES  |     | NULL    |       |
+| arrival_delay   | float        | YES  |     | NULL    |       |
+| air_time        | float        | YES  |     | NULL    |       |
+| distance        | float        | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+# can only use cast to unsigned, signed, char, binary, time, date, datetime
+
+create table airports (code varchar(255), description varchar(255));
+
+# mbp2011:ontime jhalverson$ file airports.csv 
+# airports.csv: ASCII text, with CRLF line terminators # WINDOWS LINE RETURNS!
+load data local infile '/Users/jhalverson/data_science/hadoop/ontime/airports.csv' into table airports fields terminated by ',' enclosed by '"' lines terminated by '\r\n' ignore 1 lines;
+
+create table airlines (code varchar(255), description varchar(255));
+load data local infile '/Users/jhalverson/data_science/hadoop/ontime/airlines.csv' into table airlines fields terminated by ',' enclosed by '"' lines terminated by '\r\n' ignore 1 lines;
