@@ -72,3 +72,5 @@ load data local infile '/Users/jhalverson/data_science/hadoop/ontime/airports.cs
 
 create table airlines (code varchar(255), description varchar(255));
 load data local infile '/Users/jhalverson/data_science/hadoop/ontime/airlines.csv' into table airlines fields terminated by ',' enclosed by '"' lines terminated by '\r\n' ignore 1 lines;
+
+# begin joins and aggregations
