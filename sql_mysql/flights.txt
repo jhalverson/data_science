@@ -73,4 +73,24 @@ load data local infile '/Users/jhalverson/data_science/hadoop/ontime/airports.cs
 create table airlines (code varchar(255), description varchar(255));
 load data local infile '/Users/jhalverson/data_science/hadoop/ontime/airlines.csv' into table airlines fields terminated by ',' enclosed by '"' lines terminated by '\r\n' ignore 1 lines;
 
-# begin joins and aggregations
+# case when then when then end
+mysql> select *, case when origin='JFK' then 'Presidential' when origin='LAX' then 'Hollywood' else '--' end as Guide from flights limit 5;
++-------------+------------+------------+--------+-------------+----------------+-----------------+--------------+---------------+----------+----------+--------------+
+| flight_date | airline_id | flight_num | origin | destination | departure_time | departure_delay | arrival_time | arrival_delay | air_time | distance | Guide        |
++-------------+------------+------------+--------+-------------+----------------+-----------------+--------------+---------------+----------+----------+--------------+
+| 2014-04-01  |      19805 |          1 | JFK    | LAX         | 00:08:54       |              -6 | 00:12:17     |             2 |      355 |     2475 | Presidential |
+| 2014-04-01  |      19805 |          2 | LAX    | JFK         | 00:09:44       |              14 | 00:17:36     |           -29 |      269 |     2475 | Hollywood    |
+| 2014-04-01  |      19805 |          3 | JFK    | LAX         | 00:12:24       |              -6 | 00:16:14     |            39 |      371 |     2475 | Presidential |
+| 2014-04-01  |      19805 |          4 | LAX    | JFK         | 00:12:40       |              25 | 00:20:28     |           -27 |      264 |     2475 | Hollywood    |
+| 2014-04-01  |      19805 |          5 | DFW    | HNL         | 00:13:00       |              -5 | 00:16:50     |            15 |      510 |     3784 | --           |
++-------------+------------+------------+--------+-------------+----------------+-----------------+--------------+---------------+----------+----------+--------------+
+
+mysql> select Guide, count(Guide) from (select *, case when origin='JFK' then 'Presidential' when origin='LAX' then 'Hollywood' else '--' end as Guide from flights) j group by Guide;
++--------------+--------------+
+| Guide        | count(Guide) |
++--------------+--------------+
+| --           |       450452 |
+| Hollywood    |        18359 |
+| Presidential |         8070 |
++--------------+--------------+
+
