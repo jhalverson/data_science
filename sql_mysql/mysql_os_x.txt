@@ -202,7 +202,7 @@ select * from products where price like '_8';
 # the percent symbol wildcard represents 0 or more characters
 
 
-### Union, union all, intercept, except are all possible
+### Union, union all, intersect, except are all possible
 
 
 ### Started advanced operations
