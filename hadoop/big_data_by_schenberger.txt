@@ -1,0 +1,23 @@
+Big Data: A revolution that will transform …
+
+Introduction
+
+N=All
+
+Big Data is Messy
+
+As we draw from more bigger sources, mistakes or inexactitude enter. But these mistakes are outweighed by the gain of having much, much more data. An example of this is a grammar checker of the old days.
+
+Correlation
+
+Big data allows us to find correlations that were not possible in the small data world. This means we are given the what but not the why. For instance, Walmart found that in the days leading up a hurricane, people tend to buy flashlights and pop tarts.
+
+
+Big data 
+
+Datafied
+
+Today
+
+
+Value
