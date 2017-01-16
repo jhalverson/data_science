@@ -23,9 +23,25 @@ Today
 Value
 
 
+
+
 Implications
 
 There is the data, the people who know what to do with it and then the
 people how come up with ideas for what to do with big data.
+
+== Risks ==
+
+This chapter begins with a description of the first scence of Minority
+Report (Spielberg) where a man is arrested for a thought crime. The
+point is that with model that have been fit by big data, we can have
+a good prediction. Such models are used by parole boards in determin-
+whether to grant parole or not. A professor has a model to predict
+the probability that a parole will be involved in a homocide (the
+perp or the victim) with accuracy of 70%. Thus decisions are being made
+about what is likely to happen instead of people's actual actions.
+
+
+Control
 
 
