@@ -1,0 +1,23 @@
+Weapons of Math Destruction
+Cathy O'Neil
+
+== Introduction ==
+
+Author worked for a period on trying to forecast the global financial markets.
+It should be possible to scrape FaceBook. Do they allow private companies to
+do this?
+
+Machine learning models based on big data tend to be opaque and give results
+which are impossible to interpret cleanly. That is, they have essentially
+no explainability. In 2007 the schools in Washington DC were failing. A plan
+was enacted to test the teachers and fired the lower performers. This would be
+decided based on a ML model based on big data by the firm Mathematica. A fifth
+grade teacher named Sarah Wysocki was fired despite having an excellent reptu-
+tation. The author points out that it is very difficult to decide who is
+a bad teacher since so much depends on the students. A class size of only 20-30
+students leads to bad statistics. The fired teacher complained that beside the
+model is such a mystery (black box), it is not clear why she was fired. Furth-
+ermore, it was found that there were excessive erasure marks on the 4th grade
+test sheets suggesting that the teachers were  changing the grades since the
+new program granted $8000 to the top performing teachers. The teacher and 205
+others remained fired.
