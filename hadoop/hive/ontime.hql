@@ -12,6 +12,7 @@ create external table flights (
     ,flight_num int
     ,origin string
     ,destination string
+    ,departure_time int
     ,departure_delay float
     ,arrival_time int
     ,arrival_delay float
