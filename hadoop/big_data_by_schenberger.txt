@@ -42,6 +42,21 @@ perp or the victim) with accuracy of 70%. Thus decisions are being made
 about what is likely to happen instead of people's actual actions.
 
 
-Control
+== Control ==
 
+New institutions and specific jobs are needed combat the perils of big
+data since certain groups are vulnerable. "Notice and consent" is an
+old approach. Because the uses of big data tend to become clear after
+the data is collected, a better approach is to have the users of the
+data be responsible for it. There are two clear cases where trying to
+anonymotize the data failed: AOL and NetFlix. FaceBook intentionally
+blurs the data when releasing big data to such individuals can not be
+identified.
 
+Page 177: One concern is punishing people for crimes that they have yet
+to commit. Such a practice attacks free will or human volition. Many
+models are just black boxes because there are many predictors and models
+can be complicated to begin with like neural nets. For instance, in the
+case of predicting exploding pot holes in NYC, there were 106 predictors
+in the first model. Note: The broad of directors serve the investors not
+the management. Monopolies of big data must be avoided with antitrust.
