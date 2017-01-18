@@ -1,0 +1,68 @@
+Tuesday, January 16, 2017
+--
+
+Created a cluster on AWS but found hive did not start by
+typing 'hive' at the command line via SSH. After doing nothing more
+than waiting it began to work. Maybe the cluster was not ready.
+
+Once in hive, create a database, use the database then
+
+create external table flights (
+    flight_date date
+    ,airline_id int
+    ,flight_num int
+    ,origin string
+    ,destination string
+    ,departure_time int
+    ,departure_delay float
+    ,arrival_time int
+    ,arrival_delay float
+    ,air_time float
+    ,distance float
+    ) ROW FORMAT DELIMITED FIELDS TERMINATED by ','
+    STORED as TEXTFILE;
+
+load data inpath 's3://fridaybucket/flights.csv' overwrite into table flights;
+
+create external table airlines (code int, description string) ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' STORED as TEXTFILE tblproperties ("skip.header.line.count"="1");
+
+load data inpath 's3://fridaybucket/airlines.csv' overwrite into table airlines;
+
+select a.description, count(f.arrival_delay) as cnt, avg(f.arrival_delay) as Average_Delay from flights f join airlines a on (f.airline_id=a.code) group by a.description order by Average_Delay desc;
+
+
+Query ID = hadoop_20170118000226_a2d08858-8591-4acd-9d5b-d48604c15152
+Total jobs = 1
+Launching Job 1 out of 1
+Tez session was closed. Reopening...
+Session re-established.
+
+
+Status: Running (Executing on YARN cluster with App id application_1484693626561_0004)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Map 4 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 04/04  [==========================>>] 100%  ELAPSED TIME: 10.10 s    
+----------------------------------------------------------------------------------------------
+OK
+Frontier Airlines Inc.: F9	5960	9.48506711409396
+Southwest Airlines Co.: WN	98371	8.751308820689024
+ExpressJet Airlines Inc.: EV	55437	8.629489330230712
+Envoy Air: MQ	32859	7.647402538117411
+JetBlue Airways: B6	20633	5.25846944215577
+SkyWest Airlines Inc.: OO	49848	4.376765366714813
+American Airlines Inc.: AA	43256	3.248358609210283
+Delta Air Lines Inc.: DL	65502	1.4517877316723153
+Virgin America: VX	4846	1.4380932728023113
+US Airways Inc.: US	34266	1.1938072725150295
+United Air Lines Inc.: UA	39244	1.1350779737029864
+AirTran Airways Corporation: FL	8163	-0.30270733798848465
+Hawaiian Airlines Inc.: HA	5885	-1.3114698385726422
+Alaska Airlines Inc.: AS	12611	-2.904210609785108
+Time taken: 18.074 seconds, Fetched: 14 row(s)
