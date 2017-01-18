@@ -21,3 +21,72 @@ ermore, it was found that there were excessive erasure marks on the 4th grade
 test sheets suggesting that the teachers were  changing the grades since the
 new program granted $8000 to the top performing teachers. The teacher and 205
 others remained fired.
+
+
+== Bomb Parts ==
+
+Baseball models work well because the modelers have a vast amount and variety
+of data. While the model may be complex, they are not trying makeing their
+predictions based on inane factors like how much the catcher celebrated when
+the player got struck out. This is in contrast to how the DC teachers were
+being judged where much of their score was based on annual improvement with-
+out regard to the personal issues in the students lives.
+
+The LSI-R is a model used to inform judges about how long of a sentence they
+should assign to a convicted criminal. The input data is based on the answers
+on a questionnaire by the criminal. It includes whether or not the person
+has had family members jailed, which is strange because that is largely out
+of the persons control. Note: One can try to use a persons zip code or
+language patterns to learn about their socioeconomic class. Also, models
+contain the ideology and goals of the modeler. Models must be updated over
+time -- the Google model for flu outbreak was not and this was in part why it
+later failed.
+
+Recidivism is the tendency of a convicted criminal to reoffend. Statistical
+studies have shown that judges across the US tend to sentence blacks to longer
+sentences than other racial groups for the same crimes. Blacks constitute 13%
+of the population but between 40-50% of the jail population. To remove this
+bias it would seem wise to use a computer model which does not take into acc-
+out the person's race. However, as described above this can lead to new prob-
+lems. The author argues that the LSI-R is biased and sets up a positive feed-
+back loop of destruction. The model is used in 24 states since 1995.
+
+Models tend to be black boxes due to their complexity and because they are
+intellectual property. A WMD is opaque, scales and does damage to people. Such
+models can leap from one field to another which causes more damaged and fast.
+The author points out the negative effects of uses such models and identifies
+specific groups that are the most hurt. She also admits that much good comes
+from the models. The reader is left wondering why doesn't she simply argue to
+keep the model but specifically make sure the at-risk groups are not harmed.
+This would seem to solve all the problems.
+
+
+== Shell Shocked ==
+
+The author went to work at a hedge fund (D. E. Shaw in NYC) where she worked
+as a quantative analyst. This was during the 2008 housing collapse, which is
+explained in detail. The use of models was partly to blame for the collapse
+so the author puts out that they witnessed the tangible faces of the people
+who were affected -- this is often not the case.
+
+She then left the hedge fund to work at RiskMetrics Group which was a company
+that helped banks estimate risk. But banks had their own teams so they were
+merely brought in for cosmetics. They used Monte Carlo methods. "There was
+plenty to complain about with this method, but it was a simple way to get
+some handle on your risk." However, traders like to under report risk because
+it gives them a better Sharpe ratio which leads to a bigger bonus. So the
+author's work was largely ignored and she left to become a data scientist
+in 2011 as Intent Media.
+
+Her first job was to create a model that distinguished people browsing a
+travel website versus those looking to buy. Visitors who were logged in or
+had bought before were immediately considered to be buying. Time of day and
+year proved to be important. Everyone books summer vaction the last week
+of May. The author was trying to predict people's clicks instead of the
+movement of markets. Will the big data world lead to a collapse analogous
+to that of the housing market? The author didn't want to be a part of the
+problem so she quit her job. She views these models as keeping the poor in
+their place while the rich prosper.
+
+
+== Arms Race ==
