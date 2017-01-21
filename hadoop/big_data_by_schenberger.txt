@@ -1,4 +1,6 @@
-Big Data: A revolution that will transform …
+Big Data: A revolution that will transform how we live, work and think
+Viktor Mayer-Schonberger and Kenneth Cukier (2013 version)
+
 
 Introduction
 
@@ -15,24 +17,182 @@ Big data allows us to find correlations that were not possible in the small data
 
 Big data 
 
-Datafied
+== Datafied ==
 
-Today
+The story of US Navy member Matthew Fontaine Maury. He is responsible for
+data-fying the seas by compiling all records and stories he could acquire and
+making sense of it. Ship captains used to follow safe routes that were
+circuitous because they were after of crashing or encountering bad weather
+by taking routes which were not mapped. He captured the time dependence
+of the oceans, ie., the winds and flows are seasonal or the like. He then
+started having ships record data to get higher resolution.
+
+Dataficationa and digitization are different processes. A company in Japan
+is making seats with 360 sensors in them to measure the persons posture
+and to determine who the person is. If a stranger then the car will not start.
+
+Looked at wireless and bluetooth sensors. Monnit is a company doing this.
+
+Google Books.
 
 
-Value
+== Value ==
+
+Captcha and ReCaptcha was invented in the late 1990's. ReCaptcha uses
+what people type to figure out scanned text that computers could not
+figure out with sufficient certainty. Note: Can log the clicks as well
+as mouse movements. Data can be reused unlike food, for example. Big
+data tends to have secondard uses. For electric cars, IBM and Honda and
+the Pacific Gas and Electric Company identified when the cars should be
+refueled and where the refueling stations should be. New uses for data
+can be found sometimes many decades later when combined with a new data
+set such as the Manhattan pot hole project.
+
+Hitwise measures behavior across desktop, tablet and smartphone devices.
+Marketers can use Hitwise to get a sense of whether pink will be in
+this spring or black is back.
+
+Amazon was hired to handle the technology to AOL's e-commerce site. Ama-
+zon was interested in using their data to improve their own recommendation
+engine. AOL did not think about this. Google and Nuance.
+
+A logistic company knews lot about delivering goods and product shipments
+so it processed the data and sold economic and business forecasts. Alos,
+SWIFT which is the global interbank system that starting offering GDP fore-
+casts based on the number and nature of wire transfers.
+
+Recombinant data: Combining data sets to produce value. Do cellphones
+increase the likelihood of cancer. The Danish Cancer Society looked at who
+had cell phones from 1987 to 1995, a registry of nationwide cancer patients
+and education level and disposable income for each inhabitant. These were
+excellent data sets of high quality since they did not introduce bias. In fact, 
+the data were generated years earlier and for a completely different purpose.
+Could use the N=all approach. They were able to control for subpopulations
+since they had so much data. Published in 2011.
+
+Data exhaust: The digital trail that people leave in their wake. Spell
+checkers can be generated from Internet searches. People are more likely
+to leave a FaceBook post if they see that their friend has  done so. This
+is a great feature for a classifier that predicts whether or not someone will
+post.
+
+Data.gov in the US. FlyOnTime.us appears dead.
+The value of FaceBook's data was not contained in its IPO.
+Big data can backfire it that it can be used against the company. A gender
+equality law suit was able to use the companies data to find out exactly
+what the female employees should have gotten if they were paid fairly.
 
 
-
-
-Implications
+== Implications ==
 
 There is the data, the people who know what to do with it and then the
 people how come up with ideas for what to do with big data.
 
+Decide.com was similar to FareCast in that it stored massive amounts of
+data on everyday items and then did price prediction. The company had a
+"big data mindset". The site has since be bought out by eBay just like
+Microsoft bought and then killed FareCast. Very popular is
+google.com/flights. Bing now goes through Kayak. Oddly to me, there was
+a patent on what FareCast did even though it is straightforward. ITA
+was FareCast's data supplier.
+
+McKinsey Global Institute predicts a large shortage of people with the
+skills to analyze, store and deal with data.
+
+"A division called MasterCard Advisors aggregates and analyzes 65 billion
+transactions from 1.5 billion cardholders in 210 countries ... then sells
+the consumer trends. FlightCaster.com predicted flight delays using big
+data but was then sold to Next Jump.
+
+Today news articles are recommended to people by algorithms not by editors.
+This was first used with Amazon, which is how the book began.
+
+Mobile phone companies could license their data just as Twitter does to two
+companies. Udacity is notifying its instructors where students are reviewing
+their videos the most so that the instructor can improve them.
+
+All of a cars electronics cost 1/3 the total price of the car. When a car
+is serviced this data is downloaded by the dealer and used. One company
+found that a fuel tank was faulty and rather than contact the supplier
+and telling them, that would then notify their competitors, the company
+chose to keep it quiet and solve the problem through software.
+
+Inrix is concerned with using traffic data and selling the insight to other
+companies. Inrix gets data from many companies that are competing with one
+another but they are comfortable giving their data to Inrix because of
+what they gain. Inrix takes the data and returns it to those who supply it.
+
+In 2010 UPS took their extensive traffic monitoring team and created Roadnet
+Technologies. Other companies were comfortable handing over their data and
+everyone benefitted from the massive data set. The healthcare industry did
+a similar thing.
+
+Domain expertise in the small data age loses a lot of ground to someone
+with DS skills working with big data. The DS can quickly find correlations
+that the expert would have never found.
+
+Video games is a bigger industry than Hollywood films worldwide. Zynga
+makes games in a custom way and uses data to know where players are strug-
+gling. They learn things about peoples preferences in color and design
+patterns which maybe could be applied to the real consumer world.
+
+the-numbers.com gives lots of data on Hollywood movies. Production companies
+pay to have their budgets analyzed for the given gendre, subject material
+and stars. Predictive models are used to estimate weekend box office results.
+The company has 30 million records. The records also have a network nature
+where "this screenwriter worked with this director". Producers take the
+results to financial backers which gives their case more credence.
+
+Their is an overall study that shows that data-driven companies have
+employees that are more productive by 6% in comparison to companies that make
+decisions by gut.
+
+Rolls Royce put sensors in their engines and monitor the results for
+clients and tell them if something is wrong. They make 70% on their incomes
+by doing this. So the engines make less. Obviously, jet engines need
+to work and problems need to be anticipated. UPS does this with sensors
+since they need reliable trucks.
+
+
 == Risks ==
 
-This chapter begins with a description of the first scence of Minority
+During the cold war the Stasi or secret police of East Germany monitor-
+ed its citizen in stealth. It was a complex operation with over 100k
+people involved, mostly citizens turned informants. The film "The Lives
+of Others" was based on this.
+
+Today it is far easier to invade people's lives. The NSA, DHS, CIA, FBI,
+local and state police, AFT, Alexa and shopping, combined with FaceBook, Twitter,
+Google web searches, Instagram, and cell phone companies and credit card
+companies can do orders of magnitude more than the Stasi. There are 30
+cameras within 200 yards of where George Orwell wrote 1984.
+
+Furthermore, people can tell what is going on inside a house by looking
+at "load signatures" on the electrical grid via electric meters. One can
+distinguish between a dryer and a laptop computer.
+
+The Boston PD announced that they would not purchased new software to
+scan social media for threats to public safety and the police.
+
+The secondary uses of big data are often unforeseen when the data is
+collected. For this reason consent agreements are often unless. For
+example, Google Street View also collecting geo-location data for its self-
+driving car project.
+
+AOL and NetFlix got burned by releasing big data that was supposed to
+be anonymotized. The CTO of AOL was fired in 2006 after it happened.
+"60 single men" was the woman's search on AOL. The woman in the Netflix
+case a closeted lesbian and was outted by the release of the data.
+
+The NSA intercepts and stores 1.7 billion emails, phone calls and other
+communications every day. A 1.2 billion dollar facility in Fort
+Williamns Utah has been built to analyze this data. Sign out front reads
+"If you have nothing to hide, you have nothing to fear." They are coll-
+ecting data that they don't process and storing it for later so that
+they can start investigating people immediately. They have the capacity
+to store a yottabyte (10^24).
+
+A description of the first scence of Minority
 Report (Spielberg) where a man is arrested for a thought crime. The
 point is that with model that have been fit by big data, we can have
 a good prediction. Such models are used by parole boards in determin-
@@ -40,6 +200,24 @@ whether to grant parole or not. A professor has a model to predict
 the probability that a parole will be involved in a homocide (the
 perp or the victim) with accuracy of 70%. Thus decisions are being made
 about what is likely to happen instead of people's actual actions.
+
+With big data profiling can be done a granular level instead of all
+people who look like a terrorist.
+
+Humans are hard wired to think that correlation implies causation.
+
+The story of Robert McNamara is that he believed in quantifying
+everything before the data-driven approach was popular. He worked for the
+US government making significant improvements to armament procurement.
+He then worked a Ford applying his numbers-based approach. Things looked
+good on the surface at Ford but workers were throwing parts into the near-
+by river to satisfy his demands of not building new models until all the
+old parts were used. During the Vietnam war when McNamara was the US
+Secretary of Defense, success was measured by the
+body count. Soldiers and generals lied about the body count by elevating
+it. With McNamara taking a numbers approach everything failed. He assumed
+progress was being made when it was not. Erroneous data messes up the
+whole works and many people paid for it. GIGO.
 
 
 == Control ==
@@ -60,3 +238,35 @@ can be complicated to begin with like neural nets. For instance, in the
 case of predicting exploding pot holes in NYC, there were 106 predictors
 in the first model. Note: The broad of directors serve the investors not
 the management. Monopolies of big data must be avoided with antitrust.
+
+Humans tend to build powerful tools and then figure out how to control
+them. Two examples of this are nuclear power and bioengineering. Will
+big data prove to be another?
+
+== Next ==
+
+Mike Flowers was appointed director of analytics in Manhattan despite
+having a background in law. He was responsible for identifying illegal
+conversions which occur when an apartment is divided illegally. Living
+in such tight quarters leads to fires, rats and disease, and crime. The
+idea was to rank potential conversions that were reported by 311 calls
+and tips. Since there were only so many inspectors they couldn't respond
+to all the reports. This city project is similar to the potholes, rest-
+aurant inspections, led paint removal, bike safety and 311 response time.
+
+Authors seems to at times refer to big data which in fact is not big in
+the sense that specialized infrastructure is not required but instead
+that many datasets are being used.
+
+For the illegal conversions they used data from 19 different agencies.
+They improved the rate of detection from 13 to 70% in effect. Flowers did
+not care about causation but only correlation as that solved problems.
+
+The remainder of the book is a summary of what comes before. It points
+out the movement of cell phones in African slums to reveal they are
+vibrant communities. CERN generates lots of data but only keeps about
+0.1% of it.
+
+Main message was (1) N=All is now possible, (2) the downside of inexactness
+associated with big data is overcome by all its benefits of scale, and
+(3) focus on correlation and give up on causation.
