@@ -2,20 +2,68 @@ Big Data: A revolution that will transform how we live, work and think
 Viktor Mayer-Schonberger and Kenneth Cukier (2013 version)
 
 
-Introduction
+== Introduction ==
+
+Google Flu trends considered half a billion mathematical models.
+
 
 N=All
+
 
 Big Data is Messy
 
 As we draw from more bigger sources, mistakes or inexactitude enter. But these mistakes are outweighed by the gain of having much, much more data. An example of this is a grammar checker of the old days.
 
-Correlation
+== Correlation ==
 
-Big data allows us to find correlations that were not possible in the small data world. This means we are given the what but not the why. For instance, Walmart found that in the days leading up a hurricane, people tend to buy flashlights and pop tarts.
+Amazon used to have people write book reviews. In 1997 then started working
+towards have a computer make the recommendations which was stated in their
+prospectus. Eventually the engine was used and the people were fired. Today
+one-third of all Amazon sales are from recommendations. The engine teased out
+valuable correlations without knowing the cause or the why.
 
+Walmart has 2 million employees and takes in $450 billion annually. 
 
-Big data 
+Big data allows us to find correlations that were not possible in the small
+data world. This means we are given the what but not the why. For instance,
+Walmart found that in the days leading up a hurricane, people tend to buy
+flashlights and pop tarts.
+
+Credit scores (FICO) are model based. The company also makes predictions for
+the healthcare industry. Aviva has a model using hundreds of variables to
+predict those at risk o illnesses like high blood pressure, diabetes, or de-
+pression.
+
+The Target Story: The company looked at items its customers bought and those
+purchased by customer registered in Target's pregnancy club. It them could
+predict which customers not the club were pregnant. It sent a flyer of baby
+products to one woman who was living with her parent at age 18. The father
+complained and later apologized when learning that his teenage daughter was in
+fact pregnant.
+
+Because we don't have causation it is important to keep in mind that predictors
+or combinations of predictors are proxies to quantities that we are not aware of
+or don't have the data of but through correlation we get what we want.
+
+Sensors are being placed all over on bridges, trucks, factory processing equip-
+ment. Then use correlation analysis to figure out what is wrong. At a Canadian
+University along with IBM, they are recording 16 data streams on pre-mature
+babies. They can detect the onset of infection 24 hours before hand. Very constant
+vital signs were found before detection.
+
+Network analysis can be used for finding which court decisions are based on
+which precedents, who call whom on their cellphones and social friendships
+and professional relationships.
+
+A few hundred manholes in NYC get launched in the air a few stories (300 lb.)
+because of fires. Con Edison hired a team to come up with a model of ident-
+ifying the manholes that are most likely to have problems. The team used
+multiple data sets and 106 predictors (initially) to create a model. They
+needed to datafy handwritten notes. The top 10% of their predictions contain-
+ed 44 percent of the potholes that proved to be severe. The data was messy
+but by incorporating many, big data sets, the inexactitutde is outweighed
+by the gain of big. Some of their data wasn't machine readable.
+
 
 == Datafied ==
 
@@ -31,9 +79,52 @@ Dataficationa and digitization are different processes. A company in Japan
 is making seats with 360 sensors in them to measure the persons posture
 and to determine who the person is. If a stranger then the car will not start.
 
-Looked at wireless and bluetooth sensors. Monnit is a company doing this.
+Looked at wireless and bluetooth sensors. See the company Monnit.
 
-Google Books.
+https://books.google.com/
+Google Books: October 2015, the number of scanned book titles was over 25
+million but Google thinks there are 130 million distinct books. My PhD thesis
+is in the library. The n-gram viewer is described in Uncharted. By adding
+books in different languages, one could then use the books for machine
+translation. The Gutenberg project also aimed to get books online but they
+did not see the secondary values such as n-gram viewer, machine translation
+and so on.
+
+GPS satellites are passive in that they send out their position
+and time and your phone using triangulation to work out your position.
+Geo-location data allows car insurance providers to customize their rates based
+on how oftern, how and where a customer drives. UPS uses sensors to optimize
+routes and save gas and miles. They have seen formed an external company.
+
+https://genderize.io can be used to estimate the gender of a first name.
+
+FaceBook has datafied friendship. It has 1 billion people and 100 billion
+relationships. FaceBook has been slow to sell their data. Twitter sells it data
+to two firms: DataSift and Gnip. The twitter firehose is licensed for a variable
+amount of money. All tweets are public.
+
+Twitter comes with metadata which includes where the person is, who their
+followers are and who they are following. One large scale study published in
+Science showed that people's moods followed a similar daily and weekly pattern
+across cultures around the world (in 84 countries). Moods have been datafied.
+
+The low hanging fruit of big data has been picked.
+
+One can get a sense of how well a movie will do based on the frequency and
+total number of tweets.
+
+https://www.marketpsych.com Analyzes tweets as signals for investments in the
+stock market. It teamed up with Thomas Reuters to offer no fewer than 18864
+separate indices across 119 countries, on emotional states. This is used not
+by humans but by quants.
+
+Quantified self. Apple has a patent on ears buds that measure blood oxygen-
+ation, heart rate and body temperature. Wearable technologies like FitBit
+and JawBone.
+
+GreenGoose created wireless sensors that could be stick to all kinds of things
+like dental floss, cookie jars, and dog collars. Potential uses of this and other
+big data cases are only limited by one's imagination.
 
 
 == Value ==
