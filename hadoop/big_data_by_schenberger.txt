@@ -2,17 +2,102 @@ Big Data: A revolution that will transform how we live, work and think
 Viktor Mayer-Schonberger and Kenneth Cukier (2013 version)
 
 
-== Introduction ==
+== Now ==
 
-Google Flu trends considered half a billion mathematical models.
+Google Flu trends considered half a billion mathematical models. The model
+worked faster than the CDC but years later it was shown to fail. The model
+was thus once the face of big data but later a model that fell from grace.
 
+1918 Spanish flu killed tens of millions. Google tried to predict the spread
+based on search terms from 2003 to 2008 which they data flu data on. Doctors
+reporting to the CDC took one or two weeks which was too late. Google's meth-
+od didn't require needles or mouth swabs.
+
+Etzioni and FareCast. He asked fellow passengers how much they paid and was
+upset to find that buying earlier than anyone he paid among the highest. He
+then scraped big data and store the prices as a function of time away from
+when the flight was and indicated whether the consumer should buy or wait.
+Not a predictive model, just lots of data that had been averaged together.
+
+Farecast was integrated into Microsoft's Bing. Hadoop came out of Yahoo.
+Sloan Digital Sky Survey collected more data in its first few weeks than
+everything that had been amassed in the entire history of astronomy.
+
+There were 300 exabytes in 2007 with 7 percent analog. In 2013, total information
+is 1200 exabytes with only 2 percent non-digital.
+
+Walmart and Capital One pioneered the use of big data in their respective
+industries.
+
+
+== More ==
 
 N=All
 
+The US census is required every 10 years. It used to take more than 10 years
+to get the final numbers. Eventually the calculations were done on punch cards.
 
-Big Data is Messy
+In 1934 people were still bad at forming representative samples from a
+larger population. Using randomness proven to be the best way instead of asking
+someone to put together what they felt was a representative sample.
 
-As we draw from more bigger sources, mistakes or inexactitude enter. But these mistakes are outweighed by the gain of having much, much more data. An example of this is a grammar checker of the old days.
+23andMe looks are markers instead of the full sequence. Steve Jobs had his
+genome and the genome of his cancer sequenced. This allows treatments to be
+more targeted.
+
+Big data comes with granular level resolution of the problem understanding.
+All 11 years worth of data was used for the sumo cheating study. The 15th
+match of critical importance because only sumos with a 8-7 record or better
+are allowed to maintain their professional status. When the match was thrown
+the loser tended to win much more so than the winner in subsequent non-15th
+matches.
+
+Lytro cameras store lots of information and allow the photographer to decide
+what to focus on later.
+
+If a node with few edges (but having some outside their immediate community) is
+deleted from a network it has a major effect on keeping the overall notework
+together. The vertices with a large number of edges can be removed.
+
+Statistical sampling is less than a century old. Today we can use N=all.
+
+
+== Messy ==
+
+As we draw from bigger sources, mistakes or inexactitude enter. But these
+mistakes are outweighed by the gain of having much more data. An example of
+this is a grammar checker of the old days. Without changing the algorithm
+but simply adding more more data improve the accuracy dramatically.
+
+In chess, endgames when six or fewer pieces are left have been completely
+analyzed and all possible moves are stored. This allows to program to beat
+humans because at this point they can literally play flawlessly.
+
+https://translate.google.com
+Machine translation started off as a list of rules. Big data changed all that
+when huge numbers of translations were produced. Despite the messiness in all
+those translated pages (95 billion English sentences).
+
+The consumer price index (CPI) is used to measure inflation. This was done by
+having people estimate the price incease in 250k consumer products. This can
+now be done by scraping and big data analysis. One such company is pricestats.
+One would think that the former decide.com would also be in a position to do
+this.
+
+Tagging is a common way to label unstructured data on the Internet like photos
+on Flickr or tweets.
+
+The old days was little, perfect data and hypotheses that would be carefully
+explored. Today the game is about big messy data and no hypotheses but just go
+looking for correlations.
+
+Relational databases worked well in the old days of spare, exact, structured
+data that fits on a single machine. In the big data age, NoSQL has proven to
+be a necessary shift. These databases support enormous amounts of data which
+is distributed over many machines. It affords schemaless data that whose fields
+can change dynamically. Hadoop recognizes that the data is so large that it
+is best to bypass ETL and just do the analysis where the data is. There was
+once Google MapReduce. Only 5 percent of all data is structured.
 
 == Correlation ==
 
