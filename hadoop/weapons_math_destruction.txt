@@ -93,3 +93,67 @@ their place while the rich prosper.
 
 Flutie effect is when an elevated number of students apply to a college after
 one of its sports team have done well.
+
+US News & World report came out with their college rankings in 1983. A few
+years later the rankings were based on data like acceptance rate, SAT, grad-
+uation rates, donations from alum, etc. The public believed the rankings and
+this caused university presidents to get their school the best ranking. 25% of
+the score is not measured but by opinion. Several schools in recent years have
+resorted to cheating by lying on the numbers.
+
+Schools use models to determine who to accept. Because they aim to keep their
+acceptance rates low, some will reject students who they think are applying to
+the school as a safety. The universities are gaming the model. A math dept in
+Saudi Arabia paid adjunct faculty to switch their affilitions on their publications.
+
+From 1985-2013 there was a 500% increase in tuition which was 4 times greater
+than inflation. Tuition was raised to have more resources to improve the 15 variables
+used by US News.
+
+TCU spent nearly 500 million from 2008 to 2015 to move ranking from 97 to 76.
+
+There is an entire industry around getting kids to college. 4-day essay writing
+boot camps can cost 16k. One company estimates the probability of a student getting
+accepted at a certain college then charges 25k to help the student get accepted
+(if the student gets accepted; see ThinkTank Learning).
+
+The rankings do not count tuition and fees.
+
+Obama tried to introduce new rankings that included cost and population of minor-
+ities and the poor but failed. Instead the project resulted in a web site with lots
+of data on each school so students can decide. University presidents resisted the new
+rankings because they had worked so long to optimize for US News.
+
+
+== Propaganda Machine ==
+
+Many think targeted advertising will be want people want. US News made life
+miserable for rich and middle-class. Low class was targeted by for-profit colleges
+which are those run by a business behind it like Trump University, ITT Tech and
+University of Pheonix, DeVry.
+
+Here the main point is predatory ads and lead generation and pursuing people who
+are weak. Recuiters are told to find the pain point. They seek people in the poor-
+est zip codes. They pursue veterans because it is easy to get funding for them. A
+feedback loop makes the poor even poorer.
+
+
+== Civilian Casualties ==
+
+PredPol or predictive policing is software that reads in historical crime data and
+instructs patrolling officiers where to patrol and when to prevent crime. The blocks
+are the size of two football fields. NYC officers are under pressure to diminish
+crime so they at times don't report a crime -- similar to the case of Robert S.
+McNamara during Vietnam war. HunchLab is being used in Philedelphia. One parameter
+is whether the baseball go is home or away. These are hot-spot predictors and they
+are similar to how baseball fielders move to certain areas for a given batter. The
+model is explicitly blind to race and ethnicity. When nuisance crimes are added to
+the model (things like public drinking) then the model will focus on these crimes
+because there are so many more of them and it will effectively draw the police into
+the poorest neighborhoods. If nuisance data is ignored then these neighborhoods will
+tend to bread more serious crimes. This is why zero-tolerance campaigns have been
+introduced in places like NYC. This is broken-window policing where the windows must
+be fixed otherwise people will assume the neighborhood is junk and commit more serious
+crimes. The net result is that poverty is criminalized.
+
+Stop and frisk targeted minorities. 1 in 1000 had a gun. It is still in practice.
