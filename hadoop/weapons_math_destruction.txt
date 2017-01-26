@@ -157,3 +157,45 @@ be fixed otherwise people will assume the neighborhood is junk and commit more s
 crimes. The net result is that poverty is criminalized.
 
 Stop and frisk targeted minorities. 1 in 1000 had a gun. It is still in practice.
+85% black or hispanic. In San Diego, they also take pictures of the suspects face and
+use facial recognition to see if the person is wanted. This was used on 26k people
+between 2011 and 2015. DNA testing was also carried out. In Chicago, they used a
+predictive model to identify the 400 most likely to commit a violent crime and went to
+their door.
+
+
+== Ineligible to Serve ==
+
+Chapter starts by retelling the story of a top college dropout that couldn't get a
+job for minimum wage because of being bipolar.
+Kronos makes workforce management software including a personality test used on job applications.
+They are a part of the hiring industry. Page 113, 5000 fake resumes sent to Boston Globe and
+Chicago Tribune. The white names got 50% more callbacks. Top white applicants got more
+attention than bottom whites while top and bottom blacks were not really differentiated which
+is striking.
+
+Orchestras interview with the musician behind a sheet. This increased the number of
+women. Seems like Gild is now AngelList which specializes in getting hired at a startup.
+
+
+== Sweating Bullets ==
+
+Models have been used to determine when people should work. 2/3 of people in retail and
+the food industry did not know their schedule one week in advance. Starbucks may changes
+after being criticized. A lot of this comes from Operational Research where this
+scheduling software is based on. Cataphora (now defunct) was using software to rate employ-
+ees at tech companies. Based idea was to see whose email text was passed around the most.
+Jokes and gossip was accounted for because these a distinct signature. The people who gen-
+erated the ideas and those who passed them along the most were singled out and rewarded.
+IBM and Microsoft both use similar software.
+
+Bank of America call centers had employees wear sociometric badges around employees neck
+to figure out what makes a team more productive than others. The result was that those
+that were the most social. This is in agreement with the NY Times article about the
+Google study which showed a room where people talk over one another and are comfortable
+sharing their view versus a polite and controlled group is much better. Messy is better
+than wait-your-turn.
+
+Simpson's paradox is when the data taken in whole suggest one trend, but suggest the
+opposite trend when subgroups are considered. This explained the mistake made by the
+Reagan report A Nation at Risk.
