@@ -203,4 +203,79 @@ Reagan report A Nation at Risk.
 
 == Collateral Damage ==
 
-FICO is based on debt load and bill-paying record.
+FICO is based on debt load and bill-paying record. The internet is full of e-scores, such
+as Neustar which offers software which tries to rank website visitors by how much they
+will spend and gives priority to those at the top on call wait lists.
+
+A persons credit score is used for more than just loans. For instance, if they apply for a
+job. This practice is illegal in 10 states. About 5% of credit scores are wrong or based
+on wrong information about the person.
+
+Axciom provides data, analytics and software. They compile or buy retail, advertising,
+public arrest records, home sales, voting records, etc then sell them in the form of
+dossiers. They are one of the data brokers.
+
+A machine learning model that is applied on a wide scale that does not learn from its mis-
+takes can be dangerous and unfair.
+
+LendingClub is a peer-to-peer operation where people can get loans at lower interest rates
+than those offered by banks.
+
+
+== No Safe Zone ==
+
+Statisticians and actuaries work to estimate risk for loans and insurance. The 43000 zip
+codes in the US (zipboundary.com) but book says 33419. In 2015, Consumer Reports conducted
+a large scale study where they got a web quote for 2 billion different vehicles across
+locations in the US. They found the prices varied dramatically.
+
+E-score algorithms factor in variables such as salary, occupation, home value, debt load
+and shopping history, and assign a numerical score.
+
+In some case a persons credit score is used to estimate their car insurance cost. Some
+people who like to be rated by how they actually drive and where they go. One can have
+telemetric sensors and GPS installed in their vehicle. Of course, the insurance company
+can also use the data to learn about driving habits and sell or use that information to
+make a profit.
+
+Sense Network (now defunct by YP) was using cell phone geo-location data (without names) to
+track people and figure out which groups they belonged to. Clustering methods were applied
+to identify different groups that humans would not have thought to look for. They also
+used taxicab data.
+
+Wellness or the physical fitness and health of employees is a hot topic. Michelin, the tire
+company, charges employees $1000 if they don't reach their fitness goals. CVS charges
+employees $600 if they don't give their body fat, blood sugar, blood pressure and cholestrol.
+
+The body mass index is not a good metric for health. It works somewhat for the average of
+a large population but fails when applied to individuals. It is the mass in kg divided by
+the height squared in meters. Note the book falsely reports the formala as mass over height.
+
+
+== Targeted Citizen ==
+
+Facebook is a publically traded company which means it can be only trusted so much. Today there
+are about 1.5 billion people on FB. In the US about 2/3 of the adult population is on FB with
+the average person spending 39 minutes per day. Tech companies have lobbyists in Washington
+because their profits are directly linked to government policies.
+
+FB does A/B testing to get people to vote. They showed there sets a list of random people who
+voted, a list of their friends who voted and no list but just a note. These people where
+politically active to begin with and the group that saw their friends voted at 67% versus 64%.
+
+FB alters news feeds that each user sees. During the presidental election they were accused
+of slanting the content to help a certain party.
+
+Google search is focussed on raising revenue not helping people.
+
+Obama data science team started with a large focus group of a few thousands. They identified
+certain groups and then began microtargeting these groups via TV ads, etc. Ted Cruz ran specific
+content during a conference at the Venetian in Las Vegas. A UK firm scraped FB profiles to sell.
+
+
+== Conclusion ==
+
+IBM in 1996 gave benefits to same-sex couples. They are believed to have done this because
+they were losing talent to other companies like Amazon and Microsoft who were already doing it.
+Big data is an industrial revolution of sorts that will have growing pains. Have DS take an oath.
+Europe has strict data collection rules. There is no reuse.
