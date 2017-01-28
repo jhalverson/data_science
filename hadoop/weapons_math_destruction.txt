@@ -199,3 +199,8 @@ than wait-your-turn.
 Simpson's paradox is when the data taken in whole suggest one trend, but suggest the
 opposite trend when subgroups are considered. This explained the mistake made by the
 Reagan report A Nation at Risk.
+
+
+== Collateral Damage ==
+
+FICO is based on debt load and bill-paying record.
