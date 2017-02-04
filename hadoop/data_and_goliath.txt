@@ -1,12 +1,118 @@
-Data and Goliath
-2015
-Schneider
+Data and Goliath (2015)
+Bruce Schneier
 
 
 == Introduction ==
 
+Cell phone location tracking can infer lots of information. The police can use it.
+Popular data brokers are Acxiom, Corelogic, Recorded Future. Sense Networks used
+to record lots of cell phone data and make dossiers or profiles to sell. The Ukraine
+sent a text to people at a protest indicating that they knew their location.
+"Acxiom provides the data foundation for the world's best marketers." 
+Verint makes cell tracking systems. Cobham is able to ping a phone without the
+user knowing (blind). Defentek claims to be able to locate and track any phone.
 
-== 1.
+One surveillance firm, called Defentek, boasts on its web page that its Infiltrator
+Global Real-Time Tracking System can “locate and track any phone number in the world.”
+The Infiltrator System is “a strategic solution that infiltrates and is undetected
+and unknown by the network, carrier, or the target,” the site says.
+
+GPS is more accurate than cellular. Phone apps use GPS like Angry Birds. HelloSpy
+is hidden cell phone app. "The only way to gauge your employees’ loyalty is by monitoring
+their cell phones. Employees tend to overuse the work phones assigned to them."
+
+The NSA can track cell phones that are turned off or they can turn on the mic and
+listen even to just learn whether in a crowded city street or a quiet room.
 
 
-== 2.
+== 1. Data as a byproduct of computing ==
+
+Google says give us your data for a bunch of free stuff. Mass surveillance by both
+government and coporations. In many ways data is a byproduct of computing. GPS
+is accurate to about 16-27 feet while cell towers only 2000 ft.
+
+One can identify a computer by the software it has on it including the version
+and what is enabled, etc.
+
+Cars, online, stores, cell phones, photos, EZ-pass, Uber, Nest, IoT and smart
+applications, quantified self. 23andMe could sell your markers to an insurance
+company in the future. Internet connected devices are expected to number around 30
+billion by 2020. We interact unknowingly with hundreds of computers every day.
+"Data is the exhaust of the information ago." In 2015, 76 exabytes/year passing through
+the internet. 300 petabytes or $300 million for every phone call in US/year. In 2011
+Max Schrems sued FB to get all the data they had on him. They sent a 1200-page PDF
+document that contained everything he clicked on including his profile information.
+
+
+== 2. Data as surveillance ==
+
+Snowden revealed that the NSA was recording the metadata for every US phone call.
+Metadata is more important than the data for big data projects. A Google search
+reveals a tremendous amount about someone. "We know who you are, where you have
+been. More or less what you're thinking (before you think it)."
+
+Government and coporations are talking because data gathering is cheap and prevalent.
+Lots of spy tools in SkyMall. Spring charges police $30/month for phone location info.
+
+NSA was recording all voice calls in Afhganistan to anticipate improvised explosive
+devices.
+
+License plate scanners and face recognition. The plate scanners are used by traffic
+cops for repossesion/divorce lawyers to show infidelity/PI's/auto theft. Vigilant
+Solutions in Livermore, CA. Also for warrants. They do facial recognition with
+350 vectors.
+
+FBI has 52 million faces, some from driver's licenses. Facial recognition was used
+at a concert in Boston.
+
+
+== 3. Analyzing our data ==
+
+Corporations are interested in our data for marketing. By storing lots of data we can
+look into the past when a new target appears. NSA stores several databases including
+all the phone conversations on Bermuda (MYSTIC). State of New York retains license
+plate data for up to five years. This allows them to figure out where people have been.
+AT&T hangs on to text messages for 7 years. NSA was doing 3-hop searches but were
+told to only do 2-hops on phone metadata for one program.
+
+Google searches all of your Gmail to better advertise toward you.
+
+NSA looks for GPS interactions between the target and everybody else. They check for
+tails of their overseas spies. It looks for phones that are turned off but then used
+for a brief period and looks for the same behavior amount other phones. It also looks
+where people turn their phone off and who else did that. Geofencing is the practice
+of delivering ads based on a person's location. Placecast works with Starbucks, Kmart
+and others to deliver targeted ads based on geo-loco data.
+
+Mass surveillance is the most powerful when inferences drawn across multiple data sets
+are made. Facial recognition will help this. If you buy an subway card with cash and
+use it every time you are in NYC, soon there will be only one person who has visited
+the city on those days and this can be found out by looking at airline data, etc.
+
+CMU researchers used facial recognition to dynamically load info about people walking
+toward the camera on campus using facebook profile images of people who claim to be at CMU.
+Initiate Systems correlates data across multiple data sets. They sell to both corporations
+and governments. FB is partnering with Acxiom and Epsilon to correlate online profile
+with in-store purchases. ExactData provides mailing lists and leads on specific groups
+of people who have been flagged for a certain interest or behavior like dating online or
+suffer from depression.
+
+Cases where correlating large data sets worked include catching the woman who was having
+the affair with the CIA director. She did not email him using her home wifi network but
+instead used hotels and other public networks. However, she was the only name that was
+using all those networks (from the registration data). The interview subjects of Alfred
+Kinsey were 97% identified. Hard to release de-anonymized big data.
+
+
+== 4. The business of surveillance ==
+
+A smartphone flash light app was sending geolocation data and user information to
+advertisers even when people turned the feature off.
+
+Cookie have gotten more advanced. Google analytics is used to track you on sites that use
+this service. Blur is an online privacy company that wrote DoNotTrackMe which was a browser
+plugin. It keeps your information private. Cookies are also installed into Adobe Flash.
+Both FB and Google have relaxed their privacy policies over the years. Google combined
+their apps in 2012 to presumably make it easier to create a profile to sell. Apple is one
+of the best companies at not selling user data. It could take everything in iCloud if it
+decided to.
