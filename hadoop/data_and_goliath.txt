@@ -183,9 +183,27 @@ Internet. The PRISM program legally compels the major tech companies to hand ove
 data. Vodafone hands over all internet traffic flowing into 29 countries. Some US states
 sell drivers license photos and voter registration data.
 
-1,931 corporations in the US in 2010 were working on intelligence.
+1,931 corporations in the US in 2010 were working on intelligence, counterterrorism.
+Raytheon, Northup Gruman build cyberweapons. Many other firms produce software for other
+countries so that they can carry out mass surveillance and control the internet within
+their countries. Half a million people have security clearances in the US (2012), implying
+that a lot of info is classified and there are many people in the government and contractors
+who have access.
 
-pg. 101
+When digital communications became the norm, the NSA lobbied congress to require the
+telecommunications companies make it possible for the NSA to eavesdrop. Today the NSA needs
+to get around encryption or SSL. They do this by getting plaintext from the service
+providers. They used to get it from Internet backbone companies.
+
+Lavabit was an encrypted email system. The owner was issued a National Security Letter
+and gag order requiring him to turn over the encryption key and not speak about it. He
+challenged in court and lost. Instead of following the order he shut down the site. Snowden
+was one of the users which may have been the reason for the order. Skype was also bullied
+by the NSA as well as Yahoo and RSA Security.
+
+Google's ISP is/was Level 3 Communications. It was hack by the NSA when Google wasn't turning
+over enough info for the PRISM program. They also hacked Yahoo. The NSA stopped shipments
+of Cicso switches in transit (pg. 85) to secretly install their own hardware.
 
 NSA passes racy photos around the office as well as spy on people they know. They also
 listen to phone calls of non-Americans overseas. MLK had extramartial affairs and J.
@@ -197,10 +215,30 @@ Foriegn countries cite US behavior when they make choice about how to surveil th
 citizens. Countries like Russia and China are trying to control their citizens when on
 the Internet.
 
+The NSA plays by their own rules and businesses and individuals have no recourse.
+
 Read an article on Wired about surveillance at Superbowl 50. It said they were using
 license plate scanners, stingrays or cell phone tower simulators, lots of cameras, and
 mabye face recognition technology. The feds don't need a warrant to use the stingrays
 but local and state people do.
+
+
+== 7. Political liberty and justice ==
+
+The downside of mass surveillance is the loss of liberty. People are not completely free
+to think and act, instead they must wonder if they are being watched. If we look back over
+the last 50 years we see social change today or behaviors that would have been illegal years
+ago. People must break the law for positive change to happen and if they are censoring them-
+selves they may not make these changes which would hold us back.
+
+A couple from England via Ireland were detained when one of them posted a tweet his
+intention to 'destroy' America and dig up Marilyn Monroe's grave.
+
+Great Fire Wall of China is 50,000 plus people controlling the internet. Plus, people in
+China rat on each other so network is even larger. The tech-savvy ones are able to get
+around the firewall but the ratting gets them.
+
+Germany censors Neo-Nazi paraphernalia, US censored WikiLeaks in 2010.
 
 
 === 8. Commercial fairness and equality ==
