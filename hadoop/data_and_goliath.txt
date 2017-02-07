@@ -57,12 +57,13 @@ Lots of spy tools in SkyMall. Spring charges police $30/month for phone location
 NSA was recording all voice calls in Afhganistan to anticipate improvised explosive
 devices.
 
-License plate scanners and face recognition. The plate scanners are used by traffic
+License plate scanners (ALPR automatic license plate readers) and face recognition. The
+plate scanners are used by traffic
 cops for repossesion/divorce lawyers to show infidelity/PI's/auto theft. Vigilant
 Solutions in Livermore, CA. Also for warrants. They do facial recognition with
 350 vectors.
 
-FBI has 52 million faces, some from driver's licenses. Facial recognition was used
+FBI has 52 million faces (2015), some from driver's licenses. Facial recognition was used
 at a concert in Boston.
 
 
@@ -116,3 +117,162 @@ Both FB and Google have relaxed their privacy policies over the years. Google co
 their apps in 2012 to presumably make it easier to create a profile to sell. Apple is one
 of the best companies at not selling user data. It could take everything in iCloud if it
 decided to.
+
+People voluntarily allow corporations to have their data. We like how our data is used
+by Amazon to improve its recommendation engine.
+
+The data brokers have replaced past organizations. They now take all the data they can
+get on you and assign you to some category. This is for personalized advertising.
+
+Google controls 2/3 of US search market and FB 3/4 of those on the Internet.
+
+The users are not the customers but the products. The real customers of companies like FB
+are who FB sells the data to. People like being able to lose their phone and have their
+data transfer to a new phone from the cloud. They like this more than privacy.
+
+We have no say in how these big companies can use our data. It would be hard to live and
+not use at least one of these companies.
+
+Aside: From Google privacy statement:
+"Our automated systems analyze your content (including emails) to provide you personally
+relevant product features, such as customized search results, tailored advertising, and
+spam and malware detection.
+
+We may combine personal information from one service with information, including personal
+information, from other Google services – for example to make it easier to share things
+with people you know. "
+
+
+== 5. Government surveillance and control ==
+
+NSA has three programs that involve collecting Gmail data. The internet's physical wiring
+requires much of the world's traffic to cross US borders, event traffic between two
+different countries. NSA: "collect it all", "know it all", "exploit it all". The agency
+taps the telcos (telecommunications companies) and cable companies. NSA was recording
+all voice calls in Bermuda. NSA budget is thought to $72 million with 33,000 employees
+plus contractors.
+
+FBI is a close second to the NSA. The first Snowden leak revealed a document instructing
+the FBI to turn over phone records from Verizon customers to the NSA, not the other way
+around. StingRay (pg. 68) is discussed and how those involved must sign an NDA.
+"Fusion centers" are places where local and federal agencies share data. One is setup
+for the Superbowl.
+
+Many countries are surveilling their citizens. Several countries threatened to ban
+BlackBerry if the company didn't allow them access to the encrypted data that the devices
+generate.
+
+There are many cases of nations hacking other nations. It is never clear if the attack
+is government sponsered but one can look at the clues to infer the answer. There have not
+been leaks as revealing as the Snowden trove so we don't know as much about other countries.
+We know something about China. Italty has a company called Hacking Team that makes cyber-
+weapons. Stuxnet was the first military-grade cyberweapon launch by the US and Israel
+against Iran.
+
+The Five Eyes is US, UK, Canada, Australia and New Zealand -- english speaking. The Nine
+Eyes adds Denmark, France, the Netherlands and Norway. These group share with each other
+and stipulate that the data should not be used to spy on their citizens but the NSA
+gets around this by using the Danish data to spy on the Germans and the German data to
+spy on the Danes.
+
+
+== 6. Consolidation of instituitional control ==
+
+Snowden revealed that the US government relies on US corporations to eavesdrop on the
+Internet. The PRISM program legally compels the major tech companies to hand over their
+data. Vodafone hands over all internet traffic flowing into 29 countries. Some US states
+sell drivers license photos and voter registration data.
+
+1,931 corporations in the US in 2010 were working on intelligence.
+
+pg. 101
+
+NSA passes racy photos around the office as well as spy on people they know. They also
+listen to phone calls of non-Americans overseas. MLK had extramartial affairs and J.
+Edgar Hoover wrote him a letting asking him to commit suicide. Mission creep is when
+departments or agency go beyond what they are supposed to do because it requires little
+effort. An example is the NSA helping out with catching drug smugglers.
+
+Foriegn countries cite US behavior when they make choice about how to surveil their
+citizens. Countries like Russia and China are trying to control their citizens when on
+the Internet.
+
+Read an article on Wired about surveillance at Superbowl 50. It said they were using
+license plate scanners, stingrays or cell phone tower simulators, lots of cameras, and
+mabye face recognition technology. The feds don't need a warrant to use the stingrays
+but local and state people do.
+
+
+=== 8. Commercial fairness and equality ==
+
+Corporate mass surveillance. Redlining was the practice only giving loans to people
+who lived in certain neighborbood outlined in red on a map. Today a similar online
+practice is called weblining which is the use of an e-score to decide who to interact
+with a client. Price discrimination versus price gouging. The former is practiced by
+airlines, Uber, and restaurants (lunch meal costs different than dinner). Staples online
+offers different prices depending on whether a competitor's store is nearby. Similar
+for Home Depot. Orbitz presents different options whether the computer is on a Windows
+or Mac computer. Corporations are getting more personalized. Lenddo in Panama determines
+credit risk by looking at the client's FB friends. "See how Lenddo uses non-traditional data
+to provide credit scoring and verification to economically empower the emerging middle class
+around the world." High-end restaurants use Internet searches on their clients names to
+decide whether to turn the wine menu to the more expensive ones or not.
+
+"Workplace analytics" is the practice of optimizing employees by using FitBit, etc. This
+is done with call centers, truck drivers, idea-generating people, etc.
+
+FB could steer an election by selectively showing its users articles and the "I voted"
+button from their friends. They did receive criticism during the 2016 election. FB has shown
+that they can influence a users mood by either showing them stories with positive or
+negative sentiment.
+
+Privacy breaches are common to both government and corporate which means it is not wise
+to think that these entities can store whatever they want. Ratting is the use of web cameras
+to spy on people and blackmail them.
+
+
+== 9. Business competitiveness ==
+
+NSA downplayed encryption from 1993 when the internet got started and was void of
+e-commerece. The Clipper Chip was a phone encryption system with a backdoor for the govern-
+ment to use when needed. It did not sell well. The NSA uses surveillance 1) of US cloud
+2) US hardware like Cisco routers and 3) US companies. NSA says "We're only spying on non-
+Americans." This is not reassuring for US internet companies who have international clients.
+Germany is building their own cloud to avoid the NSA. Germany ruled that FB, Apple and Google
+are unlawfully using their citizens data.
+
+There are private social networks (Ello), chat clients (Wickr, secure ephemeral chatting) and
+internet search engines (DuckDuckGo). Companies now have people to serve as the Chief Privacy
+Officers.
+
+
+== 10. Privacy ==
+
+Loss of privacy is loss of how we present ourselves. Constant surveillance is unhealthy as
+has been shown by prisons and detention centers. The word "collect" to the NSA means to inspect
+by a human, not simply store. Algorithmic surveillance can lead to action and therefore is
+still a problem. Subjecting people to constant algorithmic surveillance is unhealthy -- if they
+are aware of it.
+
+It is hard to identify cyberattacks because don't have multiple streams of data and the time
+to investigate. There is work underway to ID everyone on the net (China and Russia).
+
+Seems likely that could id someone in the Witness Protection Program by buying dossiers from
+data brokers and scanning for signature items.
+
+
+== 11. Security ==
+
+As of June 2016, the Terrorist Watch List is estimated to contain over 2,484,442 records,
+consisting of 1,877,133 individual identities.
+
+20,000 names on no-fly list. 680,000 people on the watch list. Data mining of mass surveillance
+data is not effective. There are many false positives when looking for terrorists. Agencies
+talk about "drinking from a fire hose." People plotting terrorist attacks are trying to evade
+detection even if they are not informed. Finding terrorists is like looking for a needle in a
+haystack. But you need the haystack before you can search for the needle. But there is so much
+data it is hard to find the haystack.
+
+The NSA has had little success. The director says that if mass surveillance were being used
+before 911 they could have stopped it. This statement comes despite the fact that they were not
+able to stop the Boston Marathon bombings.
