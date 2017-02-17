@@ -8,6 +8,10 @@ scrape_birthdays = True
 
 import time
 import requests
+session = requests.Session()
+session.headers = {}
+session.headers['User-Agent'] = 'Mozilla/5.0'
+print session.headers
 import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -23,16 +27,21 @@ base_path = 'fightmetric_fighters/fightmetric_fighters_'
 if scrape_fighters:
   for char in chars:
     url = 'http://fightmetric.com/statistics/fighters?char=' + char + '&page=all'
-    r = requests.get(url)
+    r = session.get(url)
     with open(base_path + char + '.html', 'w') as f:
       f.write(r.content)
+
+# get list of all previously downloaded files
+import os
+import glob
+previous = set(filter(lambda x: os.path.getsize(x) > 50, glob.glob('fightmetric_fighters/*.html')))
+print 'Previous: ', len(previous)
 
 header = ['First', 'Last', 'Nickname', 'Height', 'Weight', 'Reach',
           'Stance', 'Win', 'Loss', 'Draw', 'Belt']
 fighters = pd.DataFrame()
 chars = 'abcdefghijklmno'
 chars = 'pqrstuvwxyz'
-chars = ['p']
 for char in chars:
   # read tables from html into a list of dataframes
   with open(base_path + char + '.html', 'r') as f:
@@ -86,8 +95,10 @@ for char in chars:
         url = row.find('a').get('href')
         # get page by scraping or from file
         iofile = 'fightmetric_fighters/' + url.split('/')[-1] + '.html'
-        if scrape_birthdays:
-          r = requests.get(url, headers={'User_agent':'Mozilla/5.0'})
+        if scrape_birthdays and iofile not in previous:
+          print char, url, iofile
+          r = session.get(url, headers=session.headers)
+          print str(r.status_code)
           with open(iofile, 'w') as f:
             f.write(r.content)
           s = BeautifulSoup(r.content, 'lxml')

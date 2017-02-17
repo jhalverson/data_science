@@ -46,7 +46,6 @@ for tr in events:
     r = requests.get(url)
     with open(iofile, 'w') as f:
       f.write(r.content)
-
   # read html
   with open(iofile, 'r') as f:
     html_card = f.read()
@@ -62,11 +61,11 @@ for tr in events:
     notes = td[7].find_all('p')[1].get_text().strip()
     round_ = td[8].find('p').get_text().strip()
     time = td[9].find('p').get_text().strip()
-    extracted.append([outcome, fighter1, fighter2, weight, method, notes, round_, time, title, date, location])
+    extracted.append([fighter1, outcome, fighter2, weight, method, notes, round_, time, title, date, location])
 
 fights = pd.DataFrame(extracted)
-fights.columns = ['Outcome', 'Winner', 'Loser', 'WeightClass', 'Method', 'MethodNotes', 'Round', 'Time', 'Event', 'Date', 'Location']
-fights.Outcome = fights.Outcome.replace({'win':'Win', 'drawdraw':'Draw', 'ncnc':'NC'})
+fights.columns = ['Winner', 'Outcome', 'Loser', 'WeightClass', 'Method', 'MethodNotes', 'Round', 'Time', 'Event', 'Date', 'Location']
+fights.Outcome = fights.Outcome.replace({'win':'def.', 'drawdraw':'draw', 'ncnc':'no contest'})
 cities = {'Sao Paulo, Sao Paulo, Brazil':'Sao Paulo, Brazil',
           'Barueri, Sao Paulo, Brazil':'Sao Paulo, Brazil',
           'New York City, New York, USA':'New York, New York, USA',
@@ -74,16 +73,27 @@ cities = {'Sao Paulo, Sao Paulo, Brazil':'Sao Paulo, Brazil',
 fights.Location = fights.Location.replace(cities)
 fights.Date = pd.to_datetime(fights.Date)
 fights.Round = fights.Round.astype(int)
+
+# rename duplicate event name
+mask = (fights.Event == 'UFC Fight Night: Belfort vs Henderson') & (fights.Date == np.datetime64('2013-11-09'))
+fights.Event[mask] = 'UFC Fight Night: Belfort vs Henderson 2'
+
 fights.to_csv('fightmetric_cards/fightmetrics_fights.csv', index=False)
 
 #print fights[['Outcome', 'Winner', 'Loser', 'WeightClass', 'Method', 'Round', 'Time', 'Date', 'Location']]
 print fights.groupby('Event').first().Location.value_counts()
-print fights.groupby('Event').first().Date.apply(lambda x: x.year).value_counts()
+print fights.groupby('Event').tail(1).Date.apply(lambda x: x.year).value_counts().sort_index()
+print fights[fights.Date > np.datetime64('2012-12-25')].groupby('Event').head(1)[['Event', 'Date']].sort_values('Date', ascending=False)
 print fights.WeightClass.value_counts()
 print fights.Method.value_counts()
-print fights[~fights.Event.str.contains('UFC|Ultimate|TUF')][['Winner', 'Loser', 'Time', 'Event', 'Date', 'Location']]
+print fights[~fights.Event.str.contains('UFC|Ultimate|TUF')][['Winner', 'Outcome', 'Loser', 'Time', 'Event', 'Date', 'Location']]
+#print fights[fights.Location.str.contains('Goiania')][['Winner', 'Loser', 'Time', 'Event', 'Date', 'Location']]
+print fights[fights.Date.apply(lambda x: x.year) == 2013].groupby('Event').head(1)[['Winner', 'Loser', 'Time', 'Event', 'Date', 'Location']].reset_index()
+print fights.groupby('Event').head(1)[['Winner', 'Loser', 'Time', 'Event', 'Date', 'Location']]
+print fights[fights.Event == 'UFC Fight Night: Belfort vs Henderson']
 
 fighter = 'Conor McGregor'
+fighter = 'Vitor Belfort'
 fighter = 'Anderson Silva'
 fighter = 'Nick Diaz'
 fighter = 'Georges St-Pierre'
@@ -99,5 +109,3 @@ for locale in fights.Location.unique():
   location = geolocator.geocode(str(locale))
   if location: print locale, location.latitude, location.longitude
   else: print locale
-
-
