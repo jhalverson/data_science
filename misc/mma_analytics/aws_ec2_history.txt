@@ -1,0 +1,67 @@
+    1  python
+    2  pip
+    3  pip install pandas
+    4  sudo pip install pandas
+    5  sudo pip install beautifulsoup
+    6  sudo pip install requests
+    7  sudo pip install numpy
+    8  python
+    9  lt
+   10  vi scrape.py
+   11  python scrape.py 
+   12  vi scrape.py
+   13  python
+   14  pip install --upgrade pip
+   15  sudo pip install --upgrade pip
+   16  sudo pip install --upgrade beautifulsoup
+   17  sudo pip install beautifulsoup
+   18  pip
+   19  /usr/bin/pip
+   20  pip
+   21  python
+   22  ls
+   23  vi scrape.py 
+   24  python scrape.py 
+   25  python
+   26  vi scrape.py 
+   27  python scrape.py 
+   28  python
+   29  vi scrape.py 
+   30  python scrape.py 
+   31  pip
+   32  whereis pip
+   33  sudo /usr/local/bin/pip install --upgrade beautifulsoup
+   34  sudo /usr/local/bin/pip install --upgrade beautifulsoup4
+   35  vi scrape.py 
+   36  python scrape.py 
+   37  sudo /usr/local/bin/pip install lxml
+   38  python scrape.py 
+   39  ls
+   40  tar -cvf pz.tar *.html
+   41  lt
+   42  ls -l
+   43  gzip pz.tar 
+   44  ls -l
+   45  cp pz.tar.gz s3://fridaybucket/
+   46  scp pz.tar.gz s3://fridaybucket/
+   47  s3cmd
+   48  aws s3 cp pz.tar.gz s3://fridaybucket/pz.tar.gz
+   49  hostname
+   50  ls
+   51  file 91e3388e69060e69.html
+   52  rm *.html
+   53  lt
+   54  ls
+   55  vi scrape.py 
+   56  lt
+   57  ls -l
+   58  gunzip pz.tar.gz 
+   59  tar -xvf pz.tar 
+   60  vi c742287ed86a09bc.html
+   61  lt
+   62  ls -l
+   63  manls
+   64  man ls
+   65  ls -lS
+   66  wget
+   67  wget http://fightmetric.com/fighter-details/c742287ed86a09bc

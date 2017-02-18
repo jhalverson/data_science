@@ -3,18 +3,17 @@
 
 # flags to get updated data
 scrape_fighters = False
-scrape_birthdays = True
+scrape_birthdays = False
 ###################################
 
 import time
 import requests
-session = requests.Session()
-session.headers = {}
-session.headers['User-Agent'] = 'Mozilla/5.0'
-print session.headers
 import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
+
+session = requests.Session()
+session.headers['User-Agent'] = 'Mozilla/5.0'
 pd.set_option('display.max_rows', 200)
 pd.set_option('display.width', 200)
 
@@ -32,16 +31,13 @@ if scrape_fighters:
       f.write(r.content)
 
 # get list of all previously downloaded files
-import os
-import glob
-previous = set(filter(lambda x: os.path.getsize(x) > 50, glob.glob('fightmetric_fighters/*.html')))
-print 'Previous: ', len(previous)
+from os.path import getsize
+from glob import glob
+previous = set(filter(lambda x: getsize(x) > 50, glob('fightmetric_fighters/*.html')))
 
 header = ['First', 'Last', 'Nickname', 'Height', 'Weight', 'Reach',
           'Stance', 'Win', 'Loss', 'Draw', 'Belt']
 fighters = pd.DataFrame()
-chars = 'abcdefghijklmno'
-chars = 'pqrstuvwxyz'
 for char in chars:
   # read tables from html into a list of dataframes
   with open(base_path + char + '.html', 'r') as f:
@@ -80,7 +76,7 @@ for char in chars:
   # row then we extract the name via the <a> tags (the find_all method is implied)
   dob = []
   df.Belt = 0
-  soup = BeautifulSoup(html, 'lxml')
+  soup = BeautifulSoup(html, 'lxml').find('table', {'class':'b-statistics__table'}).find('tbody')
   for row in soup('tr', {'class':'b-statistics__table-row'}):
     # find champion belt image if exists
     if row.find('img', {'class':'b-list__icon'}):
@@ -91,18 +87,17 @@ for char in chars:
     # get link to individual fighter if exists
     if row.find('td', {'class':'b-statistics__table-col'}):
       if row.find('a'):
-        if scrape_birthdays: time.sleep(0)
         url = row.find('a').get('href')
         # get page by scraping or from file
         iofile = 'fightmetric_fighters/' + url.split('/')[-1] + '.html'
         if scrape_birthdays and iofile not in previous:
-          print char, url, iofile
+          print char, url, ' scraping file ...'
           r = session.get(url, headers=session.headers)
-          print str(r.status_code)
           with open(iofile, 'w') as f:
             f.write(r.content)
           s = BeautifulSoup(r.content, 'lxml')
         else:
+          print char, row.find('a').get_text(), iofile, ' reading file from disk'
           with open(iofile, 'r') as f:
             html = f.read()
           s = BeautifulSoup(html, 'lxml')
@@ -115,6 +110,11 @@ for char in chars:
             dob.append(birthday)
       else:
         dob.append(np.nan)
+    if scrape_birthdays: time.sleep(0)
+
+  # make indices of dataframe and series the same
+  df.reset_index(drop=True, inplace=True)
+  assert df.shape[0] == len(dob), 'DataFrame-Series mismatch'
   df['Dob'] = pd.to_datetime(pd.Series(dob))
 
   # append to previous results
@@ -124,6 +124,5 @@ print fighters
 print fighters.info()
 print fighters.describe()
 print fighters.Stance.value_counts()
-print min(fighters.Dob), max(fighters.Dob)
-print fighters[fighters.Nickname.str.contains(',', na=False)]
-fighters.to_csv('fightmetric_fighters/fighters.csv', index=False)
+print fighters[fighters.Nickname.str.contains(',', na=False, regex=False)]
+fighters.to_csv('fightmetric_fighters/fightmetric_fighters.csv', index=False)
