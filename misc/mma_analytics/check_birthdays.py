@@ -50,4 +50,5 @@ df = fightmetric.merge(wiki, how='inner', on='Name')
 
 # print out mismatches
 df.rename(columns={'Dob':'FightMetric_DOB', 'Bday':'Wikipedia_DOB'}, inplace=True)
-print df[df.FightMetric_DOB != df.Wikipedia_DOB][['Name', 'FightMetric_DOB', 'Wikipedia_DOB']]
+cols = ['Name', 'FightMetric_DOB', 'Wikipedia_DOB']
+print df[df.FightMetric_DOB != df.Wikipedia_DOB][cols].to_string(index=False)

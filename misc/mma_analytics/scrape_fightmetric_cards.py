@@ -26,6 +26,9 @@ if scrape_event_list:
 with open(events_file, 'r') as f:
   html_events = f.read()
 
+from glob import glob
+previous = set(glob('fightmetric_cards/*.html'))
+
 extracted = []
 soup = BeautifulSoup(html_events, 'lxml')
 events = soup.find('tbody').find_all('tr', {'class':'b-statistics__table-row'})[1:]
@@ -42,7 +45,7 @@ for tr in events:
 
   # download page
   iofile = 'fightmetric_cards/' + url.split('/')[-1] + '.html'
-  if scrape_cards:
+  if scrape_cards and iofile not in previous:
     r = requests.get(url)
     with open(iofile, 'w') as f:
       f.write(r.content)
@@ -78,7 +81,7 @@ fights.Round = fights.Round.astype(int)
 mask = (fights.Event == 'UFC Fight Night: Belfort vs Henderson') & (fights.Date == np.datetime64('2013-11-09'))
 fights.Event[mask] = 'UFC Fight Night: Belfort vs Henderson 2'
 
-fights.to_csv('fightmetric_cards/fightmetrics_fights.csv', index=False)
+fights.to_csv('fightmetric_cards/fightmetric_fights.csv', index=False)
 
 #print fights[['Outcome', 'Winner', 'Loser', 'WeightClass', 'Method', 'Round', 'Time', 'Date', 'Location']]
 print fights.groupby('Event').first().Location.value_counts()
@@ -99,13 +102,3 @@ fighter = 'Nick Diaz'
 fighter = 'Georges St-Pierre'
 fighter = 'Michael Bisping'
 print fights[(fights.Winner == fighter) | (fights.Loser == fighter)]
-
-import sys
-sys.exit(0)
-
-from geopy.geocoders import Nominatim
-for locale in fights.Location.unique():
-  geolocator = Nominatim()
-  location = geolocator.geocode(str(locale))
-  if location: print locale, location.latitude, location.longitude
-  else: print locale
