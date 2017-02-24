@@ -1,6 +1,7 @@
 # Jonathan Halverson
 # Tuesday, February 21, 2017
-# Here we compare birthdays between FightMetric and Wikipedia
+# Here we compare dates of birth, heights and reaches between FightMetric and Wikipedia
+# We do not use fuzzy matching to connect active Wikipedia fighters to FightMetric
 
 import numpy as np
 import pandas as pd
@@ -22,33 +23,77 @@ for table in tables:
       url = 'https://en.wikipedia.org' + td.find('a').get('href')
       if 'redlink' not in url: active_fighters.append((unidecode(name), url))
 
-# for each active fighter get their Wikipedia birthday
-wikipedia_bdays = []
-for name, url in active_fighters:
-  soup = BeautifulSoup(requests.get(url).content, 'lxml')
-  first_p = soup.find('p').get_text()
-  bday_from_first_p = ''
-  if ('(born' in first_p):
-    bday_from_first_p = first_p[first_p.index('(born'):first_p.index('(born') + 30]
-  bday = soup.find('span', {'class':'bday'})
-  if bday:
-    wikipedia_bdays.append((name, bday.string.strip()))
-    print name, bday.string.strip(), bday_from_first_p
-
-# write out names and birthdays
-with open('wikipedia_bdays.txt', 'w') as f:
-  for name, bday in wikipedia_bdays:
-    f.write('%s, %s\n' % (name, bday))
-
 # get list of FightMetric figthers
-fightmetric = pd.read_csv('fightmetric_fighters/fightmetric_fighters.csv', header=0, parse_dates=['Dob'])
+iofile = 'fightmetric_fighters/fightmetric_fighters.csv'
+fightmetric = pd.read_csv(iofile, header=0, parse_dates=['Dob'])
 
-# join Wikipedia dataframe to FightMetric
-wiki = pd.DataFrame(wikipedia_bdays, columns=['Name', 'Bday'])
-wiki.Bday = pd.to_datetime(wiki.Bday)
-df = fightmetric.merge(wiki, how='inner', on='Name')
+# try to guess links to nonactive FightMetric fighters
+active_names, _ = zip(*active_fighters)
+not_active = set(fightmetric.Name.tolist()) - set(active_names)
+nonactive_fighters = []
+for name in not_active:
+  url = 'https://en.wikipedia.org/wiki/' + '_'.join(name.split())
+  nonactive_fighters.append((name, url))
 
-# print out mismatches
-df.rename(columns={'Dob':'FightMetric_DOB', 'Bday':'Wikipedia_DOB'}, inplace=True)
-cols = ['Name', 'FightMetric_DOB', 'Wikipedia_DOB']
-print df[df.FightMetric_DOB != df.Wikipedia_DOB][cols].to_string(index=False)
+#for name, url in active_fighters:
+#  print name, url
+#import sys
+#sys.exit(0)
+
+# for each url, if page looks like MMA bio then extract dob, height and reach
+name_height_reach = []
+for name, url in active_fighters + nonactive_fighters:
+  soup = BeautifulSoup(requests.get(url).content, 'lxml')
+  text_scan = any([('mixed martial' in p.text.lower()) or (' UFC ' in p.text.lower()) for p in soup('p')])
+  table = soup.find('table', {'class':'infobox vcard'})
+  bday = soup.find('span', {'class':'bday'})
+  if (table and bday and not text_scan): print '********* Skipping ...', name, url
+  if (text_scan and table and bday):
+    # extract date of birth
+    bday = bday.string.strip()
+    reach = height = feet = inches = np.nan
+    for tr in table('tr'):
+      th = tr.find('th')
+      td = tr.find('td')
+      if th and td:
+        if (th.get_text() and td.get_text()):
+          # extract reach
+    	  if (th.get_text().strip() == 'Reach'):
+            reach = unidecode(td.get_text().strip())
+            if ('in' in reach):
+              reach = reach[:reach.index(' in')].strip()
+              if '(' in reach: reach = reach[reach.index('(') + 1:]
+              reach = float(reach)
+          # extract height
+          if (th.get_text().strip() == 'Height'):
+            height = unidecode(td.get_text().strip())
+            feet = height[:height.index(' ft')]
+            if '(' in feet: feet = feet[feet.index('(') + 1:]
+            inches = height[height.index('ft') + 2:height.index(' in')].strip()
+            if ('1/2' in inches): inches = inches.replace('1/2', '').strip()
+            height = 12.0 * float(feet) + float(inches)
+    print feet, inches, '--', height, name, reach, '--', reach, '--', url
+    name_height_reach.append([name, bday, height, reach])
+
+# create and write wikipedia dataframe
+wiki = pd.DataFrame(name_height_reach, columns=['Name', 'Dob', 'Height', 'Reach'])
+wiki.to_csv('wikipedia_bdays_height_reach.csv', index=False)
+
+# suffixes for column name collisions
+s = ('_wikipedia', '_fightmetric')
+
+# display reach mismatches
+wf = wiki[pd.notnull(wiki.Reach)].merge(fightmetric[pd.notnull(fightmetric.Reach)], on='Name', how='inner', suffixes=s)
+wf['ReachDiff'] = wf.Reach_wikipedia - wf.Reach_fightmetric
+print wf[wf.ReachDiff.abs() > 2.0][['Name', 'Reach_wikipedia', 'Reach_fightmetric']].to_string(index=False)
+
+# display height mismatches
+wf = wiki[pd.notnull(wiki.Height)].merge(fightmetric[pd.notnull(fightmetric.Height)], on='Name', how='inner', suffixes=s)
+wf['HeightDiff'] = wf.Height_wikipedia - wf.Height_fightmetric
+print wf[wf.HeightDiff.abs() > 2.0][['Name', 'Height_wikipedia', 'Height_fightmetric']].to_string(index=False)
+
+# display date of birth mismatches
+wf = wiki[pd.notnull(wiki.Dob)].merge(fightmetric[pd.notnull(fightmetric.Dob)], on='Name', how='inner', suffixes=s)
+wf.Dob_wikipedia = pd.to_datetime(wf.Dob_wikipedia)
+wf.Dob_fightmetric = pd.to_datetime(wf.Dob_fightmetric)
+print wf[wf.Dob_wikipedia != wf.Dob_fightmetric][['Name', 'Dob_wikipedia', 'Dob_fightmetric']].to_string(index=False)
