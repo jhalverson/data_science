@@ -35,7 +35,7 @@ for name in not_active:
   url = 'https://en.wikipedia.org/wiki/' + '_'.join(name.split())
   nonactive_fighters.append((name, url))
 
-#for name, url in active_fighters:
+#for name, url in nonactive_fighters:
 #  print name, url
 #import sys
 #sys.exit(0)
@@ -48,6 +48,7 @@ for name, url in active_fighters + nonactive_fighters:
   table = soup.find('table', {'class':'infobox vcard'})
   bday = soup.find('span', {'class':'bday'})
   if (table and bday and not text_scan): print '********* Skipping ...', name, url
+  print name, url
   if (text_scan and table and bday):
     # extract date of birth
     bday = bday.string.strip()
@@ -71,6 +72,7 @@ for name, url in active_fighters + nonactive_fighters:
             if '(' in feet: feet = feet[feet.index('(') + 1:]
             inches = height[height.index('ft') + 2:height.index(' in')].strip()
             if ('1/2' in inches): inches = inches.replace('1/2', '').strip()
+            if ('3/4' in inches): inches = inches.replace('3/4', '').strip()
             height = 12.0 * float(feet) + float(inches)
     print feet, inches, '--', height, name, reach, '--', reach, '--', url
     name_height_reach.append([name, bday, height, reach])
