@@ -42,7 +42,7 @@ for name in not_active:
 
 # for each url, if page looks like MMA bio then extract dob, height and reach
 name_height_reach = []
-for name, url in active_fighters + nonactive_fighters:
+for name, url in active_fighters[::] + nonactive_fighters[::]:
   soup = BeautifulSoup(requests.get(url).content, 'lxml')
   text_scan = any([('mixed martial' in p.text.lower()) or (' UFC ' in p.text.lower()) for p in soup('p')])
   table = soup.find('table', {'class':'infobox vcard'})
@@ -86,13 +86,13 @@ s = ('_wikipedia', '_fightmetric')
 
 # display reach mismatches
 wf = wiki[pd.notnull(wiki.Reach)].merge(fightmetric[pd.notnull(fightmetric.Reach)], on='Name', how='inner', suffixes=s)
-wf['ReachDiff'] = wf.Reach_wikipedia - wf.Reach_fightmetric
-print wf[wf.ReachDiff.abs() > 2.0][['Name', 'Reach_wikipedia', 'Reach_fightmetric']].to_string(index=False)
+wf['ReachDiff'] = np.abs(wf.Reach_wikipedia - wf.Reach_fightmetric)
+print wf[wf.ReachDiff > 2.0][['Name', 'Reach_wikipedia', 'Reach_fightmetric']].to_string(index=False)
 
 # display height mismatches
 wf = wiki[pd.notnull(wiki.Height)].merge(fightmetric[pd.notnull(fightmetric.Height)], on='Name', how='inner', suffixes=s)
-wf['HeightDiff'] = wf.Height_wikipedia - wf.Height_fightmetric
-print wf[wf.HeightDiff.abs() > 2.0][['Name', 'Height_wikipedia', 'Height_fightmetric']].to_string(index=False)
+wf['HeightDiff'] = np.abs(wf.Height_wikipedia - wf.Height_fightmetric)
+print wf[wf.HeightDiff > 2.0][['Name', 'Height_wikipedia', 'Height_fightmetric']].to_string(index=False)
 
 # display date of birth mismatches
 wf = wiki[pd.notnull(wiki.Dob)].merge(fightmetric[pd.notnull(fightmetric.Dob)], on='Name', how='inner', suffixes=s)
