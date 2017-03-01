@@ -1,4 +1,191 @@
 Jonathan Halverson
+Wednesday, March 1, 2017
+------------------------
+
+### How to load the ufc data into mysql:
+
+jhalverson$ mysql -u root -p
+
+mysql> use beverly;
+
+# cannot use keyword like From as column names
+mysql> create table ufc (Name varchar(255), Nickname varchar(255), Active int, Record varchar(255), Age float, Height float, Weight float, Reach float, LegReach float, OutOf varchar(255), Hometown varchar(255), College varchar(255), Degree varchar(255), Summary varchar(255));
+
+# needed the local keyword below to get this to work
+load data local infile '/Users/jhalverson/data_science/misc/mma_analytics/ufc_dot_com_fighter_data_CLEAN_28Feb2017.csv' into table ufc fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines;
+
+mysql> update ufc set Reach = null where Reach = 0;
+mysql> update ufc set Height = null where Height = 0;
+etc.
+
+mysql> select Name, Record from ufc limit 5;
++---------------------+--------+
+| Name                | Record |
++---------------------+--------+
+| Danny Abbadi        |        |
+| Tank Abbott         |        |
+| Shamil Abdurakhimov | 17-4-0 |
+| Papy Abedi          |        |
+| Ricardo Abreu       | 5-1-0  |
++---------------------+--------+
+
+mysql> desc ufc;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| Name     | varchar(255) | YES  |     | NULL    |       |
+| Nickname | varchar(255) | YES  |     | NULL    |       |
+| Active   | int(11)      | YES  |     | NULL    |       |
+| Record   | varchar(255) | YES  |     | NULL    |       |
+| Age      | float        | YES  |     | NULL    |       |
+| Height   | float        | YES  |     | NULL    |       |
+| Weight   | float        | YES  |     | NULL    |       |
+| Reach    | float        | YES  |     | NULL    |       |
+| LegReach | float        | YES  |     | NULL    |       |
+| OutOf    | varchar(255) | YES  |     | NULL    |       |
+| Hometown | varchar(255) | YES  |     | NULL    |       |
+| College  | varchar(255) | YES  |     | NULL    |       |
+| Degree   | varchar(255) | YES  |     | NULL    |       |
+| Summary  | varchar(255) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+
+mysql> select count(*) from ufc;
++----------+
+| count(*) |
++----------+
+|     1897 |
++----------+
+
+mysql> select max(length(Summary)) from ufc;
++----------------------+
+| max(length(Summary)) |
++----------------------+
+|                  211 |
++----------------------+
+
+### Check for duplicate names
+mysql> select name, count(name) as ct from ufc group by name order by ct desc limit 5;
++------------------+----+
+| name             | ct |
++------------------+----+
+| Dong Hyun Kim    |  2 |
+| John-Olav Einemo |  1 |
+| Mikey Burnett    |  1 |
+| Aaron Steed      |  1 |
+| Jess Liaudin     |  1 |
++------------------+----+
+
+### regular expressions (https://dev.mysql.com/doc/refman/5.7/en/regexp.html)
+# all names beginning with a-e
+select Name from ufc where Name regexp '^[a-e]';
+# all names ending with a-e
+select Name from ufc where Name regexp '[a-e]$';
+
+mysql> select Name from ufc where Name regexp '[[:punct:]]';
++------------------------+
+| Name                   |
++------------------------+
+| Razak Al-Hassan        |
+| Olivier Aubin-Mercier  |
+| Nah-Shon Burrell       |
+| J.C. Cottrell          |
+| Richard Crunkilton Jr. |
+| Abdul-Kerim Edilov     |
+| John-Olav Einemo       |
+| Ashlee Evans-Smith     |
+| Xavier Foupa-Pokam     |
+| He-Man Gipson          |
+| Jocelyn Jones-Lybarger |
+| C.J. Keith             |
+| Jose Landi-Jons        |
+| Jake O'Brien           |
+| TJ O'Brien             |
+| Sean O'Connell         |
+| Chuck O'Neil           |
+| Brendan O'Reilly       |
+| Khalil Rountree Jr.    |
+| Roldan Sangcha-an      |
+| Georges St-Pierre      |
+| Isaac Vallie-Flagg     |
++------------------------+
+
+# throw away potential middle name
+select c from (select concat(substring_index(name, ' ', 1), ' ', substring_index(name, ' ', -1)) as c from ufc) m where c like 'G%';
+
+mysql> select count(LegReach), count(*) - count(Reach) as 'Null Reach' from ufc where Active=1;
++-----------------+------------+
+| count(LegReach) | Null Reach |
++-----------------+------------+
+|             449 |         29 |
++-----------------+------------+
+
+mysql> select stddev(LegReach), count(LegReach), Avg(LegReach) from ufc;
++--------------------+-----------------+-------------------+
+| stddev(LegReach)   | count(LegReach) | Avg(LegReach)     |
++--------------------+-----------------+-------------------+
+| 2.4567404533132042 |             565 | 40.14513274336283 |
++--------------------+-----------------+-------------------+
+
+# estimate of median (did not work correctly since gave 40 instead of 39)
+mysql> select floor((select count(*) from ufc where legreach is not null)/2.);
++-----------------------------------------------------------------+
+| floor((select count(*) from ufc where legreach is not null)/2.) |
++-----------------------------------------------------------------+
+|                                                             282 |
++-----------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select legreach from ufc where legreach is not null order by legreach asc limit 282,1;
++----------+
+| legreach |
++----------+
+|       40 |
++----------+
+
+mysql> select name, college, degree from ufc where degree not like '' or college not like '' order by name;
++------------------------+--------------------------------------------------+--------------------------------------------------------------------------+
+| name                   | college                                          | degree                                                                   |
++------------------------+--------------------------------------------------+--------------------------------------------------------------------------+
+| Aaron Phillips         | University of Louisiana at Lafayette             | Kinesiology-Exercise Science                                             |
+| Aaron Simpson          | Arizona State University                         | Journalism                                                               |
+| Abel Trujillo          | William Penn University                          | Sports Administration                                                    |
+| Alan Omer              | Stuttgart University                             | Mechanical Engineering                                                   |
+| Albert Cheng           |                                                  | Physical and Health Education                                            |
+| Albert Tumenov         | University of Russia, Moscow                     | Bachelor Degree KBR                                                      |
+| Alex Soto              | University of San Diego                          |                                                                          |
+| Alptekin Ozkilic       | Missouri Baptist University                      | Business Administration                                                  |
+| Andrew Craig           | University of Texas                              | Corporate Communications              
+
+# case sensitive search
+mysql> select name, Hometown from ufc where hometown regexp binary 'MA|Massachusetts';
++----------------+-----------------------------------------+
+| name           | Hometown                                |
++----------------+-----------------------------------------+
+| Kyle Bochniak  | Gloucester, Massachusetts USA           |
+| Jason DeLucia  | Bellingham, Massachusetts USA           |
+| Kenny Florian  | Westwood, Massachusetts USA             |
+| Rob Font       | Leominster, Massachusetts USA           |
+| Sean Gannon    | Boston, MA., MA. USA                    |
+| Josh Grispi    | Boston, MA USA                          |
+| John Howard    | Boston, Massachusetts USA               |
+| Alex Karalexis | Boston, MA USA                          |
+| Dan Lauzon     | Brockton, Massachusetts USA             |
+| Joe Lauzon     | Brockton, Massachusetts USA             |
+| Tom Lawlor     | Fall River, MA USA                      |
+| Jon Manley     | Adams, MA USA                           |
+| Chuck O'Neil   | Bourne, MA USA                          |
+| Joe Proctor    | Quincy, Massachusetts USA               |
+| Jimmy Quinlan  | Methuen, MA USA                         |
+| Keith Rockel   | Marlboro, MA. USA                       |
+| Charles Rosa   | Peabody, Massachusetts USA              |
+| Eric Spicely   | Stoughton, Massachusetts USA            |
+| Ken Stone      | Holliston, MA USA                       |
+| Tecia Torres   | Fall River, Massachusetts United States |
+| Patrick Walsh  | Boston, Massachusetts USA               |
++----------------+-----------------------------------------+
+
+
+Jonathan Halverson
 Thursday, June 23, 2016
 -----------------------
 
