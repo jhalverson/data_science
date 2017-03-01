@@ -35,14 +35,9 @@ for name in not_active:
   url = 'https://en.wikipedia.org/wiki/' + '_'.join(name.split())
   nonactive_fighters.append((name, url))
 
-#for name, url in nonactive_fighters:
-#  print name, url
-#import sys
-#sys.exit(0)
-
 # for each url, if page looks like MMA bio then extract dob, height and reach
 name_height_reach = []
-for name, url in active_fighters[::] + nonactive_fighters[::]:
+for name, url in active_fighters + nonactive_fighters:
   soup = BeautifulSoup(requests.get(url).content, 'lxml')
   text_scan = any([('mixed martial' in p.text.lower()) or (' UFC ' in p.text.lower()) for p in soup('p')])
   table = soup.find('table', {'class':'infobox vcard'})

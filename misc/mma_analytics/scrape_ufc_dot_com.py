@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from unidecode import unidecode
-from time import sleep
 
 # store fields names in a set
 skill = set()
@@ -23,11 +22,15 @@ for i in range(0, 1900 + 1, 20):
   table = soup.find('table', {'class':'fighter-listing'})
   fighters = table('tr', {'class':'fighter'})
   for fighter in fighters:
+
     active = 0 if fighter.find('div', {'id':'former-fighter-title'}) else 1
     link = fighter.find('a', {'class':'fighter-name'})
     name = unidecode(link.string.strip())
+    if name == "Davis LC": continue
+    # LC Davis,,0,23-8-0,36.0,68.0,135.0,69.0,,"Kansas City, Missouri USA","Kansas City, Missouri USA",,,
     url = 'http://www.ufc.com' + link.get('href')
     s = BeautifulSoup(requests.get(url).content, 'lxml')
+    name = unidecode(s.find('div', {'class':'floatl current', 'id':'fighter-breadcrumb'}).find('h1').string.strip())
 
     # get record and summary if available
     record = summary = ''
@@ -38,7 +41,7 @@ for i in range(0, 1900 + 1, 20):
 	skill.add(td[0].string)
 	if (td[0].get_text() == 'Record:'): record = td[1].get_text().strip()
 	if (td[0].get_text() == 'Summary:'): summary = td[1].get_text().strip()
-    print name, record
+    print i, name, record
     # get data from fighter info block
     age = reach = height = weight = leg_reach = ''
     college = degree = nickname = fights_out = fighter_from = ''
@@ -85,11 +88,11 @@ for i in range(0, 1900 + 1, 20):
       weight = np.nan
     data.append([name, nickname, active, record, age, height, weight, reach,
                  leg_reach, fights_out, fighter_from, college, degree, summary])
-    sleep(10)
 
 cols = ['Name', 'Nickname', 'Active', 'Record', 'Age', 'Height', 'Weight', 'Reach',
         'LegReach', 'OutOf', 'From', 'College', 'Degree', 'Summary']
 df = pd.DataFrame(data, columns=cols)
+df = df.astype({'Age':float, 'Weight':float, 'Reach':float, 'LegReach':float})
 df.to_csv('ufc_dot_com_fighter_data_27Feb2017.csv', index=False)
 print df
 print df.info()
