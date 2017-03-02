@@ -184,6 +184,34 @@ mysql> select name, Hometown from ufc where hometown regexp binary 'MA|Massachus
 | Patrick Walsh  | Boston, Massachusetts USA               |
 +----------------+-----------------------------------------+
 
+mysql> select weight, count(*), avg(age) from ufc where weight < 206 and active = 1 group by weight;
++--------+----------+--------------------+
+| weight | count(*) | avg(age)           |
++--------+----------+--------------------+
+|    115 |       38 | 28.666666666666668 |
+|    125 |       25 |              28.24 |
+|    135 |       73 | 29.986301369863014 |
+|    140 |        2 |               32.5 |
+|    145 |       58 |  29.43103448275862 |
+|    155 |      101 |  30.08910891089109 |
+|    170 |       94 | 30.795698924731184 |
+|    185 |       55 | 31.636363636363637 |
+|    205 |       45 | 31.244444444444444 |
++--------+----------+--------------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Jonathan Halverson
 Thursday, June 23, 2016

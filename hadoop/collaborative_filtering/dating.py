@@ -33,6 +33,7 @@ if (__name__ == '__main__'):
 
   lines = spark.read.text('ratings.dat').rdd
   ratingsRDD = lines.map(parse_rating)
+  print(ratingsRDD.count())
   lines = spark.read.text('gender.dat').rdd
   users = dict(lines.map(parse_user).collect())
 
