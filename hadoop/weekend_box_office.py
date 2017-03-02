@@ -23,12 +23,13 @@ df.reset_index(drop=True, inplace=True)
 
 # convert data types
 df = df.astype({'Rank':int})
-df['Gross'] = df['Gross'].replace('[\$,]', '', regex=True).astype(int)
+df['Gross'] = df['Gross'].str.replace('[^0-9]', '').astype(int)
+#df['Gross'] = df['Gross'].str.replace('[\$,]', '').astype(int)
 
-# replace NaN with 0 for df.Change
-df['Change'].fillna(0, inplace=True)
-df['Change'] = df['Change'].replace('[\$,%]', '', regex=True).astype(int) / 100.0
+# remove percent sign
+df['Change'] = df['Change'].str.replace('%', '').astype(float) / 100.0
+#df['Change'].fillna(0, inplace=True)
 
 print df
-print df.info(null_counts=True)
+print df.info()
 print 'Mean gross = %.1f' % df.Gross.mean()
