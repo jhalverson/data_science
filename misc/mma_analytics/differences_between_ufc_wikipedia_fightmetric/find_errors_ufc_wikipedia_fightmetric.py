@@ -1,3 +1,7 @@
+# Jonathan Halverson
+# Wednesday, March 1, 2017
+# This script compares three data sources and outputs large differences
+
 import pprint
 import numpy as np
 import pandas as pd
@@ -38,10 +42,9 @@ h.reset_index(inplace=True, drop=True)
 pprint.pprint(h)
 
 # display height mismatches
-tmp['ReachDiff'] = np.abs(tmp.Reach_wikipedia - tmp.Reach_fightmetric)
 tmp['HeightDiff'] = np.abs(tmp.Height_wikipedia - tmp.Height_fightmetric)
-h = tmp[tmp.HeightDiff > 2.0][['Name', 'Height_ufc', 'Height_wikipedia', 'Height_fightmetric']]
-h = h[(h.Name != 'Dong Hyun Kim')]
-h = h[(h.Name != 'Michael McDonald')]
-h.reset_index(inplace=True, drop=True)
-pprint.pprint(h)
+k = tmp[tmp.HeightDiff > 2.0][['Name', 'Height_ufc', 'Height_wikipedia', 'Height_fightmetric']]
+k = k[(h.Name != 'Dong Hyun Kim')]
+k = k[(h.Name != 'Michael McDonald')]
+k.reset_index(inplace=True, drop=True)
+pprint.pprint(k)
