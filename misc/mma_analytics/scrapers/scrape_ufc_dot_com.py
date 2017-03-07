@@ -93,7 +93,7 @@ cols = ['Name', 'Nickname', 'Active', 'Record', 'Age', 'Height', 'Weight', 'Reac
         'LegReach', 'OutOf', 'From', 'College', 'Degree', 'Summary']
 df = pd.DataFrame(data, columns=cols)
 df = df.astype({'Age':float, 'Weight':float, 'Reach':float, 'LegReach':float})
-df.to_csv('data/ufc_dot_com_fighter_data_RAW_28Feb2017.csv', index=False)
+df.to_csv('../data/ufc_dot_com_fighter_data_RAW_28Feb2017.csv', index=False)
 print df
 print df.info()
 print df.describe()

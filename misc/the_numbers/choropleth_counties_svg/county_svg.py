@@ -118,4 +118,4 @@ for p in soup('path'):
 
     p['style'] = path_style + colors[color_class]
 
-print soup
+print soup.prettify()

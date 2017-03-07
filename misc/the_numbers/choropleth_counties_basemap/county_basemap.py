@@ -1,6 +1,7 @@
 # Jonathan Halverson
 # Friday, March 3, 2017
 # Choropleth map of US counties
+# http://shallowsky.com/blog/programming/plotting-election-data-basemap.html
 
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
@@ -82,7 +83,7 @@ def draw_us_map():
       countyseg = m.counties[i]
       if statename == 'Hawaii':
 	  countyseg = list(map(lambda (x,y): (x + 5750000, y-1400000), countyseg))
-      poly = Polygon(countyseg, facecolor=ccolor)  # edgecolor="white"
+      poly = Polygon(countyseg, facecolor=ccolor, edgecolor=ccolor)
       ax.add_patch(poly)
 
 if __name__ == "__main__":

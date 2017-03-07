@@ -15,7 +15,7 @@ pd.set_option('display.max_rows', 200)
 pd.set_option('display.width', 200)
 
 # scrape new fighter data if needed
-events_file = 'fightmetric_cards/fightmetric_events.html'
+events_file = '../data/fightmetric_cards/fightmetric_events.html'
 if scrape_event_list:
   url = 'http://fightmetric.com/statistics/events/completed?page=all'
   r = requests.get(url)
@@ -27,7 +27,7 @@ with open(events_file, 'r') as f:
   html_events = f.read()
 
 from glob import glob
-previous = set(glob('fightmetric_cards/*.html'))
+previous = set(glob('../data/fightmetric_cards/*.html'))
 
 extracted = []
 soup = BeautifulSoup(html_events, 'lxml')
@@ -44,7 +44,7 @@ for tr in events:
   location = td_location.string.strip()
 
   # download page
-  iofile = 'fightmetric_cards/' + url.split('/')[-1] + '.html'
+  iofile = '../data/fightmetric_cards/' + url.split('/')[-1] + '.html'
   if scrape_cards and iofile not in previous:
     r = requests.get(url)
     with open(iofile, 'w') as f:
@@ -81,7 +81,7 @@ fights.Round = fights.Round.astype(int)
 mask = (fights.Event == 'UFC Fight Night: Belfort vs Henderson') & (fights.Date == np.datetime64('2013-11-09'))
 fights.Event[mask] = 'UFC Fight Night: Belfort vs Henderson 2'
 
-fights.to_csv('fightmetric_cards/fightmetric_fights.csv', index=False)
+fights.to_csv('../data/fightmetric_cards/fightmetric_fights.csv', index=False)
 
 #print fights[['Outcome', 'Winner', 'Loser', 'WeightClass', 'Method', 'Round', 'Time', 'Date', 'Location']]
 print fights.groupby('Event').first().Location.value_counts()

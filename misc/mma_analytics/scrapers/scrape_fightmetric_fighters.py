@@ -22,7 +22,7 @@ import string
 chars = string.ascii_lowercase
 
 # scrape new fighter data if needed
-base_path = 'fightmetric_fighters/fightmetric_fighters_'
+base_path = '../data/fightmetric_fighters/fightmetric_fighters_'
 if scrape_fighters:
   for char in chars:
     url = 'http://fightmetric.com/statistics/fighters?char=' + char + '&page=all'
@@ -33,7 +33,7 @@ if scrape_fighters:
 # get list of all previously downloaded files
 from os.path import getsize
 from glob import glob
-previous = set(filter(lambda x: getsize(x) > 50, glob('fightmetric_fighters/*.html')))
+previous = set(filter(lambda x: getsize(x) > 50, glob('../data/fightmetric_fighters/*.html')))
 
 header = ['First', 'Last', 'Nickname', 'Height', 'Weight', 'Reach',
           'Stance', 'Win', 'Loss', 'Draw', 'Belt']
@@ -89,7 +89,7 @@ for char in chars:
       if row.find('a'):
         url = row.find('a').get('href')
         # get page by scraping or from file
-        iofile = 'fightmetric_fighters/' + url.split('/')[-1] + '.html'
+        iofile = '../data/fightmetric_fighters/' + url.split('/')[-1] + '.html'
         if scrape_birthdays and iofile not in previous:
           print char, url, ' scraping file ...'
           r = session.get(url, headers=session.headers)
@@ -125,4 +125,4 @@ print fighters.info()
 print fighters.describe()
 print fighters.Stance.value_counts()
 print fighters[fighters.Nickname.str.contains(',', na=False, regex=False)]
-fighters.to_csv('fightmetric_fighters/fightmetric_fighters.csv', index=False)
+fighters.to_csv('../data/fightmetric_fighters/fightmetric_fighters.csv', index=False)
