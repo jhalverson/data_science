@@ -314,3 +314,14 @@ data it is hard to find the haystack.
 The NSA has had little success. The director says that if mass surveillance were being used
 before 911 they could have stopped it. This statement comes despite the fact that they were not
 able to stop the Boston Marathon bombings.
+
+
+== Last piece ==
+
+In 2013 Target was hacked and the CEO resigned. Encryption works very well at 128-bit and above.
+"Zero day" vulnerabilities are sold. These are known holes that have yet to be known. NSA is
+known to stockpile zero-days. NSA inserts vulnerabilities and does things like packet
+injection. Microsoft weakened Skype for the NSA. Vodafone in 2005 in Greece.
+
+The NSA wants the internet to be unsecure. The NSA tapped the cell phone of Merkel according
+to Snowden. The world does not like the NSA (bad relations).
