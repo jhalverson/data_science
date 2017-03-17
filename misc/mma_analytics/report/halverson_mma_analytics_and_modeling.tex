@@ -1,0 +1,127 @@
+\documentclass[10pt]{article}
+
+\usepackage{subcaption}
+\usepackage{etoolbox}
+\BeforeBeginEnvironment{tabular}{\begin{center}\small}
+\AfterEndEnvironment{tabular}{\end{center}}
+
+%\usepackage[cm,empty]{fullpage}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+
+\begin{document}
+Statistical Analysis of Mixed Martial Arts Data: From UFC 1 to UFC 208
+
+Jonathan D. Halverson
+
+Here we analyze UFC data from 1993 through Februar 2017. We look at the effect
+of age, reach, stance.
+
+\section{Introduction}
+
+How as the data obtained? Why do this?
+
+Sample table of fighters.
+Sample table of fights.
+
+There have been 4068 UFC fights between UFC 1 and UFC 208. The number of fighters is 1641.
+
+\section{UFC Events}
+
+How many events have there been? Where have they been?
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=12cm]{fight_outcome_breakdown.pdf}
+\caption{Outcome of fights.}
+\end{center}
+\end{figure}
+
+\begin{center}
+\begin{table}[h]
+\input{most_submissions.tex}
+\caption{All-time list of fighters with 5 or more submission finishes.}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[h]
+\input{most_tkos.tex}
+\caption{All-time list of fighters with 8 or more KO/TKO finishes.}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[h]
+\input{most_fights.tex}
+\caption{All-time list of fighters with the most fights.}
+\end{table}
+\end{center}
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{number_of_events.pdf}
+\caption{Outcome of fights.}
+\end{center}
+\end{figure}
+
+\begin{center}
+\begin{table}[h]
+\input{top_locations.tex}
+\caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
+\end{table}
+\end{center}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{world_map.pdf}
+\caption{Location of UFC events.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{us_map.pdf}
+\caption{Location of UFC events.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{europe_map.pdf}
+\caption{Location of UFC events.}
+\end{center}
+\end{figure}
+
+\section{UFC Fighters}
+
+Who has fought the most? The tallest.
+
+\begin{center}
+\begin{table}[h]
+\input{longest_ufc_tensure.tex}
+\caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
+\end{table}
+\end{center}
+
+\section{Tale of the Tape}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{fight_dates_notable_fighters.pdf}
+\caption{Vertical blue lines indicate when each fighter fought in the UFC. Note that Belfort started
+in 1997 and Penn in 2001.}
+\end{center}
+\end{figure}
+
+\input{southpaw.tex}
+\input{age/age.tex}
+
+Fifth round finishes.
+
+Appendix of longtable.
+
+
+\end{document}
