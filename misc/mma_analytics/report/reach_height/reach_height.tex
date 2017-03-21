@@ -1,0 +1,187 @@
+\clearpage
+\section*{Reach and Height}
+
+We have reach and height data for 1210 of the 1641 fighters who have fought in the
+UFC from UFC 1 to UFC 208. These data are plotted in Figure~\ref{height_reach_all_fighters}.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{reach_height/height_reach_all_fighters.pdf}
+\caption{Height versus reach data for roughly 75\% of UFC fighters
+of all-time.
+Most of the data falls above the 45$^{\circ}$ line indicating that
+reach tends to exceed height. The Pearson correlation between height
+and reach is $r=0.89$ with $p\ll 0.05$. The data points have been randomly displaced
+by a small amount to afford visualization.}
+\label{height_reach_all_fighters}
+\end{center}
+\end{figure}
+
+The tallest UFC fighter of all-time is Stefan Struve at 7 feet or 84 inches. The fighter
+with the greatest reach is Semmy Schilt at 7 feet, 4 inches. It is interesting
+to note that while Jon Jones is 8 inches shorter than
+Stefan Struve, the two have the same reach of 84 inches. Figure~\ref{jones_reach} shows
+where Jones stacks up against all other UFC lightweights.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=14cm]{reach_height/jones_reach.pdf}
+\caption{(left) Height and reach of 189 light heavyweights throughout
+UFC history.
+(right) Histogram of reach data from the panel on the left.}
+\label{jones_reach}
+\end{center}
+\end{figure}
+
+Table~\ref{biggest_reach_diff} shows all UFC fights where the reach difference
+was 9 inches or greater. The fighter with the
+reach advantage won 31 of the 45 fights or 69\%. Using the
+binomial distribution it can be shown that this result is
+statistically significant ($p\approx0.016$). That is, if one
+assumes that reach difference is not a factor, it is unlikely to observe
+such a split (31/45) by chance.
+
+\begin{center}
+\begin{table}[h]
+\input{reach_height/biggest_reach_diff.tex}
+\caption{All UFC fights with a reach difference of 9 inches or more.}
+\label{biggest_reach_diff}
+\end{table}
+\end{center}
+
+\clearpage
+
+Table~\ref{biggest_reach_diff} suggests that the fighter with longer
+reach has an advantage. What about shorter reach differences?
+Figure~\ref{winratio_reach_diff}
+shows the win percentage of the fighter with
+longer reach as a function of reach difference.
+As reach difference increases the win likelihood of the fighter with greater reach
+increases. 
+A Chi-square test yields $\chi^2=20.2$, $p=0.017$ and $\Phi_c=0.08$.
+This indicates that there is a slight association between the proportions of wins and losses  
+and reach difference.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{reach_height/winratio_reach_diff.pdf}
+\caption{Win percentage of the fighter with longer reach versus reach difference. A 95\%
+confidence interval is shown for each point. These intervals were computed
+as $\pm t_{n-1}^{*}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$, where $t_{n-1}^{*}$ is always somewhat greater than
+1.96.}
+\label{winratio_reach_diff}
+\end{center}
+\end{figure}
+
+\begin{center}
+\begin{table}[h]
+\input{reach_height/reach2height_large.tex}
+\caption{All-time largest and smallest reach-to-height ratios for UFC fighters.}
+\label{reach2height_large}
+\end{table}
+\end{center}
+
+How do fight outcomes vary with reach-to-height ratio? Let's first look
+at the largest and smallest ratios in UFC history (see
+Table~\ref{reach2height_large}).
+
+\clearpage
+
+Win percentage is plotted against reach-to-height ratio in
+Figure~\ref{reach_vs_win_percent} for UFC
+fighters with at least five fights since January 1, 2005.
+We find the Pearson correlation between these quantities
+to be $r=0.07$ with $p=0.09$. This suggests
+a weak correlation that is not statistically significant.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{reach_height/reach_vs_win_percent.pdf}
+\caption{Win percentage versus reach-to-height ratio for UFC
+fighters with at least five fights since January 1, 2005. The solid line
+is a best fit to the data points.}
+\label{reach_vs_win_percent}
+\end{center}
+\end{figure}
+
+\clearpage
+\subsection*{How has average reach, height and age for each weight class varied over time?}
+
+Here we compute the average reach, height and age of UFC fighters
+by weight class
+for each year going all the way back to 1997. This section
+contains some of the most striking results of this document.
+
+Examination of Figs.~\ref{reach_vs_time_light} through
+\ref{reach_vs_time_heavy} reveal that the average reach,
+height and age of fighters within each weight class
+have increased over the years. In some cases the changes
+are dramatic.
+For instance, the average age of a middleweight was
+26 in 1998 but in 2016 it was 32! Also, middleweight reach
+has increased by almost 2 inches. The same is true of
+the welterweights.
+The height of the average welterweight was around 70 inches in 2005.
+Today it is about 71.5 inches with an average reach increase of
+about 2 inches. It is only the heavyweight division that where
+reach and height have not changed only the last decade. However,
+the average age has increased.
+
+The primary explanation for these trends must be advances made in
+weight cutting. Many fighters hire a dietician to oversee their
+diet and weight cut.
+
+One interesting note is that there were no lightweight fights in the UFC
+in 2005. The featherweights were incorporated from WEC in 2010.
+
+%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+\begin{subfigure}{8cm}
+\includegraphics[width=7.5cm]{age/featherweight_age_height_reach.pdf}
+\end{subfigure}
+\begin{subfigure}{8cm}
+\includegraphics[width=7.5cm]{age/lightweight_age_height_reach.pdf}
+\end{subfigure}
+\caption{Average reach, height, age and total number
+of fights
+for the featherweight and lightweight divisions.
+Reach and height are in units of inches.}
+\label{reach_vs_time_light}
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%
+
+\clearpage
+%%%%%%%%%%%%%%%%
+\begin{figure*}
+    \centering
+    \begin{subfigure}[b]{0.475\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{age/welterweight_age_height_reach.pdf}
+	\label{fig:mean and std of net14}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.475\textwidth}  
+	\centering 
+	\includegraphics[width=\textwidth]{age/middleweight_age_height_reach.pdf}
+	\label{fig:mean and std of net24}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}[b]{0.475\textwidth}   
+	\centering 
+	\includegraphics[width=\textwidth]{age/light_heavyweight_age_height_reach.pdf}
+	\label{fig:mean and std of net34}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.475\textwidth}   
+	\centering 
+	\includegraphics[width=\textwidth]{age/heavyweight_age_height_reach.pdf}
+	\label{fig:mean and std of net44}
+    \end{subfigure}
+    \caption{Average reach, height, age and total number of fights
+for the light heavyweight and heavyweight divisions.
+Reach and height are in units of inches.}
+    \label{reach_vs_time_heavy}
+\end{figure*}
+%%%%%%%%%%%%%%%%

@@ -1,0 +1,97 @@
+\clearpage
+\section*{Effect of Age}
+
+Before looking at the effect of age on win percentage, we examine
+some of the oldest and youngest fighters.
+
+\begin{center}
+\begin{table}[h]
+\input{longest_ufc_tensure.tex}
+\caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
+\end{table}
+\end{center}
+
+We only consider fights between UFC 208 and January 1, 2005.
+
+\begin{center}
+\begin{table}[h]
+\input{age/youngest_oldest.tex}
+\caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
+\end{table}
+\end{center}
+
+\clearpage
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{age/anova_age_by_weightclass.pdf}
+\caption{Box plots of fighter ages by weight class. The horizontal dashed
+line indicates the mean age of all active UFC fighters. The
+numbers above each weight class label is the number of fighters
+in that weight class. W--SW is women's strawweight, W--BW is women's
+bantamweight, FYB is men's flyweight, BW is men's bantamweight, FTW
+is men's featherweight, and so on.}
+\end{center}
+\end{figure}
+
+ANOVA gives $F=5.8$ and $p \ll 0.05$ indicating that the mean age depends on weight class.
+
+Number of wins by a fighter of age x divided by number of
+fights that at least one combatant was age x. If both
+combatants are age x then total possibilities is 2.
+
+\clearpage
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{age/win_percent_vs_age.pdf}
+\caption{We only show points for ages with more than 20 results. The
+solid line is a best fit. The dashed horizontal line indicates
+a win percentage of 50\%.}
+\end{center}
+\end{figure}
+
+We see that as age increases the win percentage decreases. The
+correlation between age and win percentage is $-0.96$ by both
+the Pearson and Spearman definitions ($p \ll 0.05$). A Chi-square
+test showed $\chi^2=21.2$ and $p=0.39$ indicating that we cannot
+conclude that win percentage is dependent on age.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{age/win_percent_of_younger.pdf}
+\caption{We only show points for ages with more than 20 results. The
+solid line is a best fit. The dashed horizontal line indicates
+a win percentage of 50\%.}
+\end{center}
+\end{figure}
+
+The Pearson correlation between age difference and win percentage of the
+younger fighter is 0.84 with $p \ll 0.05$. A Chi-square
+test showed $\chi^2=32.2$ and $p \approx 0.002$ indicating that win percentage
+of the younger fight is not independent of age difference.
+
+\subsection*{Is ring rust real?}
+
+Most fighter prefer to fight every 3 to 5 months. However, due to injury,
+contract negoiations and waiting for title fights, it is not uncommon
+for the elapsed time between fights to exceed this range.
+
+Figure~\ref{ring_rust} shows win percentage as a function
+of time between fights averaged over all fighters and their fights.
+The win percentage hovers around 50\% until around the one year
+point where a decrease is seen. While the error bars are large, it
+is clear that winning is a function of time from last fight.
+Note that in forming this figure we only consider UFC fight. If a fighter
+leaves the UFC and fights in another promotion before returning, the
+external fights are ignored.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{ring_rust.pdf}
+\caption{Win percentage versus elapsed time since last fight. The figure
+was constructed using all UFC fights since January 1, 2005. A
+95\% confidence interval is shown for each data point.}
+\label{ring_rust}
+\end{center}
+\end{figure}

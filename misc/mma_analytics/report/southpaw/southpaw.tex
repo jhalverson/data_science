@@ -1,0 +1,68 @@
+\clearpage
+\section*{Orthodox vs. Southpaw Stance}
+
+Is there an advantage to fighting in the orthodox versus southpaw stance?
+There have been 1641 fighters. We had stance info on 1503 of them. Here is the
+breakdown:
+
+\begin{center}
+\begin{table}[h]
+\input{southpaw/stance_breakdown.tex}
+\caption{Number and proportion of fighters with each stance type. About 10\% of the
+world population is left handed. Hardyck C, Petrinovich LF (1977). "Left-handedness". Psychol Bull. 84 (3): 385–404. doi:10.1037/0033-2909.84.3.385. PMID 859955.}
+\end{table}
+\end{center}
+
+Given that 10\% of the world population is left handed, it is surprising to see that 17.5\%
+of UFC fighters are southpaws. Let's conduct a statistical test to see if the elevated
+proportion could be explained by chance.
+The standard error is $SE = \sqrt{\frac{p_0(1-p_0)}{n}}=\sqrt{\frac{0.1\times(1 - 0.1)}{1503}}\approx0.007$.
+The corresponding test statistic is $Z = \frac{0.175 - 0.1}{SE}\approx9.7$. Using a two-sided test
+we find $p \ll 0.05$ which indicates that chance alone does not explain the elevated proportion of southpaws in the UFC.
+As we will see, left-handed fighters tend to do well so they are drawn to the fight game.
+
+\begin{center}
+\begin{table}[h]
+\input{southpaw/ortho_vs_south.tex}
+\caption{List of fights with a victor between an orthodox and southpaw fighter. There are 1010 fights going back to 2005. There are 745 unique fighters on the list.}
+\end{table}
+\end{center}
+
+There have been 1010 fights between fighters with an orthodox and southpaw stance which resulted in a clear victor (i.e., we ignore draws and no contests). The orthrodox fighters have won 449 (44.4\%) of these fights while the southpaws have won the balance of 561 (55.5\%). Is this result statistically significant? That is, could this outcome be explained by chance. Let's assume that the outcome of each fight is independent of stance. In this case, the likelihood of observing a split of 449 and 561 or more extreme values is given by a two-sided test using the binomial distribution:
+
+\begin{equation}
+p = 2\sum_{k=0}^{449} \frac{1010!}{k! (1010-k)!}(1/2)^{1010} \approx 0.001.
+\end{equation}
+
+We see that the p-value is much less than 0.05 indicating that the outcome of a fight does depend on stance.
+
+To isolate the effect of stance, we repeat the calculation for fights where the age difference between fighters
+is 3 years or less and the reach difference is 3 inches or less. 
+
+\begin{center}
+\begin{table}[h]
+\input{southpaw/ortho_vs_south_same_age_reach.tex}
+\caption{List of fights with a victor between an orthodox and southpaw fighter. There are 328 fights oing back to 2005. There are 365 unique fighters on the list.}
+\end{table}
+\end{center}
+
+Now we find 137 orthodox wins to 191 of the southpaws. The p-value of the
+appropriate two-sided test is $p \approx 0.003$ suggesting once again
+that stance is a factor.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=8cm]{southpaw/southpaw_win_ratio.pdf}
+\caption{Win percentage by stance for fights where the reach difference
+is less than 3 inches and the age difference is less than 3 years.}
+\end{center}
+\end{figure}
+
+We find 21.9\% of ranked fighters (160) are lefty while 20.9\% are lefty among ranked fighters (533).
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{southpaw/stance_type_by_year.pdf}
+\caption{Percentage of stance type versus year.}
+\end{center}
+\end{figure}
