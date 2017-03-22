@@ -1,0 +1,50 @@
+\section{Scraping and Cleaning the Data}
+\label{cleaning_data}
+Data for this project was obtained from three different sources:
+FightMetric.com, UFC.com and Wikipedia. Web scraping was used
+in all cases by writing codes in Python which made use
+of the Requests and BeautifulSoup modules. From FightMetric we scraped all the UFC fight
+cards from UFC 1 to UFC 208. We also scraped the individual fighter
+pages. From UFC.com we scraped the individual fighter pages which
+give details on leg reach and education. We used to Wikipedia
+to confirm or impute dates of birth, reach and height.
+
+The FightMetric database of fighters has three pairs of fighters
+with the same name: Michael McDonald, Dong Hyun Kim and
+Tony Johnson. Each fighter name must be made unique since the name
+serves as the primary key. One must also rename these fighters
+in the FightMetric fight cards so that the two may be joined.
+In the FightMetric fight cards there are two events with the same
+name, namely, UFC Fight Night: Belfort vs Henderson. One should rename
+one of the two events to group by event name. We also consolidated
+event locations (e.g., ``Brooklyn, New York, USA'' became ``New York, New York, USA'').
+
+The data obtained from UFC.com/fighter has duplicate names for
+Gerard Gordeau and Dong Hyun Kim which were handled. Three fighters were
+listed under the names ``... To be announced'', ``. To Be Determined'' and
+``... To be determined'', which were removed. Some of the names had
+two spaces between the first and last names. The fighter Matt Schnell
+is listed as having a 72 inch leg reach which must be false.
+After the cleaning there were 1897 fighters of which 533 were active. Note that
+the UFC data set contains WEC fighters and maybe those from other promotions
+acquired by the UFC.
+
+The FightMetric and UFC reach data are in perfect agreement for 824 fighters.
+They differ by 1 inch for 19 fighters and 2 inches for 18. Only 5 fighters
+differ by more than 2 inches.
+With respect to height, the two data sets agree perfectly for 1351 fighters,
+differ by 1 inch for 131 fighters and 2 inches for 36. This leaves 19
+cases where the height difference is greather than 2 inches. Dates of birth
+are harder to check because the UFC only gives age.
+Overall the agreement is quite good with maybe only 3\% of cases not
+agreeing perfectly.
+The author contacted FightMetric to ask about the discrepancies. Their reply
+was that they believe their data to be the best source.
+
+From UFC 1 to UFC 208 there have been 4096 fights between 1641 unique fighters. The
+data obtained by scraping UFC.com is missing only 13 of these 1641. The missing
+fighters are Benji Radach, Danillo Villefort, Eddie Mendez, Edilberto de Oliveira,
+Joao Pierini, Julian Sanchez, Kit Cope, Luiz Cane, Masutatsu Yano, Nate Loughran,
+Saeed Hosseini, Scott Smith and Tito Ortiz. Note that fuzzy matching was useful
+in matching many of the names between the FightMetric and UFC data sets.
+

@@ -1,56 +1,49 @@
-\documentclass[10pt]{article}
+\documentclass[12pt]{article}
 
 \usepackage{subcaption}
 \usepackage{etoolbox}
-\BeforeBeginEnvironment{tabular}{\begin{center}\small}
+\BeforeBeginEnvironment{tabular}{\begin{center}\footnotesize}
 \AfterEndEnvironment{tabular}{\end{center}}
 
-%\usepackage[cm,empty]{fullpage}
+\title{\Huge Statistical Analysis of Mixed Martial Arts Fighting Data: From UFC 1 to UFC 208}
+\date{\Large \today}
+\author{\Large Jonathan D. Halverson}
+
+\usepackage[in,empty]{fullpage}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{graphicx}
+\usepackage[font=footnotesize,margin=2cm]{caption}
 
 \begin{document}
-Statistical Analysis of Mixed Martial Arts Data: From UFC 1 to UFC 208
-
-Jonathan D. Halverson
-
-Here we analyze UFC data from 1993 through Februar 2017. We look at the effect
+\maketitle
+\noindent
+\textbf{Summary} -- Here we analyze UFC data from 1993 through February 2017. We look at the effect
 of age, reach, stance.
 
-\section{Introduction}
+\section*{Introduction}
 
 How as the data obtained? Why do this?
+
+How was data obtained? See appendix See appendix.
+
+Fightnomics, Dr. u.
+To our knowledge Fightnomic is the most comprehesive study on MMA
+data. Unfortunately, the book doesn't apply a single statistical test
+to the data making it interpretation impossible.
 
 Sample table of fighters.
 Sample table of fights.
 
 There have been 4068 UFC fights between UFC 1 and UFC 208. The number of fighters is 1641.
+This includes all pay-per-views, fight night on FS1, Fox, Spike, Ultimate Fighter.
 
-\section{UFC Events}
+In several figures we only consider data after January 1, 2005. This is mostly
+an arbitrary choice to be free from but is close to the take over by Zuffa. The unified rules where implemented
+
+\section*{UFC Events}
 
 How many events have there been? Where have they been?
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=12cm]{fight_outcome_breakdown.pdf}
-\caption{Outcome of fights.}
-\end{center}
-\end{figure}
-
-\begin{center}
-\begin{table}[h]
-\input{most_submissions.tex}
-\caption{All-time list of fighters with 5 or more submission finishes.}
-\end{table}
-\end{center}
-
-\begin{center}
-\begin{table}[h]
-\input{most_tkos.tex}
-\caption{All-time list of fighters with 8 or more KO/TKO finishes.}
-\end{table}
-\end{center}
 
 \begin{center}
 \begin{table}[h]
@@ -95,33 +88,40 @@ How many events have there been? Where have they been?
 \end{center}
 \end{figure}
 
-\section{UFC Fighters}
+\section*{UFC Fighters}
 
 Who has fought the most? The tallest.
 
-\begin{center}
-\begin{table}[h]
-\input{longest_ufc_tensure.tex}
-\caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
-\end{table}
-\end{center}
-
-\section{Tale of the Tape}
-
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=16cm]{fight_dates_notable_fighters.pdf}
-\caption{Vertical blue lines indicate when each fighter fought in the UFC. Note that Belfort started
-in 1997 and Penn in 2001.}
+\includegraphics[width=16.5cm]{fight_dates_notable_fighters.pdf}
+\caption{This figure indicates when notable fighters fought and the outcome of the fight. Green is victory, red is loss, blue is a draw
+and black represents a no contest. Note that Belfort started in 1997 and Penn in 2001.}
 \end{center}
 \end{figure}
 
-\input{southpaw.tex}
+\input{southpaw/southpaw.tex}
 \input{age/age.tex}
+\input{reach_height/reach_height.tex}
+\input{finishes/finishes.tex}
+\input{education/education.tex}
+\input{prediction/prediction.tex}
 
 Fifth round finishes.
+\appendix
+\input{cleaning/cleaning.tex}
 
-Appendix of longtable.
+\section{UFC Fighters with College Experience}
+\label{appendix_education}
+\begin{center}
+\input{education/education_sample.tex}
+\end{center}
 
+%\clearpage
+%\section{Every UFC Fight up to UFC 208}
+%\label{every_ufc_fight}
+%\begin{center}
+%\input{../fights_table.tex}
+%\end{center}
 
 \end{document}
