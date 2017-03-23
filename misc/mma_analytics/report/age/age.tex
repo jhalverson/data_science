@@ -6,10 +6,34 @@ some of the oldest and youngest fighters.
 
 \begin{center}
 \begin{table}[h]
+\input{age/biggest_age_diff.tex}
+\caption{Biggest age differences in UFC history.}
+\label{biggest_age_diff}
+\end{table}
+\end{center}
+
+Note that 36 of the 50 fights were won by the younger
+fighter. This is a statistically
+significant result ($p\sim 10^{-3}$).
+
+\begin{center}
+\begin{table}[h]
 \input{longest_ufc_tensure.tex}
 \caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
 \end{table}
 \end{center}
+
+\begin{center}
+\begin{table}[h]
+\input{age/finishes_by_age.tex}
+\caption{How wins are achieved by age bracket.}
+\label{finishes_by_age}
+\end{table}
+\end{center}
+
+Table~\ref{finishes_by_age}. If we ignore DQ then
+one can apply a Chi-square test and find
+$\chi^2=22.3$, $p=0.001$, $\Phi_c=0.06$.
 
 We only consider fights between UFC 208 and January 1, 2005.
 
@@ -21,6 +45,24 @@ We only consider fights between UFC 208 and January 1, 2005.
 \end{center}
 
 \clearpage
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=8cm]{age/win_pct_younger_older.pdf}
+\caption{Win percentage versus relative age.}
+\label{win_pct_younger_older}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{age/age_brackets.pdf}
+\caption{Win percentage of younger and older fighters
+in different age brackets. Win percentage for same
+age may be less than 50\% due to draws.}
+\label{age_brackets}
+\end{center}
+\end{figure}
 
 \begin{figure}[h]
 \begin{center}
@@ -68,7 +110,7 @@ a win percentage of 50\%.}
 
 The Pearson correlation between age difference and win percentage of the
 younger fighter is 0.84 with $p \ll 0.05$. A Chi-square
-test showed $\chi^2=32.2$ and $p \approx 0.002$ indicating that win percentage
+test showed $\chi^2=31.1$ with $p \approx 0.001$ and $\Phi_c=0.1$ indicating that win percentage
 of the younger fight is not independent of age difference.
 
 \subsection*{Is ring rust real?}
