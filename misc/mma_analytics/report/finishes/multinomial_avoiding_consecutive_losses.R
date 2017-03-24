@@ -2,7 +2,7 @@
 # Thursday, March 23, 2017
 # Evaulation of the CDF of the multinomial distribution
 
-p_draw = 27 / 4068.0
+p_draw = 20 / 3581.0
 p_win = 0.5 - 0.5 * p_draw
 p_lose = 0.5 - 0.5 * p_draw
 pbs = c(p_win, p_lose, p_draw)
@@ -14,7 +14,7 @@ ct = 0
 cdf = 0.0
 thres = dmultinom(x=c(1249, 1226, 12), prob=pbs)
 thres = dmultinom(x=c(1699, 1545, 20), prob=pbs)
-thres = 10
+#thres = 10
 for (i in seq(0, total)) {
   for (k in seq(0, total)) {
     if (i + k <= total) {
@@ -24,7 +24,8 @@ for (i in seq(0, total)) {
       if (prb <= thres) {
         cdf = cdf + prb
         #print(y)
-      } 
+      }
+      else {print(y)}
     }
   }
 }

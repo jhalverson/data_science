@@ -1,72 +1,190 @@
 \clearpage
-\section*{Finishes}
+\section*{Fight Outcomes}
 
-There have only been thirteen fifth round finishes in the history of the UFC.
-These are listed in Table~\ref{latest_finishes}:
+Of the 4068 fights between UFC 1 and UFC 208,
+a winner and loser were found in 3999 of them,
+42 were declared a no contest and 27 resulted in a draw.
+Twelve of the 3999 wins were by opponent disqualification.
+
+Figure~\ref{fight_outcome_by_year} shows the breakdown
+by year of all UFC fights:
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{finishes/fight_outcome_breakdown.pdf}
+\caption{Percentage of fight outcome by year for all UFC fights.}
+\label{fight_outcome_by_year}
+\end{center}
+\end{figure}
+
+The figure indicates that there have been fluctuations in how
+fights end over time. Since about 2010, fight outcomes have
+stabilized with KO/TKO at 30\%, submissions at 20\% and decision
+around 50\%.
+Other includes outcomes that were later overturned to a no contest,
+disqualifications, CNC and other.
+
+The methods of winning are shown as a percentage for each
+of the ten weight classes in Figure~\ref{finishes_weight_class_bars}.
+When opponent disqualification is removed, a Chi-square test
+applied to the data in Figure~\ref{finishes_weight_class_bars}
+showed $\chi^2=208$, $p \sim 10^{-34}$ and $\Phi_c=0.17$. This makes it
+clear that the differences in the proportions across classes are
+statistically significant.
+For instance, the heavyweights have a KO/TKO percentage of 60\%.
+A high KO/TKO percentage is also seen from the light heavyweight
+to welterweight division.
+Submissions account for roughly 20\% of finishes for each weight class with
+decisions making up the balance. The women's strawweight has the
+most fights go to decision at 65\%.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=14cm,right]{finishes/finishes_weight_class_bars.pdf}
+\caption{Method of winning versus weight class since January 1, 2005.
+Opponent DQ is very small and only visible in the MW and LH divisions.
+W-–SW is women's strawweight, W-–BW is women's bantamweight, FYW is
+men's flyweight, BW is men's bantamweight, FTW is men's
+featherweight, and so on.}
+\label{finishes_weight_class_bars}
+\end{center}
+\end{figure}
+
+The percentage of total KO/TKO's and submissions versus
+round is shown for each weight class in
+Figure~\ref{submissions_tko_percentage}. We see most
+finishes come in the first round and begin to diminish
+for each round after. The data for the fourth and fifth
+rounds are not weighted since we combined
+three and five round fights.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{finishes/submissions_tko_percentage.pdf}
+\caption{(top) Percentage of total KO/TKO's for each
+weight class by round and (bottom) the same except for submissions.}
+\label{submissions_tko_percentage}
+\end{center}
+\end{figure}
+
+%\begin{figure}[h]
+%\begin{center}
+%\includegraphics[width=12cm]{finishes/tko_sub_by_round.pdf}
+%\caption{Breakdown of finishes by round for non-decision fights.}
+%\label{height_reach_all_fighters}
+%\end{center}
+%\end{figure}
+%A Chi-square test yields $\chi^2=8.5$ with $p=0.076$. This indicates
+%that there is not enough evidence to argue that the finish technique
+%depends on round.
+
+\clearpage
+\subsection*{Avoiding Two Consecutive Losses}
+
+New UFC fighters are likely to get cut from the organization if they lose two
+fights in a row. Similarly, fighters working towards a title shot are
+face a significant setback if they drop two consecutive fights. Because of this
+one might think that fighters fight harder when coming off a loss in
+comparison to a win in their previous bout.
+
+To test this hypothesis we looked at all fights since January 1, 2005 (ignoring no contest fights) and found
+the following:
+
+\begin{center}
+\begin{table}[h]
+\begin{tabular}{r|cc}
+  \toprule
+  & Lost previous & Won previous \\
+  \hline
+  Won subsequent & 1249 & 1699 \\
+  Lost subsequent & 1226 & 1545 \\
+  Draw subsequent & 12 & 20 \\
+  \hline
+  Total & 2487 & 3264 \\
+  \bottomrule
+\end{tabular}
+\caption{Number of wins, losses and draws in the subsequent fight given a win or loss in a fighter's previous fight.}
+\label{table_avoiding_two_losses}
+\end{table}
+\end{center}
+
+We see in the left column of Table~\ref{table_avoiding_two_losses} that
+when the previous fight was a loss, the subsequent fight resulted
+in $n_w=1249$ wins, $n_l=1226$ losses and $n_d=20$ draws. There are more wins than losses but
+is this result statistically significant or could it be explained
+by chance? The probabily of a given outcome ($n_w, n_l, n_d$) is described by
+the multinomial distribution:
+
+\begin{equation}
+f(n_i, p_i) = \frac{N!}{n_w! n_l! n_d!}p_w^{n_w}p_l^{n_l}p_d^{n_d},
+\end{equation}
+
+\noindent
+where $\sum n_i = N$, $\sum p_i=1$ and $p_i$ is the probability
+of event $i$. The $p$-value for a given
+outcome $n_w, n_l, n_d=n_{i,0}$ is
+
+\begin{equation}
+p = \sum_{\substack{{\sum n_i = N} \\ {f \le f_0}}}f(n_i, p_i).
+\label{cdf_multinomial}
+\end{equation}
+
+\noindent
+where $f_0=f(n_{i,0})$.
+There were 20 draws in the 3851 fights in our data set so we
+choose $p_d=20/3851$. This determines the win and loss probabilities as
+$p_w=p_l=1/2 - p_d/2$.
+The probability of observing the outcome in the left
+column of Table~\ref{table_avoiding_two_losses}, $f_0$, or a more extreme outcome
+is given by Eq.~\ref{cdf_multinomial}. For the case where a fighter
+is coming off a loss, we find $p=0.84$. A one-way Chi-square test gives $\chi^2=0.47$ with $p=0.79$.
+Thus, we cannot conclude that a fighter is more likely to win their next fight
+when coming off a loss.
+
+In the case
+of coming off a win (right column), we find $p=0.022$ which
+indicates the differene in wins and losses is statistically significant. This is supported by a Chi-square test which
+gives $\chi^2=7.48$ and $p=0.024$. Hence, 
+UFC fighters are slightly more likely to win their next
+fight (with win percentage of 52.1\%) when coming off a win.
+We note that we could not find any software that provided the cumulative
+distribution function for the multinomial distribution. R only provides
+the probability mass function.
+
+\subsection*{Outcome of UFC Debut}
+
+Most fighters admit to being nervous before their first UFC fight.
+Since January 1, 2005, there have been 1379 UFC debuts. We found the
+win, loss and draw percentages to be 43.3\%, 56.1\% and 0.6\%, respectively.
+This result is statistically significant with Eq.~\ref{cdf_multinomial}
+giving $p \sim 10^{-5}$. Thus, most
+fighters lose their UFC debut. This is an overall analysis and it does not
+take into account age or previous experience.
+
+
+\subsection*{Most Finishes}
+We finish this section with some interesting tables:
 
 \begin{center}
 \begin{table}[h]
 \input{most_submissions.tex}
-\caption{All-time list of fighters with 5 or more submission finishes.}
+\caption{All-time list of UFC fighters with 5 or more submission finishes
+as of February 11, 2017.}
 \end{table}
 \end{center}
 
 \begin{center}
 \begin{table}[h]
 \input{most_tkos.tex}
-\caption{All-time list of fighters with 8 or more KO/TKO finishes.}
+\caption{All-time list of UFC fighters with 8 or more KO/TKO finishes
+as of February 11, 2017.}
 \end{table}
 \end{center}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=12cm]{fight_outcome_breakdown.pdf}
-\caption{Outcome of fights.}
-\end{center}
-\end{figure}
-
-In Table~\ref{finishes_by_weight_class}, We removed DQ and Chi-square yields $\chi^2=177.2$, $p\ll0.05$,$\Phi_c=0.18$.
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=14cm]{finishes/finishes_weight_class_bars.pdf}
-\caption{Outcome of fights.}
-\label{finishes_weight_class_bars}
-\end{center}
-\end{figure}
-
-\begin{center}
-\begin{table}[h]
-\input{finishes/finishes_by_weight_class.tex}
-\caption{How wins are achieved by weight class since 2005.}
-\label{finishes_by_weight_class}
-\end{table}
-\end{center}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=13cm]{finishes/submissions_tko_percentage.pdf}
-\caption{Outcome of fights.}
-\label{submissions_tko_percentage}
-\end{center}
-\end{figure}
 
 \begin{center}
 \begin{table}[h]
 \input{finishes/late_finishes.tex}
-\caption{The only fifth round finishes in UFC history.}
+\caption{The only 5th round finishes in UFC history as of February 11, 2017.}
 \label{latest_finishes}
 \end{table}
 \end{center}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=12cm]{finishes/tko_sub_by_round.pdf}
-\caption{Breakdown of finishes by round for non-decision fights.}
-\label{height_reach_all_fighters}
-\end{center}
-\end{figure}
-
-A Chi-square test yields $\chi^2=8.5$ with $p=0.076$. This indicates
-that there is not enough evidence to argue that the finish technique
-depends on round.
