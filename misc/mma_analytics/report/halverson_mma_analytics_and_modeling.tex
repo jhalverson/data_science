@@ -1,13 +1,17 @@
 \documentclass[12pt]{article}
 
+\renewcommand{\thesection}{\Roman{section}.} 
+\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+
 \usepackage{subcaption}
 \usepackage{etoolbox}
+
 \BeforeBeginEnvironment{tabular}{\begin{center}\footnotesize}
 \AfterEndEnvironment{tabular}{\end{center}}
 
-\title{\Huge Statistical Analysis of Mixed Martial Arts Fighting Data: From UFC 1 to UFC 208}
+\title{\Huge Statistical Analysis of Mixed Martial Arts Fight Data: From UFC 1 to UFC 208}
 \date{\Large \today}
-\author{\Large Jonathan D. Halverson}
+\author{\Large Jonathan D. Halverson\\ \tiny halverson.jonathan at gmail}
 
 \usepackage[export]{adjustbox}
 \usepackage{amsmath}
@@ -23,7 +27,7 @@
 \textbf{Summary} -- Here we analyze UFC data from 1993 through February 2017. We look at the effect
 of age, reach, stance.
 
-\section*{Introduction}
+\section{Introduction}
 
 How as the data obtained? Why do this?
 
@@ -47,17 +51,9 @@ It is important to understand that the results presented here have been
 averaged over all fighters. The individual behavior of individual fighters
 will not be captured here.
 
-\section*{UFC Events}
+\section{UFC Events}
 
 How many events have there been? Where have they been?
-
-\begin{center}
-\begin{table}[h]
-\input{most_fights.tex}
-\caption{All-time list of fighters with the most fights.}
-\end{table}
-\end{center}
-
 
 \begin{figure}[h]
 \begin{center}
@@ -94,10 +90,6 @@ How many events have there been? Where have they been?
 \end{center}
 \end{figure}
 
-\section*{UFC Fighters}
-
-Who has fought the most? The tallest.
-
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=16.5cm]{fight_dates_notable_fighters.pdf}
@@ -106,14 +98,13 @@ and black represents a no contest. Note that Belfort started in 1997 and Penn in
 \end{center}
 \end{figure}
 
-\input{southpaw/southpaw.tex}
 \input{age/age.tex}
 \input{reach_height/reach_height.tex}
+\input{southpaw/southpaw.tex}
 \input{finishes/finishes.tex}
 \input{education/education.tex}
 \input{prediction/prediction.tex}
 
-Fifth round finishes.
 \appendix
 \input{cleaning/cleaning.tex}
 
