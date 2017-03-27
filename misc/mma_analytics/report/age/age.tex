@@ -1,7 +1,7 @@
 \clearpage
 \section{Effect of Age}
-Table~\ref{biggest_age_diff} shows the UFC fights
-with the largest age differences:
+Table~\ref{biggest_age_diff} shows the fights
+with the largest age differences in UFC history:
 
 \begin{center}
 \begin{table}[h!]
@@ -152,6 +152,26 @@ and other factors
 it is not uncommon
 for the time between fights to exceed this range.
 
+How often do individual fighters fight? Some fighters like Donald Cerrone
+want to fight as soon as possible while others only step
+into the octogon one or twice a year. The histogram of the number of months
+between fights is shown in Figure~\ref{time_between_fights}. We see that the most
+common time between fights is 4 months. 
+Approximately 62\% of the total counts are between 3 and 6 months.
+Note that four fighters have fought less than 16 days out from their
+previous fight. And, of course, Royce Gracie fought four times in one night
+to win UFC 2. However, here we only consider 2005 data and beyond.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{age/time_between_fights.pdf}
+\caption{Histogram of number of months between consecutive UFC fights
+for individual fighters. Figure was constructed using all data since
+January 1, 2005.}
+\label{time_between_fights}
+\end{center}
+\end{figure}
+
 Figure~\ref{ring_rust} shows win percentage as a function
 of time between fights averaged over all fighters.
 For a quick turnaround of less than 3 months, the win percentage
@@ -179,11 +199,11 @@ was constructed using all UFC fights since January 1, 2005. A
 \end{figure}
 
 \clearpage
-\subsection*{Interesting Tables}
+\subsection*{Longevity and Youngest-Oldest Tables}
 
 \begin{center}
 \begin{table}[h]
-\input{longest_ufc_tensure.tex}
+\input{age/longest_ufc_tensure.tex}
 \caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
 \end{table}
 \end{center}

@@ -9,7 +9,7 @@
 \BeforeBeginEnvironment{tabular}{\begin{center}\footnotesize}
 \AfterEndEnvironment{tabular}{\end{center}}
 
-\title{\Huge Statistical Analysis of Mixed Martial Arts Fight Data: From UFC 1 to UFC 208}
+\title{\Huge Statistical Analysis of Mixed Martial Arts Fighting: From UFC 1 to UFC 208}
 \date{\Large \today}
 \author{\Large Jonathan D. Halverson\\ \tiny halverson.jonathan at gmail}
 
@@ -27,77 +27,7 @@
 \textbf{Summary} -- Here we analyze UFC data from 1993 through February 2017. We look at the effect
 of age, reach, stance.
 
-\section{Introduction}
-
-How as the data obtained? Why do this?
-
-How was data obtained? See appendix See appendix.
-
-Fightnomics, Dr. u.
-To our knowledge Fightnomic is the most comprehesive study on MMA
-data. Unfortunately, the book doesn't apply a single statistical test
-to the data making it interpretation impossible.
-
-Sample table of fighters.
-Sample table of fights.
-
-There have been 4068 UFC fights between UFC 1 and UFC 208. The number of fighters is 1641.
-This includes all pay-per-views, fight night on FS1, Fox, Spike, Ultimate Fighter.
-
-In several figures we only consider data after January 1, 2005. This is mostly
-an arbitrary choice to be free from but is close to the take over by Zuffa. The unified rules where implemented
-
-It is important to understand that the results presented here have been
-averaged over all fighters. The individual behavior of individual fighters
-will not be captured here.
-
-\section{UFC Events}
-
-How many events have there been? Where have they been?
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=16cm]{number_of_events.pdf}
-\caption{Outcome of fights.}
-\end{center}
-\end{figure}
-
-\begin{center}
-\begin{table}[h]
-\input{top_locations.tex}
-\caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
-\end{table}
-\end{center}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=16cm]{world_map.pdf}
-\caption{Location of UFC events.}
-\end{center}
-\end{figure}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=16cm]{us_map.pdf}
-\caption{Location of UFC events.}
-\end{center}
-\end{figure}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=16cm]{europe_map.pdf}
-\caption{Location of UFC events.}
-\end{center}
-\end{figure}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=16.5cm]{fight_dates_notable_fighters.pdf}
-\caption{This figure indicates when notable fighters fought and the outcome of the fight. Green is victory, red is loss, blue is a draw
-and black represents a no contest. Note that Belfort started in 1997 and Penn in 2001.}
-\end{center}
-\end{figure}
-
+\input{intro/intro.tex}
 \input{age/age.tex}
 \input{reach_height/reach_height.tex}
 \input{southpaw/southpaw.tex}

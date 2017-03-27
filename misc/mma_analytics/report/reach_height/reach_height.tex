@@ -1,8 +1,8 @@
 \clearpage
 \section{Reach and Height}
 
-We have reach and height data for 1210 of the 1641 fighters who have fought in the
-UFC from UFC 1 to UFC 208. These data are plotted in Figure~\ref{height_reach_all_fighters}.
+We have reach and height data for 1210 of the 1641 fighters who have ever fought in the
+UFC. These data are plotted in Figure~\ref{height_reach_all_fighters}:
 
 \begin{figure}[h]
 \begin{center}
@@ -21,7 +21,8 @@ The tallest UFC fighter of all-time is Stefan Struve at 7 feet or 84 inches. The
 with the greatest reach is Semmy Schilt at 7 feet, 4 inches. It is interesting
 to note that while Jon Jones is 8 inches shorter than
 Stefan Struve, the two have the same reach of 84 inches. Figure~\ref{jones_reach} shows
-where Jones stacks up against all other UFC lightweights.
+how Jones stacks up against other light heavyweights who have competed in the UFC
+over the past 24 years:
 
 \begin{figure}[h]
 \begin{center}
@@ -51,16 +52,41 @@ such a split (31/45) by chance.
 
 \clearpage
 
-Table~\ref{biggest_reach_diff} suggests that the fighter with longer
-reach has an advantage. What about shorter reach differences?
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=8cm]{reach_height/longer_reach_win_ratio.pdf}
+\caption{Win percentage in fights with a reach difference using
+all available data. The two percentages do not sum to 100\% because
+of draws.}
+\label{winratio_reach_diff_simple}
+\end{center}
+\end{figure}
+
+When there is a reach difference, does the fighter
+with greater reach tend to win?
+There are 2952 fights that meet this condition and
+1546 were won by the fighter with longer reach while
+1406 by the fighter with shorter reach. This difference
+is statistically significant ($p=0.01$).
+Figure~\ref{winratio_reach_diff_simple}
+shows the win percentages for the two fighters.
+
 Figure~\ref{winratio_reach_diff}
 shows the win percentage of the fighter with
 longer reach as a function of reach difference.
 As reach difference increases, the win likelihood of the fighter with greater reach
-increases. 
+increases.
 A Chi-square test yields $\chi^2=20.2$, $p=0.017$ and $\Phi_c=0.08$.
-This indicates that there is a slight association between the proportions of wins and losses  
+This indicates that there is an association between the proportions of wins and losses  
 and reach difference.
+
+What happens when both fighters have the same reach but there is
+a height difference? There are 327 fights of all-time that meet this condition
+and the taller fighter won 160 while the shorter won 167. However, the
+difference is not statistically significant ($p=0.74$). What if we ignore reach
+and simply ask how often does the taller fighter win? We find of the 3282 fights
+where the two fighters have different heights, the taller fighter wins 1683 to
+1599 of the shorter. This difference is not statistically significant ($p=0.15$).
 
 \begin{figure}[h]
 \begin{center}
@@ -103,6 +129,9 @@ is a best fit to the data points.}
 \label{reach_vs_win_percent}
 \end{center}
 \end{figure}
+
+Because heigth and leg reach are collinear with reach, we will not
+consider a detailed analysis of these quantities.
 
 \clearpage
 \subsection*{How has average reach, height and age for each weight class varied over time?}
