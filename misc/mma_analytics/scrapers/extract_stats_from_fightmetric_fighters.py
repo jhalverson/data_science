@@ -45,7 +45,17 @@ for i, html_file in enumerate(html_files):
   assert td_def > -0.1, 'slpm'
   assert sub_avg > -0.1, 'slpm'
 
-  records.append((name.string.strip(), slpm, str_acc, sapm, str_def, td_avg, td_acc, td_def, sub_avg))
-  cols = ['Name', 'slpm', 'str_acc', 'sapm', 'str_def', 'td_avg', 'td_acc', 'td_def', 'sub_avg']
-  df = pd.DataFrame(records, columns=cols)
-  df.to_csv('../data/fightmetric_career_stats.csv', index=False)
+  name = name.string.strip()
+  if (name not in ['Michael McDonald', 'Dong Hyun Kim', 'Tony Johnson']):
+    records.append((name, slpm, str_acc, sapm, str_def, td_avg, td_acc, td_def, sub_avg))
+
+records.append(('Michael McDonald',2.69,0.42,2.76,0.57,1.09,0.66,0.52,1.4))
+records.append(('Michael McDonald 2',0.0,0.0,0.4,0.5,0.0,0.0,0.0,0.0))
+records.append(('Dong Hyun Kim',2.19,0.49,1.79,0.59,3.01,0.43,0.8,0.7))
+records.append(('Dong Hyun Kim 2',3.3,0.45,5.25,0.5,2.41,0.6,0.33,0.0))
+records.append(('Tony Johnson',2.0,0.53,4.73,0.31,2.0,0.22,0.0,0.0))
+records.append(('Tony Johnson 2',0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0))
+
+cols = ['Name', 'slpm', 'str_acc', 'sapm', 'str_def', 'td_avg', 'td_acc', 'td_def', 'sub_avg']
+df = pd.DataFrame(records, columns=cols)
+df.to_csv('../data/fightmetric_career_stats.csv', index=False)
