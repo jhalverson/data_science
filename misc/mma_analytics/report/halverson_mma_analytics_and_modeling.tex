@@ -3,13 +3,14 @@
 \renewcommand{\thesection}{\Roman{section}.} 
 \renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
 
+\usepackage{enumitem}
 \usepackage{subcaption}
 \usepackage{etoolbox}
 
 \BeforeBeginEnvironment{tabular}{\begin{center}\footnotesize}
 \AfterEndEnvironment{tabular}{\end{center}}
 
-\title{\Huge Statistical Analysis of Mixed Martial Arts Fighting: From UFC 1 to UFC 208}
+\title{\Large \textbf{Statistical Analysis and Predictive Modeling of Mixed Martial Arts Fighting: From UFC 1 to UFC 208}}
 \date{\Large \today}
 \author{\Large Jonathan D. Halverson\\ \tiny halverson.jonathan at gmail}
 
@@ -24,8 +25,12 @@
 \begin{document}
 \maketitle
 \noindent
-\textbf{Summary} -- Here we analyze UFC data from 1993 through February 2017. We look at the effect
-of age, reach, stance.
+\textbf{Summary} -- Here we analyze UFC data from 1993 through February 2017. The most
+striking results relate to the increased age, reach and height of
+most weight classes over the last ten years. We find southpaws have a significant advantage against
+orthodox fighters, ring rust becomes real around 9-12 months, and fighters tend to lose
+more than they win after around age 30. In the last section we show that
+methods from artificial intelligence can be used to predict fight outcomes with 66\% accuracy.
 
 \input{intro/intro.tex}
 \input{age/age.tex}
