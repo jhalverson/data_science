@@ -64,13 +64,19 @@ For each fighter we have the following features:
   \item Height
   \item Reach
   \item Leg reach
-  \item Stance
+  \item Stance (orthodox, southpaw or switch)
   \item Age
   \item Education (yes or no)
-  \item Win percentage of UFC fights
-  \item Number of previous UFC fights
-  \item Elapsed time since last UFC fight
   \item Current or former champion (yes or no)
+  \item Number of previous UFC fights
+  \item Total time in the Octogon
+  \item Elapsed time since last UFC fight
+  \item Win percentage of UFC fights
+  \item Percentage of wins by KO/TKO
+  \item Percentage of wins by submission
+  \item Percentage of wins by decision
+  \item Percentage of losses by KO/TKO
+  \item Percentage of losses by submission
 \end{itemize}
 
 \noindent
@@ -86,6 +92,26 @@ We also use the following career statistics:
   \item Takedown defense
   \item Average submissions attempted per 15 minutes
 \end{itemize}
+
+\noindent
+The derived features are
+
+\begin{itemize}[noitemsep]
+  \item Difference in age, reach, number of fights, and so on of the two fighters
+  \item Total damage = total fight time times strikes absorbed per minute
+  \item Total strikes thrown per minute = SlPM / striking accuracy
+  \item Expected strikes absorbed per minute1 = string defense1 * (SlPM / striking accuracy)2
+  \item Fighter versatility index = (3/2)((1/3)/(W2+W2+W2) - 1/3)
+  \item Natural logarithm of $\textrm{WTKO}_1/\textrm{LTKO}_2$
+  \item Natural logarithm of $\textrm{WSUB}_1/\textrm{LSUB}_2$
+\end{itemize}
+
+The class label is a 0 if fighter 1 beats fighter 2 or
+a 1 if fighter 2 beats fighter 1.
+There are approximatley
+equal numbers of each class label.
+
+As always we need discriminatory features.
 
 An additional feature would be an indicator variable
 which would be unity for champions and interim champions
@@ -139,6 +165,27 @@ Once the model has been
 trained we use it to make fight predictions on
 the remaining 30\% of the fights. We then report the
 accuracy of the model on the test data.
+
+\begin{center}
+\begin{table}[h]
+\begin{tabular}{c|cccccc}
+  \toprule
+  {} &  \multicolumn{2}{c}{{Fighter 1}} & \multicolumn{2}{c}{{Fighter 2}} & Fighter 1 $-$ Fighter 2 & Fighter 1 / Fighter 2\\
+  \hline
+  Outcome & Age & Reach & Age & Reach & $\textrm{SLpM}_1 - \textrm{SLpM}_2$ & $\textrm{WTKO}_1/\textrm{LTKO}_2$\\
+  \hline
+  1 & 23.2 & 72.0 & 31.0 & 70.0 & 1.1 & 3.1\\
+  0 & 33.5 & 67.0 & 29.9 & 68.0 & $-0.7$ & 0.9\\
+  1 & 27.1 & 78.0 & 36.3 & 74.0 & 0.9 & 1.8\\
+  \bottomrule
+\end{tabular}
+\caption{Accuracy scores for simple rule-based models. For models where win ratio was used, we only considered
+fighters with 5 or more UFC fights. $p$-values are given in the rightmost column. Note that for $p=0.05$, $\log_{10}p = -1.3$. In all
+cases the sum of
+Total and Excluded is 3561.}
+\label{sample_labels_features}
+\end{table}
+\end{center}
 
 
 We create predictive models using the 3561 fights since
