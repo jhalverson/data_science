@@ -4,7 +4,7 @@
 # flags to get updated data
 scrape_event_list = False
 scrape_cards = False
-scrape_individual_fights = True
+scrape_individual_fights = False
 ###################################
 
 import requests
@@ -56,8 +56,10 @@ for tr in events:
 
   # extract table
   s = BeautifulSoup(html_card, 'lxml')
-  fight_details_links = s('a', {'class':'b-flag b-flag_style_green'})
-  fight_details_urls = [link.get('href') for link in fight_details_links]
+  #fight_details_links = s('a', {'class':'b-flag b-flag_style_green'})
+  #fight_details_urls = [link.get('href') for link in fight_details_links]
+  fight_details_links = s('tr', {'class':'b-fight-details__table-row b-fight-details__table-row__hover js-fight-details-click'})
+  fight_details_urls = [link.get('data-link') for link in fight_details_links]
 
   for url in fight_details_urls:
     iofile = '../data/fightmetric_individual_fights/' + url.split('/')[-1] + '.html'
@@ -70,66 +72,52 @@ for tr in events:
       html_individ = f.read()
 
     sp = BeautifulSoup(html_individ, 'lxml')
-    for tr in sp.find('tbody', {'class':'b-fight-details__table-body'}).find_all('tr'):
-      td = tr('td')
-      fighter1 = td[0].find_all('p')[0].get_text().strip()
-      fighter2 = td[0].find_all('p')[1].get_text().strip()
-      knockdowns1 = td[1].find_all('p')[0].get_text().strip()
-      knockdowns2 = td[1].find_all('p')[1].get_text().strip()
-      sig_strikes1 = td[2].find_all('p')[0].get_text().strip()
-      sig_strikes2 = td[2].find_all('p')[1].get_text().strip()
-      # ignore sig. str. percentage
-      total_strikes1 = td[4].find_all('p')[0].get_text().strip()
-      total_strikes2 = td[4].find_all('p')[1].get_text().strip()
-      takedowns1 = td[5].find_all('p')[0].get_text().strip()
-      takedowns2 = td[5].find_all('p')[1].get_text().strip()
-      # ignore takedown percentage
-      sub_att1 = td[7].find_all('p')[0].get_text().strip()
-      sub_att2 = td[7].find_all('p')[1].get_text().strip()
-      pass1 = td[8].find_all('p')[0].get_text().strip()
-      pass2 = td[8].find_all('p')[1].get_text().strip()
-      reversal1 = td[9].find_all('p')[0].get_text().strip()
-      reversal2 = td[9].find_all('p')[1].get_text().strip()
+    tbody = sp.find('tbody', {'class':'b-fight-details__table-body'})
+    if (tbody):
+      trs = tbody.find_all('tr')
+      for tr in trs:
+	td = tr('td')
+	fighter1 = td[0].find_all('p')[0].get_text().strip()
+	fighter2 = td[0].find_all('p')[1].get_text().strip()
+	knockdowns1 = td[1].find_all('p')[0].get_text().strip()
+	knockdowns2 = td[1].find_all('p')[1].get_text().strip()
+	sig_strikes1 = td[2].find_all('p')[0].get_text().strip()
+	sig_strikes2 = td[2].find_all('p')[1].get_text().strip()
+	# ignore sig. str. percentage
+	total_strikes1 = td[4].find_all('p')[0].get_text().strip()
+	total_strikes2 = td[4].find_all('p')[1].get_text().strip()
+	takedowns1 = td[5].find_all('p')[0].get_text().strip()
+	takedowns2 = td[5].find_all('p')[1].get_text().strip()
+	# ignore takedown percentage
+	sub_att1 = td[7].find_all('p')[0].get_text().strip()
+	sub_att2 = td[7].find_all('p')[1].get_text().strip()
+	pass1 = td[8].find_all('p')[0].get_text().strip()
+	pass2 = td[8].find_all('p')[1].get_text().strip()
+	reversal1 = td[9].find_all('p')[0].get_text().strip()
+	reversal2 = td[9].find_all('p')[1].get_text().strip()
 
-      # split on of
-      sig_strikes_landed1 = sig_strikes1.split(' of ')[0]
-      sig_strikes_attempts1 = sig_strikes1.split(' of ')[1]
-      sig_strikes_landed2 = sig_strikes2.split(' of ')[0]
-      sig_strikes_attempts2 = sig_strikes2.split(' of ')[1]
+	# split on of
+	sig_strikes_landed1 = sig_strikes1.split(' of ')[0]
+	sig_strikes_attempts1 = sig_strikes1.split(' of ')[1]
+	sig_strikes_landed2 = sig_strikes2.split(' of ')[0]
+	sig_strikes_attempts2 = sig_strikes2.split(' of ')[1]
 
-      tot_strikes_landed1 = total_strikes1.split(' of ')[0]
-      tot_strikes_attempts1 = total_strikes1.split(' of ')[1]
-      tot_strikes_landed2 = total_strikes2.split(' of ')[0]
-      tot_strikes_attempts2 = total_strikes2.split(' of ')[1]
+	tot_strikes_landed1 = total_strikes1.split(' of ')[0]
+	tot_strikes_attempts1 = total_strikes1.split(' of ')[1]
+	tot_strikes_landed2 = total_strikes2.split(' of ')[0]
+	tot_strikes_attempts2 = total_strikes2.split(' of ')[1]
 
-      td_landed1 = takedowns1.split(' of ')[0]
-      td_attempts1 = takedowns1.split(' of ')[1]
-      td_landed2 = takedowns2.split(' of ')[0]
-      td_attempts2 = takedowns2.split(' of ')[1]
+	td_landed1 = takedowns1.split(' of ')[0]
+	td_attempts1 = takedowns1.split(' of ')[1]
+	td_landed2 = takedowns2.split(' of ')[0]
+	td_attempts2 = takedowns2.split(' of ')[1]
 
-      extracted.append([date,
-			fighter1, fighter2,
-			knockdowns1, knockdowns2,
-			sig_strikes_landed1, sig_strikes_attempts1,
-			sig_strikes_landed2, sig_strikes_attempts2,
-			tot_strikes_landed1, tot_strikes_attempts1,
-			tot_strikes_landed2, tot_strikes_attempts2,
-			td_landed1, td_attempts1,
-			td_landed2, td_attempts2,
-			sub_att1, sub_att2,
-			pass1, pass2,
-			reversal1, reversal2])
-
+	extracted.append([date, fighter1, knockdowns1, sig_strikes_landed1, sig_strikes_attempts1, tot_strikes_landed1, tot_strikes_attempts1, td_landed1, td_attempts1, sub_att1, pass1, reversal1,
+	                        fighter2, knockdowns2, sig_strikes_landed2, sig_strikes_attempts2, tot_strikes_landed2, tot_strikes_attempts2, td_landed2, td_attempts2, sub_att2, pass2, reversal2])
+    else:
+      extracted.append(23 * [np.nan])
 individ_fights = pd.DataFrame(extracted)
-individ_fights.columns = ['Date', 'Fighter1', 'Fighter2',
-                          'Knockdowns1', 'Knockdowns2',
-                          'SigStrikesLanded1', 'SigStrikesAttempted1',
-                          'SigStrikesLanded2', 'SigStrikesAttempted2',
-                          'TotStrikesLanded1', 'TotStrikesAttempted1',
-                          'TotStrikesLanded2', 'TotStrikesAttempted2',
-                          'TakedownLanded1', 'TakedownAttempted1',
-                          'TakedownLanded2', 'TakedownAttempted2',
-                          'SubsAttempted1', 'SubsAttempted2',
-                          'Pass1', 'Pass2',
-                          'Reversal1', 'Reversal2']
-individ_fights.to_csv('../data/fightmetric_individual_fights/detailed_stats_individual_fights.csv', index=False)
+individ_fights.columns = ['Date', 'Fighter1', 'Knockdowns1', 'SigStrikesLanded1', 'SigStrikesAttempted1', 'TotStrikesLanded1', 'TotStrikesAttempted1', 'TakedownLanded1', 'TakedownAttempted1', 'SubsAttempted1', 'Pass1', 'Reversal1',
+                                  'Fighter2', 'Knockdowns2', 'SigStrikesLanded2', 'SigStrikesAttempted2', 'TotStrikesLanded2', 'TotStrikesAttempted2', 'TakedownLanded2', 'TakedownAttempted2', 'SubsAttempted2', 'Pass2', 'Reversal2']
+individ_fights.Date = pd.to_datetime(individ_fights.Date)
+individ_fights.to_csv('../data/fightmetric_individual_fights/detailed_stats_individual_fights_RAW.csv', index=False)
