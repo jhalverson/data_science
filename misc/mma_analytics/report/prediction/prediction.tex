@@ -100,10 +100,17 @@ The derived features are
   \item Difference in age, reach, number of fights, and so on of the two fighters
   \item Total damage = total fight time times strikes absorbed per minute
   \item Total strikes thrown per minute = SlPM / striking accuracy
-  \item Expected strikes absorbed per minute1 = string defense1 * (SlPM / striking accuracy)2
+  \item Natural logarithm of elapsed time since last UFC fight
   \item Fighter versatility index = (3/2)((1/3)/(W2+W2+W2) - 1/3)
-  \item Natural logarithm of $\textrm{WTKO}_1/\textrm{LTKO}_2$
-  \item Natural logarithm of $\textrm{WSUB}_1/\textrm{LSUB}_2$
+\end{itemize}
+
+\noindent
+These features depend on both fighters:
+
+\begin{itemize}[noitemsep]
+  \item Expected strikes absorbed per minute1 = string defense1 * (SlPM / striking accuracy)2
+  \item TKO susceptibility $(\textrm{LTKO}_1 \times \textrm{WTKO}_2)^{1/2}$
+  \item Submission susceptibility $(\textrm{LSUB}_1 \times \textrm{WSUB}_2)^{1/2}$
 \end{itemize}
 
 The class label is a 0 if fighter 1 beats fighter 2 or
@@ -229,3 +236,10 @@ surprising given that the rule-based models in Table~\ref{table_simple_rules} ha
 similar predictive power even though they were limited to a subset of the fights.
 In the end the prediction is difficult because matchmakers try to pair fighters with
 roughly equal ability.
+
+\begin{center}
+\begin{table}[h]
+\input{prediction/single_feature_logistic.tex}
+\caption{Accuracy and Brier scores for single features using logistic regression.}
+\end{table}
+\end{center}
