@@ -208,6 +208,115 @@ For non-tree based methods, it is necessary to standardize
 each column. The standardizer is applied in preprocessing to
 the test data.
 
+
+\begin{center}
+\begin{table}[h]
+\begin{tabular}{r|ccccc}
+  \toprule
+  Model & Features & Accuracy\\
+  \hline
+  Random forest & $h_1$, $r_1$, $h_2$, $r_2$ & 52.9\% \\
+  Logistic regression & $h_1$, $r_1$, $h_2$, $r_2$ & 52.1\% \\
+  Random forest & $\Delta h_{12}$, $\Delta r_{12}$ & 51.6\% \\
+  Logistic regression & $\Delta h_{12}$, $\Delta r_{12}$ & 51.6\% \\
+  Random forest & $h_1$, $\Delta h_{12}$, $r_1$, $\Delta r_{12}$ & 52.0\% \\
+  Logistic regression & $h_1$, $\Delta h_{12}$, $r_1$, $\Delta r_{12}$ & 51.9\% \\
+  Random forest & $h_1$, $r_1$, $l_1$, $h_2$, $r_2$, $l_2$ & 56.6\% \\
+  Logistic regression & $h_1$, $r_1$, $l_1$, $h_2$, $r_2$, $l_2$ & 51.9\% \\
+  Random forest & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$ & 50.7\% \\
+  Logistic regression & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$ & 52.2\% \\
+  Random forest & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 52.4\% \\
+  LR & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 55.1\% \\
+  MLP & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 55.4\% \\
+  Random forest & $h_1$, $r_1$, $a_1$, $h_2$, $r_2$, $a_2$ & 53.4\% \\
+  Logistic regression & $h_1$, $r_1$, $a_1$, $h_2$, $r_2$, $a_2$ & 54.7\% \\
+  Random forest & $h_1$, $r_1$, $a_1$, $a_1^2$, $h_2$, $r_2$, $a_2$, $a_2^2$ & 53.4\% \\
+  LR & $h_1$, $r_1$, $a_1$, $a_1^2$, $h_2$, $r_2$, $a_2$, $a_2^2$ & 55.1\% \\
+  Random forest & $r_1/h_1$, $a_1^2$, $r_2/h_2$, $a_2^2$ & 54.3\%\\
+  LR & $r_1/h_1$, $a_1^2$, $r_2/h_2$, $a_2^2$ & 55.1\%\\
+  Multilayer Perceptron & $r_1/h_1$, $a_1^2$, $r_2/h_2$, $a_2^2$ & 55.2\%\\
+  Random forest & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$ & 56.1\% \\
+  Logistic regression & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$ & 54.9\% \\
+  Random forest & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 55.8\% \\
+  Logistic regression & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 54.9\% \\
+  Random forest & $a_1$, $osw_1$, $a_2$, $osw_2$ & 51.0\% \\
+  Logistic regression & $a_1$, $osw_1$, $a_2$, $osw_2$ & 55.0\% \\
+  Random forest & $a_1$, $osw_1$, $r_1$, $a_2$, $osw_2$, $r_2$ & 53.5\%\\
+  Logistic regression & $a_1$, $osw_1$, $r_1$, $a_2$, $osw_2$, $r_2$ & 55.7\%\\
+  Random forest & $a_1$, $osw_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $r_2$, $l_2$ & 56.1\%\\
+  Logistic regression & $a_1$, $osw_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $r_2$, $l_2$ & 55.4\%\\
+  Random forest & $a_1$, $osw_1$, $h_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $h_2$, $r_2$, $l_2$ & 56.7\%\\
+  Logistic regression & $a_1$, $osw_1$, $h_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $h_2$, $r_2$, $l_2$ & 55.3\%\\
+  Random forest & $h_1$, $r_1$, $c_1$, $h_2$, $r_2$, $c_2$ & 53.3\% \\
+  Logistic regression & $h_1$, $r_1$, $c_1$, $h_2$, $r_2$, $c_2$ & 52.8\% \\
+  Random forest & $h_1$, $r_1$, $c_1$, $e_1$, $h_2$, $r_2$, $c_2$, $e_2$ & 52.7\% \\
+  Logistic regression & $h_1$, $r_1$, $c_1$, $e_1$, $h_2$, $r_2$, $c_2$, $e_2$ & 53.4\% \\
+  \hline
+  Random forest & $h_1$, $r_1$, $l_1$, $a_1$, $osw_1$, $h_2$, $r_2$, $l_2$, $a_2$, $osw_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$, $\Delta osw_{12}$ & 56.0\% \\
+  LR & $h_1$, $r_1$, $l_1$, $a_1$, $osw_1$, $h_2$, $r_2$, $l_2$, $a_2$, $osw_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$, $\Delta osw_{12}$ & 54.8\% \\
+  \bottomrule
+\end{tabular}
+\caption{}
+\label{anthropomorphic_features}
+\end{table}
+\end{center}
+
+
+
+\begin{center}
+\begin{table}[h]
+\begin{tabular}{r|ccccc}
+\toprule
+Model & Features & Accuracy\\
+\hline
+RF & $n_f$, $n_w$, $a$, $t_{total}$ & 53.5\% \\
+LR & $n_f$, $n_w$, $a$, $t_{total}$ & 56.9\% \\
+RF & $n_f$, $n_w$, $a$, $r$ & 55.1\% \\
+LR & $n_f$, $n_w$, $a$, $r$ & 57.0\% \\
+RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $c$ & 57.8\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $c$ & 58.0\% \\
+
+RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$ & 57.2\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$ & 58.8\% \\
+AdaBoost & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$ & 58.1\% \\
+
+RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$ & 58.0\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$ & 58.8\% \\
+
+RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$ & 58.0\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$ & 58.5\% \\
+
+RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$, $slpm$ & 57.9\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$, $slpm$ & 59.1\% \\
+MLP & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$, $slpm$ & 58.9\% \\
+
+RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $str_acc$ & 58.6\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $str_acc$ & 58.4\% \\
+
+RF & all & 58.1\% \\
+LR & all & 59.3\% \\
+MLP & all & 59.1\% \\
+
+RF & $n_f$, $n_w$, $a$, $r$, $osw$, $c$ & 56.6\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $osw$, $c$ & 58.9\% \\
+MLP & $n_f$, $n_w$, $a$, $r$, $osw$, $c$ & 58.5\% \\
+RF & $n_f$, $n_w$, $a$, $r$, $osw$, $c$, $h$, $l$ & 57.9\% \\
+LR & $n_f$, $n_w$, $a$, $r$, $osw$, $c$, $h$, $l$ & 59.0\% \\
+RF & $a$, $r$, $slpm$ & 54.9\% \\
+LR & $a$, $r$, $slpm$ & 56.2\% \\
+RF & $a$, $r$, $takedowns$ & 54.3\% \\
+LR & $a$, $r$, $takedowns$ & 56.1\% \\
+RF & $a$, $r$, $sapm$ & 55.7\% \\
+LR & $a$, $r$, $sapm$ & 57.1\% \\
+\bottomrule
+\end{tabular}
+\caption{}
+\label{other_features}
+\end{table}
+\end{center}
+
+
+
 \begin{center}
 \begin{table}[h]
 \begin{tabular}{r|ccccc}
