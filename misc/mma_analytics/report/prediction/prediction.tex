@@ -211,52 +211,40 @@ the test data.
 
 \begin{center}
 \begin{table}[h]
-\begin{tabular}{r|ccccc}
+\begin{tabular}{r|cccc}
   \toprule
-  Model & Features & Accuracy\\
+   & Random Forest & Logistic Reg. & Multilayer Perceptron \\
+  Features & Accuracy & Accuracy& Accuracy \\
   \hline
-  Random forest & $h_1$, $r_1$, $h_2$, $r_2$ & 52.9\% \\
-  Logistic regression & $h_1$, $r_1$, $h_2$, $r_2$ & 52.1\% \\
-  Random forest & $\Delta h_{12}$, $\Delta r_{12}$ & 51.6\% \\
-  Logistic regression & $\Delta h_{12}$, $\Delta r_{12}$ & 51.6\% \\
-  Random forest & $h_1$, $\Delta h_{12}$, $r_1$, $\Delta r_{12}$ & 52.0\% \\
-  Logistic regression & $h_1$, $\Delta h_{12}$, $r_1$, $\Delta r_{12}$ & 51.9\% \\
-  Random forest & $h_1$, $r_1$, $l_1$, $h_2$, $r_2$, $l_2$ & 56.6\% \\
-  Logistic regression & $h_1$, $r_1$, $l_1$, $h_2$, $r_2$, $l_2$ & 51.9\% \\
-  Random forest & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$ & 50.7\% \\
-  Logistic regression & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$ & 52.2\% \\
-  Random forest & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 52.4\% \\
-  LR & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 55.1\% \\
-  MLP & $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 55.4\% \\
-  Random forest & $h_1$, $r_1$, $a_1$, $h_2$, $r_2$, $a_2$ & 53.4\% \\
-  Logistic regression & $h_1$, $r_1$, $a_1$, $h_2$, $r_2$, $a_2$ & 54.7\% \\
-  Random forest & $h_1$, $r_1$, $a_1$, $a_1^2$, $h_2$, $r_2$, $a_2$, $a_2^2$ & 53.4\% \\
-  LR & $h_1$, $r_1$, $a_1$, $a_1^2$, $h_2$, $r_2$, $a_2$, $a_2^2$ & 55.1\% \\
-  Random forest & $r_1/h_1$, $a_1^2$, $r_2/h_2$, $a_2^2$ & 54.3\%\\
-  LR & $r_1/h_1$, $a_1^2$, $r_2/h_2$, $a_2^2$ & 55.1\%\\
-  Multilayer Perceptron & $r_1/h_1$, $a_1^2$, $r_2/h_2$, $a_2^2$ & 55.2\%\\
-  Random forest & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$ & 56.1\% \\
-  Logistic regression & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$ & 54.9\% \\
-  Random forest & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 55.8\% \\
-  Logistic regression & $h_1$, $r_1$, $l_1$, $a_1$, $h_2$, $r_2$, $l_2$, $a_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$ & 54.9\% \\
-  Random forest & $a_1$, $osw_1$, $a_2$, $osw_2$ & 51.0\% \\
-  Logistic regression & $a_1$, $osw_1$, $a_2$, $osw_2$ & 55.0\% \\
-  Random forest & $a_1$, $osw_1$, $r_1$, $a_2$, $osw_2$, $r_2$ & 53.5\%\\
-  Logistic regression & $a_1$, $osw_1$, $r_1$, $a_2$, $osw_2$, $r_2$ & 55.7\%\\
-  Random forest & $a_1$, $osw_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $r_2$, $l_2$ & 56.1\%\\
-  Logistic regression & $a_1$, $osw_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $r_2$, $l_2$ & 55.4\%\\
-  Random forest & $a_1$, $osw_1$, $h_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $h_2$, $r_2$, $l_2$ & 56.7\%\\
-  Logistic regression & $a_1$, $osw_1$, $h_1$, $r_1$, $l_1$, $a_2$, $osw_2$, $h_2$, $r_2$, $l_2$ & 55.3\%\\
-  Random forest & $h_1$, $r_1$, $c_1$, $h_2$, $r_2$, $c_2$ & 53.3\% \\
-  Logistic regression & $h_1$, $r_1$, $c_1$, $h_2$, $r_2$, $c_2$ & 52.8\% \\
-  Random forest & $h_1$, $r_1$, $c_1$, $e_1$, $h_2$, $r_2$, $c_2$, $e_2$ & 52.7\% \\
-  Logistic regression & $h_1$, $r_1$, $c_1$, $e_1$, $h_2$, $r_2$, $c_2$, $e_2$ & 53.4\% \\
-  \hline
-  Random forest & $h_1$, $r_1$, $l_1$, $a_1$, $osw_1$, $h_2$, $r_2$, $l_2$, $a_2$, $osw_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$, $\Delta osw_{12}$ & 56.0\% \\
-  LR & $h_1$, $r_1$, $l_1$, $a_1$, $osw_1$, $h_2$, $r_2$, $l_2$, $a_2$, $osw_2$, $\Delta h_{12}$, $\Delta r_{12}$, $\Delta l_{12}$, $\Delta a_{12}$, $\Delta osw_{12}$ & 54.8\% \\
+  $a$ & 52.4\% & 55.9\% & 55.6\%\\
+  $r$ & 52.2\% & 52.1\% & 51.9\%\\
+  $h$, $r$ & 52.9\%  & 52.1\% & \\
+  $\Delta h$, $\Delta r$ & 51.6\% & 51.6\%  &\\
+  $h$, $\Delta h$, $r$, $\Delta r$ & 52.0\% & 51.9\%  &\\
+  $h$, $r$, $l$ & 56.6\% & 51.9\% &  \\
+  $\Delta h$, $\Delta r$, $\Delta l$ & 50.7\% & 52.2\%  &\\
+  $\Delta h$, $\Delta r$, $\Delta l$, $\Delta a$ & 52.4\% & 55.1\% & 55.4\% \\
+  $h$, $r$, $a$ & 53.4\% & 54.7\% &  \\
+  $h$, $r$, $a$, $a^2$ & 53.4\% & 55.1\% &  \\
+  $r/h$, $a^2$ & 54.3\% & 55.1\% & 55.2\%  \\
+  $h$, $r$, $l$, $a$ & 56.1\% & 54.9\% &  \\
+  $h$, $r$, $l$, $a$, $\Delta h$, $\Delta r$, $\Delta l$, $\Delta a$ & 55.8\% & 54.9\%  &\\
+  $osw$ & 52.3\% & 52.3\% & 52.3\%\\
+  $a$, $osw$ & 51.0\% & 55.0\% & \\
+  $r$, $a$, $osw$ & 53.5\% & 55.7\% &  \\
+  $r$, $l$, $a$, $osw$ & 56.1\% & 55.4\% & \\
+  $h$, $r$, $l$, $a$, $osw$ & 56.7\% & 55.3\% &  \\
+  $h$, $r$, $l$, $a$, $osw$, $\Delta h$, $\Delta r$, $\Delta l$, $\Delta a$, $\Delta osw$ & 56.0\% & 54.8\% &  \\
   \bottomrule
 \end{tabular}
-\caption{}
+\caption{Accuracy scores for different machine learning classifiers which were trained
+on age, stance and anthropometric measurements only.
+$a$ is age, $h$ is height, $r$ is reach, $l$ is leg reach,
+$osw$ stands for three indicator variables for orthodox, southpaw,
+switch and $\Delta$ is the difference in one of the features between the two
+fighters. For instance, in the third row the models were trained on
+four features or the height and reach of both fighters (i.e., $h_1$, $r_1$, $h_2$, $r_2$)
+whereas in the fourth row only two features were used (i.e., $h_1-h_2$ and $r_1-r_2$).}
 \label{anthropomorphic_features}
 \end{table}
 \end{center}
@@ -265,49 +253,86 @@ the test data.
 
 \begin{center}
 \begin{table}[h]
-\begin{tabular}{r|ccccc}
+\begin{tabular}{r|cccc}
 \toprule
-Model & Features & Accuracy\\
+         & RF       & Logistic Reg. & MLP      & AdaBoost\\
+Features & Accuracy & Accuracy      & Accuracy & Accuracy\\
 \hline
-RF & $n_f$, $n_w$, $a$, $t_{total}$ & 53.5\% \\
-LR & $n_f$, $n_w$, $a$, $t_{total}$ & 56.9\% \\
-RF & $n_f$, $n_w$, $a$, $r$ & 55.1\% \\
-LR & $n_f$, $n_w$, $a$, $r$ & 57.0\% \\
-RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $c$ & 57.8\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $c$ & 58.0\% \\
+$w_r$ & 54.0\% & 55.0\% & 55.9\% & \\
+$\Delta w_r$ & 52.1\% & 55.5\% & 55.5\% & \\
+$w_r$, $n_f$ & 52.7\% & 55.1\% & 53.7\% & \\
+$w_r$, $n_f$, $n_w$ & 53.4\% & 55.8\% &  & \\
+$w_r$, $a$ & 55.5\% & 57.5\% & 56.6\% & \\
+$\Delta w_r$, $\Delta a$ & 53.3\% & 57.6\% & 57.3\% & \\
+$n_f$, $n_w$, $a$, $r$ & 55.1\% & 57.0\% \\
+$n_f$, $n_w$, $a$, $r$, $h$, $l$, $c$ & 57.8\% & 58.0\% & &\\
+$n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$ & 57.2\% & 58.8\% & & 58.1\%\\
+$n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$ & 58.0\% & 58.8\% & &\\
+$n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $s_a$ & 58.0\% & 58.5\% & & \\
+$n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $s_a$, $s_l$ & 57.9\% &59.1\% &58.9\% & \\
+$n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $a_s$ & 58.6\% & 58.4\% \\
+$n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $\Delta s_r$ & 57.8\% & 58.2\% & 58.4\% & 58.1\%\\
+$n_f$, $n_w$, $a$, $r$, $osw$, $c$ & 56.6\% & 58.9\% & 58.5\% \\
+$n_f$, $n_w$, $a$, $r$, $osw$, $c$, $h$, $l$ & 57.9\% & 59.0\% & &\\
+$a$, $r$, $s_l$ & 54.9\% & 56.2\% & & \\
+$a$, $r$, $d_t$ & 54.3\% & 56.1\% & & \\
+$a$, $r$, $s_a$ & 55.7\% & 57.1\% & & \\
+all 121 features & 58.1\% & 59.3\% & 59.1\% & \\
+\bottomrule
+\end{tabular}
+\caption{$w_r$ is win ratio, $s_l$ is significant strikes landed per minute,
+$s_a$ is significant strikes absorbed per minute, $a_s$ is striking accuracy,
+$s_r$ is striking ratio, $d_t$ is average number of takedowns per 15 mintues,
+$n_f$ is number of previous UFC fights, $n_w$ is number
+of UFC wins, $c$ is the champion indicator variable, $e$ is college graduate.}
+\label{other_features}
+\end{table}
+\end{center}
 
-RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$ & 57.2\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$ & 58.8\% \\
-AdaBoost & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$ & 58.1\% \\
 
-RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$ & 58.0\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$ & 58.8\% \\
 
-RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$ & 58.0\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$ & 58.5\% \\
 
-RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$, $slpm$ & 57.9\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$, $slpm$ & 59.1\% \\
-MLP & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $sapm$, $slpm$ & 58.9\% \\
+\begin{center}
+\begin{table}[h]
+\begin{tabular}{ccr|ccc}
+\toprule
+Min. Number &        &         & RF        & Logistic Reg. & MLP      \\
+of Fights & Fights & Features & Accuracy & Accuracy      & Accuracy\\
+\hline
+0  & 3300 & all 121 features & 58.1\% & 59.3\% & 59.1\% \\
+2  & 1740 & all 121 features & 59.9\% & 58.4\% &  \\
+4  & 1006 & all 121 features & 58.3\% & 59.8\% &   \\
+4  & 1006 & $w_r$ & 52.5\% & 57.4\% & 57.4\%  \\
+4  & 1006 & $w_r$, $a$ & 56.9\% & 58.9\% & 56.7\%  \\
+4  & 1006 & $w_r$, $a$, $r$, $h$, $l$, $osw$ & 57.9\% & 58.6\% & 56.0\%\\
+4  & 1006 & $w_r$, $a$, $s_l$, $s_a$ & 59.0\% & 60.0\% & 59.9\%  \\
+4  & 1006 & $w_r$, $a$, $d_t$, $d_f$ & 57.4\% & 58.0\% & 56.1\%  \\
+4  & 1006 & $w_r$, $a$, $s_r$ & 59.1\% & 60.8\% & 61.0\%  \\
+4  & 1006 & $n_w$, $w_r$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $s_r$, $s_l$, $s_a$, $d_t$ & 60.0\% & 59.8\% & 56.5\%  \\
+6  &  586 & all 121 features & 59.9\% & 60.0\% & 54.5\% \\
+8  &  343 & all 121 features & 58.5\% & 61.1\% & 54.0\% \\
+10 &  196 & all 121 features & 58.0\% & 56.6\% & 53.6\% \\
+\bottomrule
+\end{tabular}
+\caption{$d_f$ is average takedown defense}
+\label{other_features}
+\end{table}
+\end{center}
 
-RF & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $str_acc$ & 58.6\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $str_acc$ & 58.4\% \\
 
-RF & all & 58.1\% \\
-LR & all & 59.3\% \\
-MLP & all & 59.1\% \\
-
-RF & $n_f$, $n_w$, $a$, $r$, $osw$, $c$ & 56.6\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $osw$, $c$ & 58.9\% \\
-MLP & $n_f$, $n_w$, $a$, $r$, $osw$, $c$ & 58.5\% \\
-RF & $n_f$, $n_w$, $a$, $r$, $osw$, $c$, $h$, $l$ & 57.9\% \\
-LR & $n_f$, $n_w$, $a$, $r$, $osw$, $c$, $h$, $l$ & 59.0\% \\
-RF & $a$, $r$, $slpm$ & 54.9\% \\
-LR & $a$, $r$, $slpm$ & 56.2\% \\
-RF & $a$, $r$, $takedowns$ & 54.3\% \\
-LR & $a$, $r$, $takedowns$ & 56.1\% \\
-RF & $a$, $r$, $sapm$ & 55.7\% \\
-LR & $a$, $r$, $sapm$ & 57.1\% \\
+% use career statistics
+\begin{center}
+\begin{table}[h]
+\begin{tabular}{r|ccc}
+\toprule
+         & RF       & Logistic Reg. & MLP     \\
+Features & Accuracy & Accuracy      & Accuracy\\
+\hline
+all 145 features & 66.0\% & 66.3\% & 66.0\% \\
+8 career stats & 65.6\% & 66.3\% & 66.2\% \\
+$\hat{s}_l$, $\hat{s}_a$ & 62.5\% & 64.4\% & 66.0\% \\
+$s_l$, $s_a$ & 52.9\% & 56.8\% & 56.5\% \\
+$\hat{s}_l$, $\hat{s}_a$, $d_t$ & 64.0\% & 65.0\% & 65.3\% \\
 \bottomrule
 \end{tabular}
 \caption{}
@@ -316,6 +341,34 @@ LR & $a$, $r$, $sapm$ & 57.1\% \\
 \end{center}
 
 
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{prediction/rf_importances.pdf}
+\caption{Feature importances of the random forest model.}
+\label{rf_importances}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{prediction/lack_of_ufc_fights.pdf}
+\caption{Percentage of fights between inexperienced UFC fighters.}
+\label{lack_of_ufc_fights}
+\end{center}
+\end{figure}
+
+One reason why predictions are so difficult is the lack of history
+of the fighters. Of the 3300 fights, 892 fights one or both
+fighters are making their debut. Because we ignore their previous
+fights in other promotions we know nothing about them. Moreover,
+70\% of the fights at least one of the fighters has three previous
+UFC fights or less. The stats get screwed up if they don't have
+a representative fights in the past.
+
+Jon, make a table of accuracy when only considering an increasing
+number of fights.
 
 \begin{center}
 \begin{table}[h]
@@ -352,3 +405,15 @@ roughly equal ability.
 \caption{Accuracy and Brier scores for single features using logistic regression.}
 \end{table}
 \end{center}
+
+What is the effect of guessing the initial values? How many fights have
+at least one fighter new? Note that many quantities fluctuate dramatically
+during the first few fights. This can cause problems. How many fights take
+place between fighters with fewer than 5 fights?
+
+Why does using the career statistics improve the model so much? What
+happens if we only consider fights between fighters with a large number
+of fights and we use the upto fight statistics? 
+
+
+
