@@ -67,7 +67,7 @@ these traits.
 One limitation of simple rule-based models is that they
 cannot be applied to all fights. For instance, if the two fighters
 have the same reach, a model that predicts the fighter with the longer
-reach to win can say nothing.
+reach to win must exclude the fight.
 In this section we go beyond simple rules to machine learning,
 which is a branch of Artificial Intelligence.
 
@@ -351,7 +351,8 @@ take place between two orthodox fighters.
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=11cm]{prediction/rf_importances.pdf}
-\caption{Feature importances of the random forest model.}
+\caption{Feature importances of the random forest model with $w_r$,
+$a$, $r$, $h$, $l$ and $osw$.}
 \label{rf_importances}
 \end{center}
 \end{figure}
@@ -362,23 +363,37 @@ predict 60\% of the fights correctly. The explanation for
 the difficulty of prediction can be understood by assessing the
 quality of the data. Figure~\ref{lack_of_ufc_fights} shows
 a plot of the percentage of UFC fights where at least one of the
-fighters had $n$ fights or fewer. We see that 70\% of UFC fights
+fighters had $n$ UFC fights or fewer. We see that 71\% of UFC fights
 have taken place between fighters with 3 or fewer previous UFC
-fights. This means the data we have on them such as significant
+fights. Note that while we only considered fights after January 1, 2005,
+we computed the number of previous fights using all the data. Because
+so many fights take place between fighters with so few UFC fights,
+metrics such as significant
 strikes landed per minute and number of takedowns per 15 minutes
 are not reliable. This explains why we are able to only improve on
 our model based on age and reach using an addition 117 features.
+Of the 3300 fights, 892 fights one or both
+fighters are making their debut. Because we ignore their previous
+fights in other promotions we know nothing about them.
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=11cm]{prediction/lack_of_ufc_fights.pdf}
-\caption{Percentage of fights between inexperienced UFC fighters.}
+\caption{Percentage of UFC fights where one or both fighters
+have only $n$ previous UFC fights or less. For the
+`Since 2005' data set with $n=0$, 1, 2, 3, 4, 5 the values are
+28.0\%, 48.8\%, 61.5\%, 70.9\%, 77.7\% and 83.1\%, respectively.}
 \label{lack_of_ufc_fights}
 \end{center}
 \end{figure}
 
-We repeated our calculations using only fighters with
-a certain number of fights.
+To verify our hypothesis we retrained our models using
+bouts where both fighters have had a certain number of
+UFC fights (see Table~\ref{other_features_with_min}). We
+see that when each fighter has at least four fights, we
+can achieve an accuracy of slightly greater than 60\%. 
+While the improvement is marginal this result lends support
+to our hypothesis.
 
 \begin{center}
 \begin{table}[h]
@@ -401,7 +416,8 @@ of Fights & Fights & Features & Accuracy & Accuracy      & Accuracy\\
 8  &  343 & all 121 features & 58.5\% & 61.1\% & 54.0\% \\
 \bottomrule
 \end{tabular}
-\caption{$d_f$ is average takedown defense}
+\caption{Model performance when only fights with experienced
+fighters are considered. $d_f$ is average takedown defense}
 \label{other_features_with_min}
 \end{table}
 \end{center}
@@ -432,6 +448,8 @@ all 145 features & 66.0\% & 66.3\% & 66.0\% \\
 $\hat{s}_{l,\textrm{FM}}$, $\hat{s}_{a,\textrm{FM}}$ & 62.5\% & 64.4\% & 66.0\% \\
 $\hat{s}_{l,\textrm{UFC}}$, $\hat{s}_{a,\textrm{UFC}}$ & 62.6\% & 64.6\% & 64.3\% \\
 $s_l$, $s_a$ & 52.9\% & 56.8\% & 56.5\% \\
+$\hat{w}_r$ & 75.7\% & 79.6\% & 79.4\% \\
+$w_r$ & 54.0\% & 55.0\% & 55.9\% \\
 \bottomrule
 \end{tabular}
 \caption{Accuracy scores when future data is used
@@ -446,10 +464,12 @@ average takedowns landed per 15 minutes,
 takedown accuracy,
 takedown defense (the percentage of opponents TD attempts that did not land),
 average submissions attempted per 15 minutes. $\hat{s}_{l,\textrm{FM}}$ is
-the career-average value taken from FightMetric, which
+the career-average value of significant strikes landed per minute
+taken from FightMetric, which
 includes fights outside the UFC, whereas $\hat{s}_{l,\textrm{UFC}}$ is
 the career-average value computed using only UFC fights.
-$s_l$ and $s_a$ are computed using only UFC data before the fight.}
+$s_l$ and $s_a$ are computed using only UFC data before the fight. $\hat{w}_r$
+is the career-averaged win ratio.}
 \label{scores_using_career_stats}
 \end{table}
 \end{center}
@@ -459,34 +479,14 @@ $s_l$ and $s_a$ are computed using only UFC data before the fight.}
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=15cm]{prediction/sl_dist.pdf}
-\caption{Feature importances of the random forest model.}
+\caption{(left) Square of the difference between the moving average
+and overall average of significant strikes landed per minute as
+a function of normalized fight index for the top 250 fighters
+with the most UFC fights. $n$ is the $n$-th UFC fight of
+a given fighter and $n_f$ is their total number of UFC fights.
+Note that $\bar{s}_l=\hat{s}_l$ at $n/n_f=1$ for all fighters.
+(right) Same as left panel except averaged over all 250 data sets.}
 \label{normalized_sl_dist}
 \end{center}
 \end{figure}
-
-One reason why predictions are so difficult is the lack of history
-of the fighters. Of the 3300 fights, 892 fights one or both
-fighters are making their debut. Because we ignore their previous
-fights in other promotions we know nothing about them. Moreover,
-70\% of the fights at least one of the fighters has three previous
-UFC fights or less. The stats get screwed up if they don't have
-a representative fights in the past.
-
-The accuracy scores of various predictive models are found in Table~\ref{table_ML_models}.
-We see the best model was found to be random forest with an accuracy of 56\%. This is
-surprising given that the rule-based models in Table~\ref{table_simple_rules} had a
-similar predictive power even though they were limited to a subset of the fights.
-In the end the prediction is difficult because matchmakers try to pair fighters with
-roughly equal ability.
-
-What is the effect of guessing the initial values? How many fights have
-at least one fighter new? Note that many quantities fluctuate dramatically
-during the first few fights. This can cause problems. How many fights take
-place between fighters with fewer than 5 fights?
-
-Why does using the career statistics improve the model so much? What
-happens if we only consider fights between fighters with a large number
-of fights and we use the upto fight statistics? 
-
-
 
