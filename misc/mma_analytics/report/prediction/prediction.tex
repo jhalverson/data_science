@@ -1,13 +1,11 @@
 \clearpage
 \section{Predicting the Winner}
 
-In this section we create several models to try to predict
+In this section we create several models to predict
 the winner. We start with simple models based on rules
 and then move on to machine learning models such as
 random forests, artificial neural networks and
-adaptive boosting. It will be shown that prediction is quite
-difficult with our best model having an accuracy of
-only about 60\%.
+adaptive boosting.
 
 \subsection*{Simple Rules}
 
@@ -49,7 +47,7 @@ these are excluded in the calculation.
 \caption{Accuracy scores for simple rule-based models. For models where win ratio was used, we only considered
 fighters with 5 or more UFC fights. $p$-values are given in the rightmost column. Note that for $p=0.05$, $\log_{10}p = -1.3$. In all
 cases the sum of 
-Total and Excluded is 3561.}
+Total and Excluded is 3561. Random guessing corresponds to an accuracy of 50\%.}
 \label{table_simple_rules}
 \end{table}
 \end{center}
@@ -62,7 +60,7 @@ Table~\ref{table_simple_rules} makes clear the advantage of being young, having
 greater reach and being a southpaw.  Note that Conor McGregor has all three of
 these traits.
 
-\subsection*{Machine Learning Models}
+\subsection*{Machine Learning and Feature Engineering}
 
 One limitation of simple rule-based models is that they
 cannot be applied to all fights. For instance, if the two fighters
@@ -100,13 +98,13 @@ For each fighter we have the following features:
 \end{itemize}
 
 \noindent
-We also use the following offensive and defensive statistics:
+We also use the following offensive and defensive metrics:
 
 \begin{itemize}[noitemsep]
   \item Significant strikes landed per minute, $s_l$
   \item Significant striking accuracy, $a_s$
   \item Significant strikes absorbed per minute, $s_a$
-  \item Significant strike defense, $a_f$
+  \item Significant striking defense, $a_f$
   \item Average takedowns landed per 15 minutes, $d_t$
   \item Takedown accuracy, $d_a$
   \item Takedown defense, $d_f$
@@ -130,66 +128,78 @@ The derived features are
 \begin{itemize}[noitemsep]
   \item Difference in age, reach and so on of the two fighters (e.g., $\Delta r=r_1-r_2$)
   \item Total damage absorbed = cumulative sum of significant strikes absorbed
-  \item Striking ratio = significant strikes landed / significant strikes absorbed
-  \item Natural logarithm of elapsed time since last UFC fight
+  \item Striking ratio, $s_r =$ significant strikes landed / significant strikes absorbed
+  \item Natural logarithm of elapsed time since last UFC fight, $\ln t_e$
   \item Fighter versatility index
 \end{itemize}
 
 \noindent
 The fighter versatility index was introduced by Estelami as
 \begin{equation}
-FVI = \frac{\frac{1/3}{W_{\textrm{TKO}}^2+W_{\textrm{SUB}}^2+W_{\textrm{DEC}}^2}-\frac{1}{3}}{2/3}.
+I = \frac{\frac{1/3}{W_{\textrm{TKO}}^2+W_{\textrm{SUB}}^2+W_{\textrm{DEC}}^2}-\frac{1}{3}}{2/3}.
 \end{equation}
 
-The $FVI$ is zero when a fighter achieves all wins in one manner and
-it is one when all three methods of victory are uniformly used.
+\noindent
+The fighter versatility index is zero when a fighter achieves all wins in one manner and
+it is unity when all three methods of victory are uniformly employed.\\
 
 \noindent
-These features depend on both fighters:
+The following additional features depend on both fighters:
 
 \begin{itemize}[noitemsep]
-  \item Expected strikes absorbed per minute of fighter 1 = $a_{f,1} (s_{l,2}/a_{s,2})$
+  \item Expected significant strikes absorbed per minute of fighter 1 = $a_{f,1} (s_{l,2}/a_{s,2})$
   \item TKO susceptibility of fighter 1 = $(L_{\textrm{TKO},1} \times W_{\textrm{TKO},2})^{1/2}$
   \item Submission susceptibility of fighter 1 = $(L_{\textrm{SUB},1} \times W_{\textrm{SUB},2})^{1/2}$
   \item Same three above except for fighter 2
 \end{itemize}
 
-It is important to note that these quantites are computed
-up to the time of the fight. We do not use any information
+It is important to note that all the quantites described above are computed
+up to the time of the fight. That is, we do not use any information
 obtained during the fight or afterwards to make predictions.
 Later, we will violate this rule to see if such an approach
 leads to an improvement in model performance.
 
-The most important part of any machine learning model is
-to assemble a collection of discriminatory features. While
-our list is comprehensive, we will find it to be insufficient.
+What values should we use for a fighter making their UFC debut? In this work
+we set all their values involving wins and losses to
+zero (e.g., $w_r=W_{\textrm{TKO}}=I=0$, etc.). However, for
+offensive and defensive metrics such as striking accuracy we use the UFC median values.
+Alternative approaches might set these values to zero, impute values based
+on age, reach, stance and weight class, or even acquire data from
+each fighter's previous promotions and use those
+values.
 
-One additional thought not taken into account is to weight
-wins, losses, strikes landed and attempt by who the opponent
-is. Such weights would need to be found in self-consistent
-manner which suggest a cascading scheme.
-
-Some of the featurs are correlated such as reach
-and height. We will address this in the next section.
+The most important part of any machine learning approach is
+to assemble a collection of discriminatory features. While the
+list above seems quite comprehensive, much more could be done.
+Some of the features are highly correlated and
+we will address this in the next section.
 
 
-\subsection*{Prediction}
+\subsection*{Prediction using Machine Learning Models}
 
-In cases where heigh and reach were known but leg reach
+In cases where height and reach were known but leg reach
 was missing, we imputed values by creating a linear model
-based on reach and height. After removing fights where
-dates of birth were not known, we were left with 3300 fights,
-all of which took place after January 1, 2005.
+based on reach and height. A second model was
+used to impute leg reach when only height was known. After removing fights where
+dates of birth were absent, we were left with 3300 fights,
+all of which took place after January 1, 2005, which was
+the ``modern era''cutoff that we introduced. However,
+keep in mind that quantities such as number of UFC fights,
+win ratio and significant strikes landed per minute were computed
+using all UFC fights. We simply train the model and make
+predictions on fights that took place after the cutoff but
+use data before it.
 
-Before creating our first model we examine a correlation
+Before creating our first machine learning model we examine a correlation
 matrix of certain features. Table~\ref{corr_mat} shows that
 most correlation coefficients are small. The largest ones
-are for reach and height. This suggests that training a model
-on both features will not be useful and may even be
-detrimental. We see that there is a postive
+are for reach and height ($r=0.88$). This suggests that training a model
+on both of these features will not be useful and may even be
+detrimental. We see that there is a positive
 correlation between win ratio and significant strikes landed
 per minute while the correlation is negative between win ratio
-and significant strikes absorbed per minute.
+and significant strikes absorbed per minute. Both of these trends
+are logical and serve as a check.
 
 \begin{center}
 \begin{table}[h]
@@ -208,20 +218,20 @@ of the remaining 30\% of the data. The accuracy is then determined
 by comparing the predicted outcomes with the known outcomes.
 Because results vary with train-test split, we shuffle the
 data and repeat the procedure above ten times. The average
-of these ten accuracy scores are then recorded.
+of these ten accuracy scores are then reported.
 While using the
-test data is consider bad practice, this approach eliminates
+test data more than once is considered bad practice, this approach eliminates
 concerns associated with using a single split which may give
 favorable or unfavorable results depending on how the data
-is partitioned.
+happens to be partitioned.
 
 Random forests (RF) is a tree-based ensemble method,
-logistic regression (LR) is an example of the generalized
+logistic regression (LR) is an application of the generalized
 linear model with the logit link function, the multilayer perceptron (MLP)
 is an artificial neural network and AdaBoost is
 an ensemble method based on adaptive boosting.
 For each model we optimize the hyperparameters
-during K-fold cross-validation. For RF the
+during cross-validation. For RF the
 number of estimators is 100, bootstrapping is used
 and the number of features to split on is taken
 as the square root of the total number of features.
@@ -236,17 +246,20 @@ For non-tree based methods, it is necessary to standardize
 each feature. The standardizer was fit to the train data
 and then used to transform both the train and test data.
 
+\subsubsection*{Anthropometric Models}
+
 Our first set of models is based on age, height,
 reach, leg reach and stance. The accuracy scores
 for different models and feature sets are show
 in Table~\ref{anthropomorphic_features}.
 We see that when age is the only feature, LR is gives
-an accuracy of 55.6\%. This is very close to the simple
-rule model as expected. The best we can do is just more than
+an accuracy of 55.6\%. This is very close to the result obtained using the simple
+rule-based model in the previous section. The table
+suggests that the best we can do is just more than
 56\%. Given the strong correlation between height, reach
 and leg reach, it is not surprising that results do not
 improve when these features are used together. We see that
-age is a discriminatory feature.
+age and reach are the leading discriminatory features of the set.
 
 \begin{center}
 \begin{table}[h]
@@ -283,21 +296,25 @@ on age, stance and anthropometric measurements only.
 $a$ is age, $h$ is height, $r$ is reach, $l$ is leg reach,
 $osw$ stands for three indicator variables for orthodox, southpaw,
 switch and $\Delta$ is the difference in one of the features between the two
-fighters. For instance, in the third row the models were trained on
-four features or the height and reach of both fighters (i.e., $h_1$, $r_1$, $h_2$, $r_2$)
-whereas in the fourth row only two features were used (i.e., $h_1-h_2$ and $r_1-r_2$).}
+fighters. In the third row the models were trained on
+four features or the age and reach of both fighters (i.e., $a_1$, $r_1$, $a_2$, $r_2$)
+whereas in the fourth row only two features were used (i.e., $a_1-a_2$ and $r_1-r_2$).}
 \label{anthropomorphic_features}
 \end{table}
 \end{center}
 
+\clearpage
+\subsubsection*{Full Feature Models}
+
 Table~\ref{other_features} gives results for models with more
 advanced choices of the features. We see that LR with win ratio
-and age as the features (i.e., $w_{r,1}$, $w_{r,2}$, $a_1$, $a_2$) the
-accuracy score is 57.5\%. As more featurs are introduced such as
+and age as the features (i.e., $w_{r,1}$, $w_{r,2}$, $a_1$, $a_2$) gives an
+accuracy score of 57.5\%. As more featurs are introduced such as
 total number of fights, stance, champion status and education, the
-accuracy increases somewhat. We only achieve 60\% when the feature
+accuracy increases somewhat. However, we only achieve 60\% when the feature
 extraction technique called linear discriminant analysis is applied
-to the full feature matrix and then LR is used.
+to the full feature matrix and then LR is used. Overall the the accuracy
+scores are surprisingly low.
 
 \begin{center}
 \begin{table}[h]
@@ -334,18 +351,18 @@ all 121 features + LDA &  & 60.1\% & & \\
 $s_a$ is significant strikes absorbed per minute, $a_s$ is striking accuracy,
 $s_r$ is striking ratio, $d_t$ is average number of takedowns per 15 mintues,
 $n_f$ is number of previous UFC fights, $n_w$ is number
-of UFC wins, $c$ is the champion indicator variable, $e$ is college graduate.}
+of UFC wins, $s_r$ is striking ratio, $c$ is the champion indicator variable and $e$ is college graduate.}
 \label{other_features}
 \end{table}
 \end{center}
 
-RF provides a way to gauge the importance or how dicriminatory
-each feature is. The feature importances for a given feature
+RF provides a way to gauge the importance of
+each feature. The importances for a given feature
 set are shown in Figure~\ref{rf_importances}. We see that age
 and win ratio are the dominant features with leg reach and reach
-also being relevant. We remind ourselves that because reach and leg
-are highly correlated, we can think of them as also the same. Stance
-plays only a small role which isn't surprising since most fights
+also being relevant. We remind ourselves that because reach and leg reach
+are highly correlated, RF could probably use them interchangably. Stance
+plays only a small role which is not surprising since most fights
 take place between two orthodox fighters.
 
 \begin{figure}[h]
@@ -357,43 +374,65 @@ $a$, $r$, $h$, $l$ and $osw$.}
 \end{center}
 \end{figure}
 
-It is surprising that even with 121 features for each fight
-and sophisicated machine learning models, we are only able to
-predict 60\% of the fights correctly. The explanation for
-the difficulty of prediction can be understood by assessing the
+It is surprising that even with a large number of features
+and robust machine learning models, we are only able to
+predict 60\% of the fights correctly. 
+The difficulty of prediction can partly be understood by assessing the
 quality of the data. Figure~\ref{lack_of_ufc_fights} shows
 a plot of the percentage of UFC fights where at least one of the
-fighters had $n$ UFC fights or fewer. We see that 71\% of UFC fights
-have taken place between fighters with 3 or fewer previous UFC
-fights. Note that while we only considered fights after January 1, 2005,
+fighters had $m$ previous UFC fights or less. We see that 71\% of UFC fights
+have taken place between fighters where at least one of the two
+fighters had 3 or fewer previous UFC
+bouts. Furthermore, in 28\% of the fights one or both
+fighters were making their debut.
+Note that while we only considered fights after January 1, 2005 (orange curve),
 we computed the number of previous fights using all the data. Because
 so many fights take place between fighters with so few UFC fights,
 metrics such as significant
 strikes landed per minute and number of takedowns per 15 minutes
-are not reliable. This explains why we are able to only improve on
-our model based on age and reach using an addition 117 features.
-Of the 3300 fights, 892 fights one or both
-fighters are making their debut. Because we ignore their previous
-fights in other promotions we know nothing about them.
+are not reliable in many cases.
+This partly explains why we were only able to only improve on
+our simple models of the previous section by a few percent.
+
+Given the large number of fights where one or both fighters
+are debuting, it is important to initialize the features properly.
+What value should we use for the takedown accuracy, for example, of a
+fighter who has never fought in the UFC?
+The overall accuracy of the model
+will clearly be sensitive to these choices. It is likely that
+using a second model specifically for handling debuts would improve
+the overall accuracy. However, this is beyond the scope of this
+work.
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=11cm]{prediction/lack_of_ufc_fights.pdf}
 \caption{Percentage of UFC fights where one or both fighters
-have only $n$ previous UFC fights or less. For the
-`Since 2005' data set with $n=0$, 1, 2, 3, 4, 5 the values are
-28.0\%, 48.8\%, 61.5\%, 70.9\%, 77.7\% and 83.1\%, respectively.}
+have only $m$ previous UFC fights or less. For the
+`Since 2005' data set with $m=0$, 1, 2, 3, 4, 5 the values are
+28.0\%, 48.8\%, 61.5\%, 70.9\%, 77.7\% and 83.1\%, respectively.
+For the construction of this figure we include draws and 
+no contest outcomes.}
 \label{lack_of_ufc_fights}
 \end{center}
 \end{figure}
 
-To verify our hypothesis we retrained our models using
-bouts where both fighters have had a certain number of
-UFC fights (see Table~\ref{other_features_with_min}). We
-see that when each fighter has at least four fights, we
-can achieve an accuracy of slightly greater than 60\%. 
-While the improvement is marginal this result lends support
-to our hypothesis.
+To verify the hypothesis that fights between inexperienced UFC fighters were
+lowering our accuray, we retrained our models using
+bouts where both fighters had a minimum number of previous
+UFC fights (see Table~\ref{other_features_with_min}).
+This indeed resulted in improved performance. For example,
+using $w_r$, $a$ and $s_r$, the LR accuracy improved from 57.3\% to 60.8\% when the minimum
+number of fights was raised from zero to four.
+While the improvement is still only slight, it lends support
+to our hypothesis. As the minimum number of fights increases,
+the number of fights that meet this condition decreases. In fact,
+from UFC 1 to UFC 208, if we include draws and no contests, there are
+only 364 fights out of 4068 or 8.9\% where both fighters have 8 previous UFC
+fights or more. This fact emphasizes the difficulty
+of making predictions based on UFC data only. Presumably if we incorporated
+data from Strikeforce, WEC, Bellator FC, Pride FC and so on, our predictions would
+be better.
 
 \begin{center}
 \begin{table}[h]
@@ -402,39 +441,57 @@ to our hypothesis.
 Min. Number &        &         & RF        & Logistic Reg. & MLP      \\
 of Fights & Fights & Features & Accuracy & Accuracy      & Accuracy\\
 \hline
+0  & 3300 & $w_r$ & 54.0\% & 55.0\% & 55.9\%  \\
+0  & 3300 & $w_r$, $a$, $s_r$ & 55.2\% & 57.3\% & 58.0\%  \\
+0  & 3300 & $w_r$, $a$, $r$, $s_r$ & 57.0\% & 58.1\% & 58.5\%  \\
 0  & 3300 & all 121 features & 58.1\% & 59.3\% & 59.1\% \\
-2  & 1740 & all 121 features & 59.9\% & 58.4\% &  \\
-4  & 1006 & all 121 features & 58.3\% & 59.8\% &   \\
 4  & 1006 & $w_r$ & 52.5\% & 57.4\% & 57.4\%  \\
+4  & 1006 & $w_r$, $a$, $s_r$ & 59.1\% & 60.8\% & 61.0\%  \\
+4  & 1006 & $w_r$, $a$, $r$, $s_r$ & 57.9\% & 60.5\% & 58.5\% \\
+4  & 1006 & all 121 features & 58.3\% & 59.8\% &   \\
 4  & 1006 & $w_r$, $a$ & 56.9\% & 58.9\% & 56.7\%  \\
 4  & 1006 & $w_r$, $a$, $r$, $h$, $l$, $osw$ & 57.9\% & 58.6\% & 56.0\%\\
 4  & 1006 & $w_r$, $a$, $s_l$, $s_a$ & 59.0\% & 60.0\% & 59.9\%  \\
 4  & 1006 & $w_r$, $a$, $d_t$, $d_f$ & 57.4\% & 58.0\% & 56.1\%  \\
-4  & 1006 & $w_r$, $a$, $s_r$ & 59.1\% & 60.8\% & 61.0\%  \\
 4  & 1006 & $n_w$, $w_r$, $a$, $r$, $h$, $l$, $osw$, $c$, $e$, $s_r$, $s_l$, $s_a$, $d_t$ & 60.0\% & 59.8\% & 56.5\%  \\
 6  &  586 & all 121 features & 59.9\% & 60.0\% & 54.5\% \\
 8  &  343 & all 121 features & 58.5\% & 61.1\% & 54.0\% \\
 \bottomrule
 \end{tabular}
 \caption{Model performance when only fights with experienced
-fighters are considered. $d_f$ is average takedown defense}
+fighters are considered. The leftmost column specifies how
+many previous UFC fights each fighter must have in order
+for the fight to be included in the calculation. The second
+column from the left indicates the number of fights out of 3300 that
+meet that condition. $d_f$ is average takedown defense. Other symbols
+have been defined previously.}
 \label{other_features_with_min}
 \end{table}
 \end{center}
 
-To confirm this position, we have computed the career-average of
-each fighters statistics and  used those as the features instead
-of the moving averages, which we just argued are not very useful
-since most fighters have so few fights. When these ``from the future''
-values are used, we obtain the results
-in Table~\ref{scores_using_career_stats}. Indeed, the career-averaged
-values improve the performance of the model markedly. However, they
-are off limits to us in reality. This tells us that fighters do
-get better over time. To see this we plotted the squared deviation
-versus normalized fight number in Figure~\ref{normalized_sl_dist}
-for the 250 UFC fighters with the most fights. In the right panel
-the average curve is shown. Indeed the curve relaxes to zero over
-a non-trivial number of fights.
+\clearpage
+\subsubsection*{Using Data from the Future}
+
+In the previous section we argued that if we had more
+well-established values for metrics such as significant strikes
+landed per minute and takedown defense, we could do a better
+job with prediction. We then retrained our models on
+fights between experienced UFC fighters
+and indeed the accuracy was higher. In this section we use
+career-average values for each fighter as the features.
+For example, to compute the career-average value of significant
+strikes landed per minute, $\hat{s}_l$, we add all the significant strikes
+the fighter has landed in their UFC career and then divide by the
+total time spent in the Octogon. This
+is cheating because we are using data from the future but we
+will see that it is an instructive exercise.
+
+When the career-average values are used, we obtain the results
+in Table~\ref{scores_using_career_stats}. Indeed, these
+values improve the performance of the model markedly.
+For instance, using only $\hat{s}_l$ and $\hat{s}_a$ we achieve an accuracy of
+64.4\% versus 56.8\% when these quantities are only
+computed up to the time of the fight.
 
 \begin{center}
 \begin{table}[h]
@@ -444,7 +501,7 @@ a non-trivial number of fights.
 Features & Accuracy & Accuracy      & Accuracy\\
 \hline
 all 145 features & 66.0\% & 66.3\% & 66.0\% \\
-8 career stats & 65.6\% & 66.3\% & 66.2\% \\
+8 career metrics & 65.6\% & 66.3\% & 66.2\% \\
 $\hat{s}_{l,\textrm{FM}}$, $\hat{s}_{a,\textrm{FM}}$ & 62.5\% & 64.4\% & 66.0\% \\
 $\hat{s}_{l,\textrm{UFC}}$, $\hat{s}_{a,\textrm{UFC}}$ & 62.6\% & 64.6\% & 64.3\% \\
 $s_l$, $s_a$ & 52.9\% & 56.8\% & 56.5\% \\
@@ -455,7 +512,7 @@ $w_r$ & 54.0\% & 55.0\% & 55.9\% \\
 \caption{Accuracy scores when future data is used
 to compute the eight career statistics, which are then
 used as features.
-The eight career-averaged statistics are
+The eight career-average metrics are
 significant strikes landed per minute,
 significant striking accuracy,
 significant strikes absorbed per minute,
@@ -469,24 +526,91 @@ taken from FightMetric, which
 includes fights outside the UFC, whereas $\hat{s}_{l,\textrm{UFC}}$ is
 the career-average value computed using only UFC fights.
 $s_l$ and $s_a$ are computed using only UFC data before the fight. $\hat{w}_r$
-is the career-averaged win ratio.}
+is the career-average win ratio.}
 \label{scores_using_career_stats}
 \end{table}
 \end{center}
 
+This result begs the question how many fights are needed for metrics such
+as significant strikes landed per minute
+to become reasonably well-established (i.e., $\bar{s}_l \approx \hat{s}_l$)?
+To answer this question let's first consider a specific fighter.
+Table~\ref{anderson_running_ave} shows these values for
+Anderson Silva. In his first fight against Leben, he landed
+17 significant strikes in 48 seconds to finish his opponent.
+This gave Anderson a $s_l$ value of 20.82. His next few fights took
+longer and after his fight with Griffin he was landing
+4.2 significant strikes per minute. Anderson's career-average
+value is 3.01 and we see he reached this value roughly around his
+12th fight.
 
+\begin{center}
+\begin{table}[h]
+\input{prediction/anderson_slpm.tex}
+\caption{Anderson Silva's UFC fights. $s_L$ is the number
+of significant strikes landed per fight by Silva, $\Sigma s_L$ is the cumulative
+sum of $s_L$, $\bar{s}_l$ is the moving average of $s_L/\textrm{Minutes}$,
+$\hat{s}_l$ is Silva's career-average value and $n_f=21$.}
+\label{anderson_running_ave}
+\end{table}
+\end{center}
+
+The left panel of Figure~\ref{normalized_sl_dist} shows the approach of
+$\bar{s}_l$ to its career-average value for Anderson Silva and 247 other
+UFC fighters who have 9 UFC fights or more. The horizontal
+scale is the fight number normalized by the total number of fights for
+each fighter. We see that during the early stages of a fighter's career, $\bar{s}_l$ deviates
+significantly from $\hat{s}_l$. At later stages $\bar{s}_l$
+approaches $\hat{s}_l$ and they become equal at $n/n_f=1$.
+In the right panel we show the average of the 248 curves
+on the left. The average curve is sufficiently close to zero at $n/n_f \approx 1/2$.
+The inset shows a histogram of the total number of fights of the 248 fighters. The
+mean value of $n_f$ is about 14.
+Thus,
+the answer to our original question is that $\bar{s}_l$ becomes
+well-established around
+$n/n_f=1/2$ which corresponds to about 7 fights. This is supported
+by the last entry in Table~\ref{other_features_with_min} where we achieve our highest
+accuracy of 61.1\% when only past data is used and 
+only fights where both fighters have
+had 8 UFC bouts or more are considered.
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=15cm]{prediction/sl_dist.pdf}
 \caption{(left) Square of the difference between the moving average
 and overall average of significant strikes landed per minute as
-a function of normalized fight index for the top 250 fighters
-with the most UFC fights. $n$ is the $n$-th UFC fight of
-a given fighter and $n_f$ is their total number of UFC fights.
+a function of normalized fight number for all fighters with
+9 UFC fights or more (248 fighters). $n$ is the $n$-th UFC fight of
+a given fighter and $n_f$ is their total number of UFC fights. Hence,
+$n$ ranges from 1 to $n_f$.
 Note that $\bar{s}_l=\hat{s}_l$ at $n/n_f=1$ for all fighters.
-(right) Same as left panel except averaged over all 250 data sets.}
+(right) Same as left panel except averaged over the curves in the left.
+The inset shows a histogram of total number of fights for the
+fighters considered in the left panel.}
 \label{normalized_sl_dist}
 \end{center}
 \end{figure}
 
+In summary, one problem we face with prediction is that the vast
+majority of UFC fights take place between fighters with few
+previous UFC bouts. This means the metrics or features for these
+fighters are not well-established since we showed that roughly 7 fights are needed
+before they become reliable (at least for $s_l$). However, even when fighters have
+a sufficient number of fights, our best model still only gives
+61.1\% accuracy when each fighter has 8 fights or more. To improve on this one must develop features
+that are more discriminatory. One way to do this is to recognize that
+not all wins and losses are same. Losing to a future longtime champion
+should mean less than a loss to an average fighter. Similarly, scoring
+a takedown against a fighter with the best takedown defense should receive
+more weight. The same goes for striking offense and defense. Also, more data is available from FightMetric. For instance,
+time-in-position (TIP) data would be very useful. 
+TIP data tells how much of the fight took place at distance,
+in the clinch and on the ground.
+If a fight
+took place almost entirely on the ground, it doesn't make sense to compute the average
+number of takedowns per minute by using the total fight time. The present
+study ignores this fact.
+Presumably, TIP data and other information could be
+used to create derived features which would lead to better
+accuracy.

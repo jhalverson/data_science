@@ -1,21 +1,24 @@
 \clearpage
 \section{Education}
 
-The UFC website provides data on the education of each fighter.
-There are 186 UFC fighters with college or degree. Only 55
-of the 533 active fighters have college experience.
-
-The complete list of college data is found in Table~\ref{ed_table}
+The UFC website provides information on each fighter such
+as their professional MMA record, age and height. They also provide
+information labeled as ``College'' and ``Degree''. If a fighter in the
+UFC database is listed as having a degree
+or college then we will consider them a college graduate.
+Accordingly, out of the 1897 fighters, there are 186 college graduates.
+The complete list of educational data is found in Table~\ref{ed_table}
 in Appendix~\ref{appendix_education}.
-
-If a fighter in the UFC database is listed as having a degree
-or college then we will consider them a college graduate. In
-this section we look at all UFC fights between a college graduate
+In this section we look at UFC fights between a college graduate
 and a fighter who did not graduate college. Is there an advantage
 to higher education?
 
 Let's first look at the percentage of fights with at least
-one college graduate as shown in Fig.~\ref{fights_with_college_grad}:
+one college graduate as shown in Fig.~\ref{fights_with_college_grad}.
+A steady increase in
+college graduates is seen until around 2011 when it begins to decline.
+The curve reaches a maximum of 45\% in 2011. For our analysis in this
+section, we will consider all fights in 2003 and beyond.
 
 \begin{figure}[h]
 \begin{center}
@@ -26,15 +29,11 @@ is a college graduate as a function of year.}
 \end{center}
 \end{figure}
 
-Fig.~\ref{fights_with_college_grad} shows a steady increase in
-college graduates until around 2011 when it begins to decline.
-It maximum is 45\% in 2011. For our analysis, we will consider
-all fights in 2003 and beyond.
-
-Note that we excluded fights involving the thirteen fighters
-not found in the UFC database. We also ignored the five fights that resulted
+Note that we excluded fights involving thirteen fighters who fought in the UFC
+but are
+not found in their database. We also ignored the five fights that resulted
 in a draw.
-Using this starting date, there are 1059 fights between a college
+Using the cutoff date stated above, there are 1059 fights between a college
 graduate and a fighter who did not graduate college. We find
 597 of these fights or 56.4\% were won by the college graduate.
 If education was not a factor then the likelihood of observing
@@ -50,3 +49,7 @@ opponent is not.}
 \label{win_pct_college_no_college}
 \end{center}
 \end{figure}
+
+One may think that the UFC college graduates all attended well-known wrestling
+schools. This does not appear to be the case as Table~\ref{ed_table} shows
+a variety of schools and degrees.
