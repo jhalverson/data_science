@@ -112,7 +112,7 @@ We also use the following offensive and defensive metrics:
 \end{itemize}
 
 \begin{itemize}[noitemsep]
-  \item Significant strikes attepted per minute
+  \item Significant strikes attempted per minute
   \item Knockdowns per minute
   \item Total strikes landed per minute
   \item Total strikes attempted per minute
@@ -153,7 +153,7 @@ The following additional features depend on both fighters:
   \item Same three above except for fighter 2
 \end{itemize}
 
-It is important to note that all the quantites described above are computed
+It is important to note that all the quantities described above are computed
 up to the time of the fight. That is, we do not use any information
 obtained during the fight or afterwards to make predictions.
 Later, we will violate this rule to see if such an approach
@@ -246,7 +246,7 @@ For non-tree based methods, it is necessary to standardize
 each feature. The standardizer was fit to the train data
 and then used to transform both the train and test data.
 
-\subsubsection*{Anthropometric Models}
+\subsection*{Anthropometric Models}
 
 Our first set of models is based on age, height,
 reach, leg reach and stance. The accuracy scores
@@ -304,12 +304,12 @@ whereas in the fourth row only two features were used (i.e., $a_1-a_2$ and $r_1-
 \end{center}
 
 \clearpage
-\subsubsection*{Full Feature Models}
+\subsection*{Full Feature Models}
 
 Table~\ref{other_features} gives results for models with more
 advanced choices of the features. We see that LR with win ratio
 and age as the features (i.e., $w_{r,1}$, $w_{r,2}$, $a_1$, $a_2$) gives an
-accuracy score of 57.5\%. As more featurs are introduced such as
+accuracy score of 57.5\%. As more features are introduced such as
 total number of fights, stance, champion status and education, the
 accuracy increases somewhat. However, we only achieve 60\% when the feature
 extraction technique called linear discriminant analysis is applied
@@ -349,7 +349,7 @@ all 121 features + LDA &  & 60.1\% & & \\
 \end{tabular}
 \caption{$w_r$ is win ratio, $s_l$ is significant strikes landed per minute,
 $s_a$ is significant strikes absorbed per minute, $a_s$ is striking accuracy,
-$s_r$ is striking ratio, $d_t$ is average number of takedowns per 15 mintues,
+$s_r$ is striking ratio, $d_t$ is average number of takedowns per 15 minutes,
 $n_f$ is number of previous UFC fights, $n_w$ is number
 of UFC wins, $s_r$ is striking ratio, $c$ is the champion indicator variable and $e$ is college graduate.}
 \label{other_features}
@@ -361,7 +361,7 @@ each feature. The importances for a given feature
 set are shown in Figure~\ref{rf_importances}. We see that age
 and win ratio are the dominant features with leg reach and reach
 also being relevant. We remind ourselves that because reach and leg reach
-are highly correlated, RF could probably use them interchangably. Stance
+are highly correlated, RF could probably use them interchangeably. Stance
 plays only a small role which is not surprising since most fights
 take place between two orthodox fighters.
 
@@ -418,7 +418,7 @@ no contest outcomes.}
 \end{figure}
 
 To verify the hypothesis that fights between inexperienced UFC fighters were
-lowering our accuray, we retrained our models using
+lowering our accuracy, we retrained our models using
 bouts where both fighters had a minimum number of previous
 UFC fights (see Table~\ref{other_features_with_min}).
 This indeed resulted in improved performance. For example,
@@ -470,7 +470,7 @@ have been defined previously.}
 \end{center}
 
 \clearpage
-\subsubsection*{Using Data from the Future}
+\subsection*{Using Data from the Future}
 
 In the previous section we argued that if we had more
 well-established values for metrics such as significant strikes
@@ -547,7 +547,7 @@ value is 3.01 and we see he reached this value roughly around his
 \begin{center}
 \begin{table}[h]
 \input{prediction/anderson_slpm.tex}
-\caption{Anderson Silva's UFC fights. $s_L$ is the number
+\caption{Anderson Silva's UFC fights ignoring his no contest with Nick Diaz. $s_L$ is the number
 of significant strikes landed per fight by Silva, $\Sigma s_L$ is the cumulative
 sum of $s_L$, $\bar{s}_l$ is the moving average of $s_L/\textrm{Minutes}$,
 $\hat{s}_l$ is Silva's career-average value and $n_f=21$.}
@@ -569,7 +569,7 @@ mean value of $n_f$ is about 14.
 Thus,
 the answer to our original question is that $\bar{s}_l$ becomes
 well-established around
-$n/n_f=1/2$ which corresponds to about 7 fights. This is supported
+$n/n_f=1/2$ which corresponds to about 7 fights on average. This is supported
 by the last entry in Table~\ref{other_features_with_min} where we achieve our highest
 accuracy of 61.1\% when only past data is used and 
 only fights where both fighters have

@@ -1,6 +1,6 @@
 \clearpage
 \section{Effect of Age}
-Table~\ref{biggest_age_diff} shows the fights
+Table~\ref{biggest_age_diff} below shows the fights
 with the largest age differences in UFC history:
 
 \begin{center}
@@ -24,7 +24,7 @@ of the younger and older fighter in all UFC fights?
 There
 are 3850 fights where both dates of birth are known
 -- and not the same -- 
-and the outcome is not a no contest.
+and the outcome was not a no contest.
 We find
 the younger fighter wins 54.8\% (2108) and the older
 wins 44.6\% (1716). This result
@@ -42,8 +42,8 @@ was performed using all data from UFC 1 to UFC 208.}
 \end{figure}
 
 How do these win percentages change if we introduce
-age brackets? That is, if only consider fights
-between fighters who ages are between 18-24, 25-29,
+age brackets? That is, if we only consider fights
+between fighters whose ages are between 18-24, 25-29,
 30-34 and 35-39, does the younger fighter still win more?
 Figure~\ref{win_pct_younger_older} suggests
 that this is true for the middle age brackets. In the youngest
@@ -110,18 +110,24 @@ is men's featherweight, and so on.}
 
 \clearpage
 
-We see in Figure~\ref{win_pct_abs_age} that as age increases the win percentage decreases. The
-correlation between age and win percentage is $-0.96$ by both
-the Pearson and Spearman definitions ($p \ll 0.05$). A Chi-square
-test showed $\chi^2=21.2$ and $p=0.39$ indicating that we cannot
-conclude that win percentage is dependent on age.
+Figure~\ref{win_pct_abs_age} shows win percentage versus age.
+Young fighters between the ages of 20 and 27 enjoy an approximately constant win percentage
+of 58\%. A fairly steep decline is then observed beginning around age 28.
+Fighters beyond age 33 have a losing record on average.
+A Chi-square test yielded $\chi^2=71.9$ and $p \sim 10^{-12}$ indicating that the differences
+in the win-to-loss ratios across the age brackets are statistically
+significant.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=10cm]{age/win_percent_vs_age.pdf}
-\caption{Win percentage versus age. The
-solid line is a best fit. The dashed horizontal line indicates
-a win percentage of 50\%. A 95\% confidence interval is shown for each point.}
+\includegraphics[width=11cm]{age/win_percent_vs_age.pdf}
+\caption{Win percentage versus age. 
+The dashed horizontal line indicates
+a win percentage of 50\%. A 95\% confidence interval is shown for each point.
+The age brackets are 20-22, 22-24, and so on with the points drawn at
+the midpoint of the bracket.
+This figure was constructed using all fights after January 1, 2005 ignoring
+draws and no contests.}
 \label{win_pct_abs_age}
 \end{center}
 \end{figure}
@@ -135,7 +141,7 @@ of the younger fight is dependent on age difference.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=10cm]{age/win_percent_of_younger.pdf}
+\includegraphics[width=11cm]{age/win_percent_of_younger.pdf}
 \caption{Win percentage of the younger fighter versus the absolute
 value of age difference. The
 solid line is a best fit. The dashed horizontal line indicates
@@ -145,17 +151,12 @@ a win percentage of 50\%. A 95\% confidence interval is shown for each point.}
 \end{figure}
 
 \clearpage
-\subsection*{Is ring rust real?}
+\subsection*{How often do fighters fight?}
 
-Most fighters prefer to fight every 3 to 5 months. However, due to injury
-and other factors
-it is not uncommon
-for the time between fights to exceed this range.
-
-How often do individual fighters fight? Some fighters like Donald Cerrone
+Some fighters like Donald Cerrone
 want to fight as soon as possible while others only step
-into the octogon one or twice a year. The histogram of the number of months
-between fights is shown in Figure~\ref{time_between_fights}. We see that the most
+in to the Octogon one or twice a year. A histogram of elapsed time between fights
+is shown in Figure~\ref{time_between_fights}. We see that the most
 common time between fights is 4 months. 
 Approximately 62\% of the total counts are between 3 and 6 months.
 Note that four fighters have fought less than 16 days out from their
@@ -167,11 +168,12 @@ to win UFC 2. However, here we only consider 2005 data and beyond.
 \includegraphics[width=11cm]{age/time_between_fights.pdf}
 \caption{Histogram of number of months between consecutive UFC fights
 for individual fighters. Figure was constructed using all data since
-January 1, 2005. A 95\% confidence interval is shown for each point.}
+January 1, 2005.}
 \label{time_between_fights}
 \end{center}
 \end{figure}
 
+\subsection*{Is ring rust real?}
 Figure~\ref{ring_rust} shows win percentage as a function
 of time between fights averaged over all fighters.
 For a quick turnaround of less than 3 months, the win percentage
@@ -204,7 +206,8 @@ was constructed using all UFC fights since January 1, 2005. A
 \begin{center}
 \begin{table}[h]
 \input{age/longest_ufc_tensure.tex}
-\caption{Top 25 fighters who started with the UFC the longest ago and are still active today.}
+\caption{Top 25 fighters who started with the UFC the longest ago and are still active today. Nick Diaz
+is considered inactive so he does not appear on the list.}
 \end{table}
 \end{center}
 

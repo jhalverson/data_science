@@ -1,19 +1,17 @@
 \documentclass[12pt]{article}
 
-\renewcommand{\thesection}{\Roman{section}.} 
-\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
-
 \usepackage{enumitem}
 \usepackage{subcaption}
 \usepackage{etoolbox}
 \usepackage{dcolumn}
+\usepackage{hyperref}
 
 \BeforeBeginEnvironment{tabular}{\begin{center}\footnotesize}
 \AfterEndEnvironment{tabular}{\end{center}}
 
-\title{\huge Statistical Analysis and Predictive Modeling of Mixed Martial Arts Fighting: From UFC 1 to UFC 208}
-\date{\Large \today}
-\author{\Large Jonathan D. Halverson\\ \tiny halverson.jonathan at gmail}
+\title{\Large\bfseries Statistical Analysis and Predictive Modeling of Mixed Martial Arts Fighting: From UFC~1~to~UFC~208}
+\author{\large Jonathan D. Halverson, Ph.D.\\ \tiny halverson.jonathan at gmail}
+\date{\large \today}
 
 \usepackage[export]{adjustbox}
 \usepackage{amsmath}
@@ -22,16 +20,40 @@
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage[font=footnotesize,margin=2cm]{caption}
+\usepackage{indentfirst}
+
+\renewcommand{\thesection}{\Roman{section}.} 
+\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\normalsize\bfseries}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\tiny Paul Valenti Special Edition}
+\rfoot{\thepage}
 
 \begin{document}
 \maketitle
+\thispagestyle{fancy}
 \noindent
-\textbf{Summary} -- Here we analyze UFC data from 1993 through February 2017. The most
-striking results relate to the increased age, reach and height of
-most weight classes over the last ten years. We find southpaws have a significant advantage against
-orthodox fighters, ring rust becomes real around 9-12 months, and fighters tend to lose
-more than they win after around age 30. In the last section we show that
-methods from artificial intelligence can be used to predict fight outcomes with 66\% accuracy.
+\textbf{Summary} -- Here we analyze UFC data from 1993 through February 2017.
+We find southpaws have a significant advantage against
+orthodox fighters, ring rust takes effect around 9-12 months, and fighters tend to lose
+more than they win after around age 33 with fighter performance on the decline after about age 28.
+Average age, height and reach has increased in almost all weight classes
+with the average welterweight standing two inches taller today than only a decade ago.
+Quite remarkably these values are still increasing.
+We find that college graduates beat non-graduates
+56.4 percent of the time.
+In the last section, we utilize
+a branch of Artificial Intelligence called machine learning to
+train models such as artificial neural networks and random forests to
+predict fight outcomes. Our best model has an accuracy of approximately 60\%. We argue that
+prediction is made difficult by the lack of fighters with UFC experience. 
+That is, in 78\% of all UFC bouts one or both fighters had only four or fewer previous UFC fights.
 
 \input{intro/intro.tex}
 \input{age/age.tex}
@@ -48,6 +70,8 @@ methods from artificial intelligence can be used to predict fight outcomes with 
 
 \section{UFC Fighters with College Experience}
 \label{appendix_education}
+The data in the table below was obtained from \url{ufc.com/fighter} on February 28, 2017.
+All fighters in the UFC database with a listing in either College or Degree are shown.
 \begin{center}
 \input{education/education_sample.tex}
 \end{center}
