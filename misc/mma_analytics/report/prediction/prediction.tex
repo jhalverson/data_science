@@ -32,34 +32,92 @@ these are excluded in the calculation.
   Greater height wins & 51.2\% & 1486 & 2903 & 658 & $-0.7$\\
   Greater leg reach wins & 49.0\% & 487 & 993 & 2568 & $-0.2$\\
   Southpaw (vs. orthodox) wins & 55.5\% & 561 & 1010 & 2551 & $-4$\\
-  Education (vs. no education) wins & 56.5\% & 594 & 1051 & 2510 & $-5$\\
+  College graduate (vs. non-graduate) wins & 56.5\% & 594 & 1051 & 2510 & $-5$\\
   Greater number of UFC fights wins & 55.6\% & 1606 & 2886 & 675 & $-9$\\
   Fighter who fought more recently wins & 51.8\% & 1220 & 2353 & 1208 & $-1.1$\\
-  Greater previous win ratio wins & 58.6\% & 434 & 740 & 2821 & $-6$\\
+  Greater previous win ratio wins & 59.6\% & 439 & 737 & 2824 & $-7$\\
   Current or former champion wins & 61.8\% & 175 & 283 & 3278 & $-5$\\
   \hline
   Lesser age and greater reach wins & 57.2\% & 919 & 1607 & 1954 & $-9$\\
   Southpaw and lesser age wins & 61.7\% & 284 & 460 & 3101 & $-7$\\
   Southpaw, lesser age and greater reach wins & 62.0\% & 132 & 213 & 3348 & $-4$\\
-  Greater previous win ratio and lesser age wins & 61.9\% & 252 & 407 & 3154 & $-6$\\
+  Greater previous win ratio and lesser age wins & 62.9\% & 256 & 407 & 3154 & $-7$\\
   \bottomrule
 \end{tabular}
 \caption{Accuracy scores for simple rule-based models. For models where win ratio was used, we only considered
-fighters with 5 or more UFC fights. $p$-values are given in the rightmost column. Note that for $p=0.05$, $\log_{10}p = -1.3$. In all
+fighters with 5 or more UFC fights. Current or former champion refers to fights
+between belt holders (current, interim or former) versus those who have never held a
+UFC title. When southpaw is part of the model, only fights between southpaws are
+orthodox fighters are considered. $p$-values are given in the rightmost column. Note that for $p=0.05$, $\log_{10}p = -1.3$. In all
 cases the sum of 
 Total and Excluded is 3561. Random guessing corresponds to an accuracy of 50\%.}
 \label{table_simple_rules}
 \end{table}
 \end{center}
 
-In computing the number of previous UFC fights for each fighter, we start
+In computing the number of previous UFC fights (and wins) for each fighter, we start
 counting with UFC 1. We ignored no contests but draws were included. A fighter's
 win ratio is their number of UFC wins divided by their
 total number of UFC fights (including draws).
 Table~\ref{table_simple_rules} makes clear the advantage of being young, having
-greater reach and being a southpaw.  Note that Conor McGregor has all three of
+greater reach and being a southpaw. Note that Conor McGregor has all three of
 these traits.
 
+Before moving on to machine learning models, we explore two simple
+models. The first is the Greater Win ratio Wins (GWW) model,
+which predicts the fighter with the greater win ratio to win. The
+second is the Win ratio-Age-Reach (WAR) model which works as follows:
+
+\begin{enumerate}[noitemsep]
+\item If the win ratios are unequal then the fighter with the higher win ratio wins
+\item If the win ratios are equal then the younger fighter wins
+\item If win ratios and ages are equal then the fighter with greater reach wins
+\item If all three quantities are equal then randomly guess
+\end{enumerate}
+
+\noindent
+The advantage of the WAR model is that it can be applied to any fight
+since it always makes a prediction whereas the GWW model can only be applied
+to fights where the win ratios are unequal. We use dates of birth with the
+WAR model so usually a prediction is made before reach is considered.
+
+Before applying these models we must address the choice of the win
+ratio for a fighter making their UFC debut.
+Using the 3561 fights since January 1, 2005, there are
+299 fights where both fighters are debuting and 711 where only one
+of the fighters is debuting. Therefore, 1010 out of the 3561 fights or
+28.4\% have at least one fighter debuting.
+The win ratio of a fighter making their debut is
+set to zero for the calculations described below.
+
+In Table~\ref{table_simple_rules} when using the win ratio we only
+considered fights between fighters who had at least 5 previous UFC bouts each.
+Here we consider the general case.
+The top panel of Figure~\ref{win_ratio_wins} shows the accuracy
+of the two models as a
+function of the minimum number of fights, $n_{\textrm{min}}$.
+The number of fights which meet the condition
+set by $n_{\textrm{min}}$ are shown in the
+lower panel.
+The average accuracy of both the GWW and WAR models is 59.7\% when
+$n_{\textrm{min}}$ ranges from 3 to 10. As $n_{\textrm{min}}$ becomes
+large the number of fights becomes small and both models
+become unreliable. The number of fights first drops below 100 in
+going from $n_{\textrm{min}}=11$ to 12. When $n_{\textrm{min}}=0$,
+we see in the lower panel that while the WAR model makes
+a prediction for all 3561 fights, the GWW model only makes predictions for 2699 fights
+since it can only be applied to fights where the win ratios are unequal.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=9cm]{prediction/win_ratio_model.pdf}
+\caption{Accuracy and number of fights used in the calculation
+versus minimum number of previous fights, $n_{\textrm{min}}$, required for each fighter.}
+\label{win_ratio_wins}
+\end{center}
+\end{figure}
+
+\clearpage
 \subsection*{Machine Learning and Feature Engineering}
 
 One limitation of simple rule-based models is that they
@@ -70,7 +128,7 @@ In this section we go beyond simple rules to machine learning,
 which is a branch of Artificial Intelligence.
 
 In the first stage of supervised machine learning, a model
-is trained by feeding it information about the two fighters
+is trained on information about the two fighters
 and which of the two won the bout. After the training phase,
 the model is said to be smart and we show it information about
 two fighters and ask it to tell us who won.
