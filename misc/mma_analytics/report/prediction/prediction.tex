@@ -84,9 +84,9 @@ WAR model so usually a prediction is made before reach is considered.
 Before applying these models we must address the choice of the win
 ratio for a fighter making their UFC debut.
 Using the 3561 fights since January 1, 2005, there are
-299 fights where both fighters are debuting and 711 where only one
-of the fighters is debuting. Therefore, 1010 out of the 3561 fights or
-28.4\% have at least one fighter debuting.
+299 fights where both fighters are debuting and 703 where only one
+of the fighters is debuting. Therefore, 1002 out of the 3561 fights or
+28.1\% have at least one fighter debuting.
 The win ratio of a fighter making their debut is
 set to zero for the calculations described below.
 
@@ -116,6 +116,28 @@ versus minimum number of previous fights, $n_{\textrm{min}}$, required for each 
 \label{win_ratio_wins}
 \end{center}
 \end{figure}
+
+\clearpage
+\subsection*{Modeling the Difference in Cumulative Win Ratio using Logistic Regression}
+Johnson and Hall (2012) created a simple binary logistic regression model using
+the difference in the cumulative win ratios of the two fighters as the only feature.
+For this model the authors report the percent concordant/discordant as 59.5/37.2, a
+rescaled R-squared of 0.05 and a Brier score of 0.24. They do not say what value of the
+win ratio they use for debuting fighters.
+We attempt to reproduce their results here.
+
+In this case the model is
+
+\begin{equation}
+\ln\Bigg ( \frac{p_i}{1-p_i} \Bigg) = \alpha + \Delta w_{r,i} \beta,
+\label{logit}
+\end{equation}
+
+\noindent
+where $p_i$ is the probability of fighter 1 defeating fighter 2 in fight $i$ and
+$\Delta w_{r,i}$ is the difference in win ratios between fighter 1 and fighter 2 in fight $i$.
+In Equation~\ref{logit}, $\alpha$ and $\beta$ are the unknown weights we seek.
+
 
 \clearpage
 \subsection*{Machine Learning and Feature Engineering}
