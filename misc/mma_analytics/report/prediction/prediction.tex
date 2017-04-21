@@ -118,12 +118,12 @@ versus minimum number of previous fights, $n_{\textrm{min}}$, required for each 
 \end{figure}
 
 \clearpage
-\subsection*{Modeling the Difference in Cumulative Win Ratio using Logistic Regression}
-Johnson and Hall (2012) created a simple binary logistic regression model using
+\subsection*{Simple Model based on the Difference in Cumulative Win Ratios}
+Johnson and Hall (2012) created a simple binary logistic regression (LR) model using
 the difference in the cumulative win ratios of the two fighters as the only feature.
 For this model the authors report the percent concordant/discordant as 59.5/37.2, a
-rescaled R-squared of 0.05 and a Brier score of 0.24. They do not say what value of the
-win ratio they use for debuting fighters.
+rescaled R-squared of 0.05 and a Brier score of 0.24 (see Table 13 of Johnson
+and Hall).
 We attempt to reproduce their results here.
 
 In this case the model is
@@ -135,9 +135,85 @@ In this case the model is
 
 \noindent
 where $p_i$ is the probability of fighter 1 defeating fighter 2 in fight $i$ and
-$\Delta w_{r,i}$ is the difference in win ratios between fighter 1 and fighter 2 in fight $i$.
+$\Delta w_{r,i}$ is the difference in cumulative win ratios between fighter 1 and fighter 2 in fight $i$.
 In Equation~\ref{logit}, $\alpha$ and $\beta$ are the unknown weights we seek.
+The 3561 fights are divided into a train and test set.
+During the training phase, we randomly select 70\% of the fights
+and use this data to fit the model. This is done using
+stratified K-fold cross validation with 10 folds. A grid search
+procedure is used to find the optimal regularization parameters.
+The optimized model is then used to predict the outcome
+of the remaining 30\% of the data. The accuracy of the model is determined
+by comparing the predicted outcomes with the known outcomes.
+Because results vary with train-test split, we shuffle the
+data and repeat the procedure above ten times. The average
+of these ten accuracy scores is what is reported in this work.
+While using the
+test data more than once is considered bad practice, this approach eliminates
+concerns associated with using a single split which may give
+favorable or unfavorable results depending on how the data
+happens to be partitioned.
 
+Figure~\ref{lr_win_diff} shows the accuracy of the LR model along with
+the GWW and WAR models
+as a function of $n_{\textrm{min}}$. For the LR model with $n_{\textrm{min}}=0,1,2$ the accuracy
+is 56.5\%, 55.5\% and 58.3\% with Brier scores of 0.245, 0.248, and 0.245, respectively.
+If percent concordant and percent accuracy are the same measures then
+our accuracy for $n_{\textrm{min}}=0$ of 56.5\% is
+well below the value of 59.5\% reported by Johnson and Hall. It is only
+for $n_{\textrm{min}}>3$ that we reach their value.
+There are several explanations for this. First, percent
+concordant may not be equal to percent accuracy. Second, Johnson and Hall
+make no mention of a train-test split, cross validation, regularization
+or standardization.
+Our suspicion is that they fit the entire data set and then computed
+percent concordant/discordant by using the model to make predictions on the
+same data set. 
+However, even when we train on all the samples and predict
+on those same samples,
+we still achieve an accuracy of only 57.3\%.
+Third, they only had data up to 2012 while our data set includes
+several years beyond this mark. Fourth,
+they do not indicate what value of the
+win ratio they used for debuting fighters.
+The present work uses zero.
+This is important because 28.1\% of the
+fights that we considered included at least one debuting fighter.
+The comparison between our LR model and that
+of Johnson and Hall is important for this study
+because Johnson and Hall report a best model percent concordant/discordant
+of 63.4/36.6. Given the disagreement between
+the LR models we do not know how to interpret this result relative
+to our own.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=9cm]{prediction/lr_win_diff.pdf}
+\caption{Accuracy of logistic regression model using
+only the difference between the cumulative win ratios of the fighters
+as a function of $n_{\textrm{min}}$. The GWW and WAR models are
+shown for comparison.}
+\label{lr_win_diff}
+\end{center}
+\end{figure}
+
+Figure~\ref{predicted_vs_true} shows the predicted probability
+of fighter 1 winning versus the actual outcome for the LR model
+with $n_{\textrm{min}}=0$. We see that the separation is not sharp.
+The accuracy for this case is 56.5\%.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=11cm]{prediction/predicted_vs_true.pdf}
+\caption{Predicted probability of fighter 1 winning (Eqn.~\ref{logit}) versus
+actual outcome for $n_{\textrm{min}}=0$.
+The standardized values
+of $\alpha$ and $\beta$ are 0 and 0.089, respectively.
+The points have been randomly displaced in the vertical
+direction to afford visualization.}
+\label{predicted_vs_true}
+\end{center}
+\end{figure}
 
 \clearpage
 \subsection*{Machine Learning and Feature Engineering}
