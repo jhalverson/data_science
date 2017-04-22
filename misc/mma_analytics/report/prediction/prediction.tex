@@ -99,16 +99,19 @@ function of the minimum number of fights, $n_{\textrm{min}}$.
 The number of fights which meet the condition
 set by $n_{\textrm{min}}$ are shown in the
 lower panel.
-The average accuracy of both the GWW and WAR models is 59.7\% when
+The average accuracy of both the GWW and WAR models is 59.8\% when
 $n_{\textrm{min}}$ ranges from 3 to 10. As $n_{\textrm{min}}$ becomes
 large the number of fights becomes small and both models
 become unreliable. The number of fights first drops below 100 in
 going from $n_{\textrm{min}}=11$ to 12. When $n_{\textrm{min}}=0$,
 we see in the lower panel that while the WAR model makes
-a prediction for all 3561 fights, the GWW model only makes predictions for 2699 fights
+a prediction for 3530 fights, the GWW model only makes predictions for 2699 fights
 since it can only be applied to fights where the win ratios are unequal.
+Missing date of birth data explains why the WAR model could not be
+applied to all 3561 fights. When the win ratio was initialized to 1/2
+or 1 the GWW model did not perform as well as for the choice of 0.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=9cm]{prediction/win_ratio_model.pdf}
 \caption{Accuracy and number of fights used in the calculation
@@ -118,9 +121,9 @@ versus minimum number of previous fights, $n_{\textrm{min}}$, required for each 
 \end{figure}
 
 \clearpage
-\subsection*{Simple Model based on the Difference in Cumulative Win Ratios}
+\subsection*{Simple Model Based on the Difference in Win Ratios}
 Johnson and Hall (2012) created a simple binary logistic regression (LR) model using
-the difference in the cumulative win ratios of the two fighters as the only feature.
+the difference in the cumulative win ratios of the two fighters as the only explanatory variable.
 For this model the authors report the percent concordant/discordant as 59.5/37.2, a
 rescaled R-squared of 0.05 and a Brier score of 0.24 (see Table 13 of Johnson
 and Hall).
@@ -135,7 +138,7 @@ In this case the model is
 
 \noindent
 where $p_i$ is the probability of fighter 1 defeating fighter 2 in fight $i$ and
-$\Delta w_{r,i}$ is the difference in cumulative win ratios between fighter 1 and fighter 2 in fight $i$.
+$\Delta w_{r,i}$ is the difference in win ratios between fighter 1 and fighter 2 in fight $i$.
 In Equation~\ref{logit}, $\alpha$ and $\beta$ are the unknown weights we seek.
 The 3561 fights are divided into a train and test set.
 During the training phase, we randomly select 70\% of the fights
@@ -166,12 +169,10 @@ There are several explanations for this. First, percent
 concordant may not be equal to percent accuracy. Second, Johnson and Hall
 make no mention of a train-test split, cross validation, regularization
 or standardization.
-Our suspicion is that they fit the entire data set and then computed
-percent concordant/discordant by using the model to make predictions on the
-same data set. 
-However, even when we train on all the samples and predict
-on those same samples,
-we still achieve an accuracy of only 57.3\%.
+Our suspicion is that they used the entire data set for
+both the training and testing phases, which is not best practices.
+However, when we do this
+we still only achieve an accuracy of 57.3\%.
 Third, they only had data up to 2012 while our data set includes
 several years beyond this mark. Fourth,
 they do not indicate what value of the
@@ -190,7 +191,7 @@ to our own.
 \begin{center}
 \includegraphics[width=9cm]{prediction/lr_win_diff.pdf}
 \caption{Accuracy of logistic regression model using
-only the difference between the cumulative win ratios of the fighters
+only the difference between the win ratios of the fighters
 as a function of $n_{\textrm{min}}$. The GWW and WAR models are
 shown for comparison.}
 \label{lr_win_diff}
@@ -202,7 +203,7 @@ of fighter 1 winning versus the actual outcome for the LR model
 with $n_{\textrm{min}}=0$. We see that the separation is not sharp.
 The accuracy for this case is 56.5\%.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=11cm]{prediction/predicted_vs_true.pdf}
 \caption{Predicted probability of fighter 1 winning (Eqn.~\ref{logit}) versus
