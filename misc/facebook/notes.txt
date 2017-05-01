@@ -1,0 +1,37 @@
+FaceBook notes
+======
+1.5 billion monthly-active users
+Graph-based database
+Johnny Halbertson - 1985, mpip email and ygerm2m
+In 2014 can no longer get the friends of friends who use an app
+
+
+App secret: 1c667aa2c411c0db6669293b64b17cc4
+App ID: 1747997842177701
+API version: v2.8
+
+{
+  "id": "613275765538719",
+  "name": "Johnny Halbertson"
+}
+
+export FACEBOOK_TEMP_TOKEN=EAACEdEose0cBAKKrEJb0G5EPs6QpZBnOAbYAUPv5OaHaUhz4sUJoBX8xPNfrZB8blPYLV3VsDkjKZBKsfJPTM0dkHlBoJc401FdWs4FYITD2NPWd7xmV6u4X1X7jo3jSi1FdHKVDqff34tZBLJfufoohLjVSRse3EEUipsK8m2qxMzMAStCVGyGAiXaQIcsZD
+
+EAACEdEose0cBAG45KZBg7cqc6ZC3yyXz1DIe2MGMqFPjfnk4QdIZCyZBNegjBDuD9OjZAmag1tb0LZAWMsg4VNNROGGWZCSl8iX5TJoaWsT4MSwIRXaeqOvDzyOcQhSJDUiyM0PGQSh68acDMOfcmW9iJGl443AlHuru2xQKi53xL7jDYZCeOuUU3HGZAkRAHihEZD
+
+EAACEdEose0cBALkVyaIIStzGsyqvEtNLToAHp5gJctDIgeuCyU0ZCx3lV2xBUbCQRtiRVxQJzHAm66Eb8PBEPGlaTZBcOPETiaqZAuIYilndCN0jPuRq76umVZAtR41W9CwjZAuoiXVmv8YOG91NgJCeZB3xNZCwBH49ZCdFe7zpJiMrj7HbKzZAzaZAZAxmopC93QZD
+
+https://graph.facebook.com/v2.8/226072290752578?fields=likes&limit=999&access_token=EAACEdEose0cBALkVyaIIStzGsyqvEtNLToAHp5gJctDIgeuCyU0ZCx3lV2xBUbCQRtiRVxQJzHAm66Eb8PBEPGlaTZBcOPETiaqZAuIYilndCN0jPuRq76umVZAtR41W9CwjZAuoiXVmv8YOG91NgJCeZB3xNZCwBH49ZCdFe7zpJiMrj7HbKzZAzaZAZAxmopC93QZD
+
+200 API calls per hour?
+
+https://www.facebook.com/1142731515751476/photos/1302646643093295/
+
+Try scraping the mobile version of the page instead (https://m.facebook.com/PacktPub)
+
+Friends must have consented to the policy of the app before we can
+Obtain information about them.
+
+For each user we can view the Movies they liked so get this and “Lives in”.
+
+https://www.facebook.com/profile/picture/view/?profile_id=100013993457459
