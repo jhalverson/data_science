@@ -1,6 +1,6 @@
 # Data science portfolio
 
-####Jonathan Halverson
+## Jonathan Halverson
 
 I am seeking a data scientist position in Boston/Cambridge. My background is in computational physics. I have been transitioning to data science since summer 2015.
 
