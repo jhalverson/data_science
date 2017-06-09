@@ -1,12 +1,12 @@
-#Keep It Fresh: Predict Restaurant Inspections
+# Keep It Fresh: Predict Restaurant Inspections
 
-###Jonathan Halverson
+### Jonathan Halverson
 
-####Introduction
+#### Introduction
 
 The purpose of this contest was to develop a model to predict hygiene violations for 1851 restaurants in Boston. Contestants were given publicly available past violation data as well as Yelp data (reviews, tips, business info, check-ins, user info). This was a real competition used by the City of Boston to identify restaurants that should receive greater scrutiny. My two-person team Glouston finished 12th out of 525.
 
-####Exploratory data analysis
+#### Exploratory data analysis
 
 The data consisted of several files in JSON or CSV format.
 There were numerous duplicate inspection results. We removed duplicates that were
@@ -69,7 +69,7 @@ Yelp tip data is very similar to the review data. A plot of date versus number o
 characters per tip indicates that Yelp [changed their character limit twice](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_5_tip_data_exploration.ipynb). The average
 number of characters in a tip is 56.8. We did not use the tip data in our models.
 
-####Models
+#### Models
 
 A range of models from simple to complex were considered. Each model was based only on data up to the inspection date since this is ultimately how it would be used in practice. Below is a description of each model:
 
@@ -97,7 +97,7 @@ violation score. Ridge regression with a regularization coefficient of alpha equ
 * Model 4: From the exploratory data analysis of the restaurant metadata we found that categories, and to a lesser extent neighborhoods, were telling. We constructed a [series of models](https://github.com/jhalverson/data_science/blob/master/project_boston_restaurants/part_8_categories_neighborhoods_model.ipynb) by using one-hot encoding to prepare the features. We also used the
 mean number of violations up to the inspection date as a feature. The alpha parameter of the Lasso model was optimized for each case.
 
-####Results
+#### Results
 
 Below is a table summarizing ours results. These results are based on a 80/20 train-test split.
 
@@ -113,6 +113,6 @@ Below is a table summarizing ours results. These results are based on a 80/20 tr
 |4 | 16.4  | 16.4 | Categories and neighborhoods |
 |4 | 15.8  | 15.9 | Mean violations, categories and neighborhoods |
 
-####Conclusions
+#### Conclusions
 
 Our best model does a fair job given the difficulty of the problem. It would have been nice to have Yelp data available right up to the day of the inspection or at least the week before but the contest was not run in this way.
