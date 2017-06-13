@@ -6,7 +6,11 @@ Wednesday, March 1, 2017
 
 jhalverson$ mysql -u root -p
 
+mysql> show databases;
+
 mysql> use beverly;
+
+mysql> show tables;
 
 # cannot use keyword like From as column names
 mysql> create table ufc (Name varchar(255), Nickname varchar(255), Active int, Record varchar(255), Age float, Height float, Weight float, Reach float, LegReach float, OutOf varchar(255), Hometown varchar(255), College varchar(255), Degree varchar(255), Summary varchar(255));
