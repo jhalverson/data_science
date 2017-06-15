@@ -139,6 +139,7 @@ mysql> select floor((select count(*) from ufc where legreach is not null)/2.);
 +-----------------------------------------------------------------+
 1 row in set (0.00 sec)
 
+limit [offset, number of rows] so this is skipping the first 282 and then pulling one row
 mysql> select legreach from ufc where legreach is not null order by legreach asc limit 282,1;
 +----------+
 | legreach |
