@@ -18,7 +18,7 @@ APP_NAME = "Movie Recommender"
 if (__name__ == '__main__'):
   spark = SparkSession.builder.appName(APP_NAME).getOrCreate()
 
-  lines = spark.sparkContext.textFile('sample_movielens_ratings.txt').map(lambda x: x.split('::'))
+  lines = spark.read.text('sample_movielens_ratings.txt').rdd.map(lambda x: x.value.split('::'))
   ratingsRDD = lines.map(lambda x: Row(user=int(x[0]), film=int(x[1]), rating=float(x[2])))
   print(ratingsRDD.first())
 
@@ -37,7 +37,8 @@ if (__name__ == '__main__'):
   num_iterations = 8
   lambda_ = 0.1
 
-  als = ALS(rank=rank_, maxIter=num_iterations, regParam=lambda_, userCol="user", itemCol="film", ratingCol="rating")
+  als = ALS(rank=rank_, maxIter=num_iterations, regParam=lambda_, userCol="user",
+            itemCol="film", ratingCol="rating", coldStartStrategy="drop")
   model = als.fit(training)
 
   # Evaluate the model by computing the RMSE on the test data
@@ -45,6 +46,9 @@ if (__name__ == '__main__'):
   evaluator = RegressionEvaluator(metricName="rmse", labelCol="rating", predictionCol="prediction")
   rmse = evaluator.evaluate(predictions)
   print("Root-mean-square error = " + str(rmse))
+
+  userRecs = model.recommendForAllUsers(10)
+  userRecs.show()
 
   # make recommendations for user 19
   filmIDs = ratings.select('film').distinct().sort('film').rdd.map(lambda x: x[0])
