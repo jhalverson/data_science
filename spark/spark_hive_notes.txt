@@ -1,0 +1,65 @@
+Friday, February 23, 2018
+=========================
+
+1. Make a custom EMR cluster with Hadoop, Spark, Hive, and HBase.
+
+2. Enable SSH to the master: Hardware configuration: Remove one of the two Core nodes and kept the Master. Once the cluster is ready, you need to enable SSH:
+Go to Hardware tab then click on Instance groups. This will bring up a new page.
+Choose Security Groups from the menu on the left. Then click on the master node
+Then choose Edit under Inbound and add a rule to allow SSH. If you choose My IP it will fill it in automatically.
+
+From the directory containing the pem file:
+ssh -i BevFeb2018.pem hadoop@ec2-18-222-71-0.us-east-2.compute.amazonaws.com
+
+You are now on an Intel Xeon (virtual) machine running Linux machine as user hadoop.
+
+3. Put a csv file in hdfs:
+aws s3 cp s3://fridaybucket/airlines.csv airlines.csv
+hadoop fs -put airlines.csv airlines.csv
+rm airlines.csv
+hadoop fs -ls
+
+4. Create a database and table in Hive:
+create database ontime;
+use ontime;
+create external table airlines (airline_code int, name string) ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' STORED AS TEXTFILE tblproperties ("skip.header.line.count"="1");
+load data inpath 'airlines.csv' overwrite into table airlines;
+create view air as select cast(airline_code as int) as airline_code, name from airlines;
+select * from air where airline_code > 21614;
+
+5. Make table in HBase:
+hbase shell
+create 'linkshare', 'link'
+put 'linkshare', 'org.hbase.www', 'link:title', 'Apache HBase'
+put 'linkshare', 'org.hadoop.com', 'link:title', 'Apache Hadoop'
+put 'linkshare', 'com.oreilly.www', 'link:title', 'OReily.com'
+put 'linkshare', 'com.oreilly.www', 'link:size', 23
+put 'linkshare', 'org.hbase.www', 'link:size', 99
+exit
+
+6. Connect Hive to HBase
+hive
+set hbase.zookeeper.quorum=ec2-18-222-71-0.us-east-2.compute.amazonaws.com;
+use ontime;
+create external table inputTable (key string, title string, value int) stored by 'org.apache.hadoop.hive.hbase.HBaseStorageHandler' with serdeproperties ("hbase.columns.mapping"=":key,link:title,link:size") tblproperties ("hbase.table.name"="linkshare");
+select * from inputtable;
+
+7. /usr/bin/spark-submit --executor-memory 500M test.py
+=====
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.enableHiveSupport().getOrCreate()
+df = spark.read.csv('s3://fridaybucket/co-est2014-pop-data.csv', header=True, inferSchema=True)
+df.show()
+df.write.format('json').save('tony')
+spark.stop()
+=====
+hadoop fs -ls // tony containing a json file
+
+8. Use Hive via Spark:
+>>> pyspark --executor-memory 500M
+spark = SparkSession.builder.enableHiveSupport().getOrCreate()
+spark.catalog.setCurrentDatabase('ontime')
+spark.catalog.listTables()
+spark.sql("""select * from air""").show()
+// there was trouble accessing the HBase table this way
